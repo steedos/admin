@@ -20,6 +20,17 @@ FlowRouter.route('/', {
 });
 
 
+FlowRouter.route('/profile', {
+  name: "profile",
+  action: function(params, queryParams) {
+      BlazeLayout.render('masterLayout', {
+        footer: "footer",
+        main: "profile",
+        nav: "nav",
+      });
+  }
+});
+
 FlowRouter.notFound = {
   action: function() {
     BlazeLayout.render('masterLayout', {

@@ -35,3 +35,6 @@ tap:i18n
 flemay:less-autoprefixer
 raix:handlebar-helpers
 natestrauser:animate-css
+cfs:standard-packages
+cfs:filesystem
+chrismbeckett:toastr
