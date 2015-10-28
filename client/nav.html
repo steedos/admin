@@ -1,0 +1,41 @@
+<template name="nav">
+<!--   <div class="ui transparent inverted main menu">
+    <div class="header item"><img alt="UserAccounts" width="25" height="25" src="/imgs/ua-logo.png"></div>
+    <a class="{{isActiveRoute regex='home'}} item" href="{{pathFor 'home'}}">Home</a>
+    <a class="{{isActiveRoute regex='private'}} item" href="{{pathFor 'private'}}">Private</a>
+    <div class="right menu">
+      {{> atNavButton}}
+    </div>
+  </div> -->
+
+        <div class="ui fixed inverted secondary menu" id="topbar">
+          &nbsp;
+          <div class="ui dropdown item">
+            {{_ 'Steedos'}}
+              <i class="dropdown icon"></i>
+              <div class="ui menu">
+                  <a class="item" href="https://chat.steedos.com/channel/steedos-support/" target="_blank">{{_ 'Chat with us'}}</a>
+                  <a class="item" href="/contact">{{_ 'Support Request'}}</a>
+                  <a class="item" href="https://www.steedos.com/us/help/" target="_blank">{{_ 'Online Help'}}</a>
+              </div>
+          </div>
+
+          <div class="ui right small secondary menu">
+              <div class="item {{#if user}} hidden{{/if}}">
+                <a class="ui button" href="/sign-in" style="background: rgba(255,255,255,.3); color: white; margin-right: 10px">{{_ 'Log in'}}</a>
+                <a class="ui button" href="/sign-up">{{_ 'Sign up'}}</a>
+              </div>
+              
+              <div class="ui dropdown item {{#unless user}} hidden{{/unless}}">
+                <img class="ui avatar image" src="{{avatar}}"/>
+                <span>{{displayName}}</span>
+                <i class="dropdown icon"></i>
+                <div class="ui menu">
+                    <a class="item" href="/account">{{_ 'My Account'}}</a>
+                    <a class="item" href="/logout">{{_ 'Logout'}}</a>
+                </div>
+              </div>
+          </div>
+        </div>
+
+</template>
