@@ -1,0 +1,7 @@
+<template name="atTitle">
+  <div class="at-title">
+    <h2 class="ui center aligned header">
+      {{title}}
+    </h2>
+  </div>
+</template>

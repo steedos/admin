@@ -5,9 +5,14 @@
 
 accounts-password
 accounts-google
+accounts-facebook
 service-configuration
 
+semantic:ui
 useraccounts:semantic-ui
+useraccounts:flow-routing
+softwarerero:accounts-t9n
+
 zimme:active-route
 standard-minifiers
 meteor-base
@@ -16,6 +21,7 @@ mongo
 blaze-html-templates
 session
 jquery
+coffeescript
 tracker
 logging
 reload
@@ -23,11 +29,9 @@ random
 ejson
 spacebars
 check
-useraccounts:flow-routing
+
 arillo:flow-router-helpers
-accounts-facebook
 tap:i18n
-semantic:ui
 flemay:less-autoprefixer
 raix:handlebar-helpers
 natestrauser:animate-css
