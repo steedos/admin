@@ -1,2 +1,10 @@
 .meteor/local
 .meteor/meteorite
+
+client/semantic-ui/.custom.*
+client/semantic-ui/theme.*
+client/semantic-ui/semantic.*
+client/semantic-ui/definitions/
+client/semantic-ui/site/
+client/semantic-ui/themes/
+

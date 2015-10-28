@@ -8,13 +8,13 @@ FlowRouter.route( '/logout', {
 FlowRouter.route('/', {
   name: "home",
   action: function(params, queryParams) {
-  	if (Meteor.user())
+  	//if (Meteor.user())
 	    BlazeLayout.render('masterLayout', {
 	      footer: "footer",
 	      main: "home",
 	      nav: "nav",
 	    });
-  	// else 
+  	//else 
   	// 	FlowRouter.go("/sign-in");
   }
 });

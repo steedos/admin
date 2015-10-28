@@ -50,7 +50,7 @@ AT.prototype.atSocialHelpers = {
 };
 
 AT.prototype.atSocialEvents = {
-    "click button": function(event, t) {
+    "click": function(event, t) {
         event.preventDefault();
         event.currentTarget.blur();
         if (AccountsTemplates.disabled())
