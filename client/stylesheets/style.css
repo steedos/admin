@@ -21,6 +21,10 @@ body {
   margin-top: 0px;
 }
 
+#content {
+  padding-top: 100px;
+}
+
 .full-page {
     position: absolute;
     top: 0px;

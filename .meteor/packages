@@ -9,9 +9,9 @@ accounts-facebook
 service-configuration
 
 semantic:ui
-useraccounts:semantic-ui
-useraccounts:flow-routing
-softwarerero:accounts-t9n
+steedos:useraccounts-core
+steedos:useraccounts-semantic-ui
+steedos:useraccounts-flow-routing
 
 zimme:active-route
 standard-minifiers

@@ -2,6 +2,9 @@
   <div class="at-pwd-form">
     <form id="at-pwd-form" action="#" method="POST" novalidate class="ui large form">
       <div class="ui segment">
+        {{#if showOauthServices}}
+          {{> atOauth}}
+        {{/if}}
         {{#each fields}}
           {{> atInput}}
         {{/each}}

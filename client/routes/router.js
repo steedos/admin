@@ -14,8 +14,8 @@ FlowRouter.route('/', {
 	      main: "home",
 	      nav: "nav",
 	    });
-  	else 
-  		FlowRouter.go("/sign-in");
+  	// else 
+  	// 	FlowRouter.go("/sign-in");
   }
 });
 

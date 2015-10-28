@@ -1,8 +1,8 @@
 Package.describe({
   summary: "Almost i18n, with standard translations for basic meteor packages.",
   version: "1.1.5",
-  name: "softwarerero:accounts-t9n",
-  git: "https://github.com/softwarerero/meteor-accounts-t9n.git",
+  name: "steedos:useraccounts-t9n",
+  original: "https://github.com/softwarerero/meteor-accounts-t9n.git",
 });
 
 DEFAULT_LANGUAGES = ['ar', 'zh_cn', 'ca', 'cs', 'da', 'de', 'el', 'en', 'es', 
