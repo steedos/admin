@@ -8,11 +8,11 @@
       </div>
 
       <div class="ui form twelve wide column" id="form-signin">
-        <div class="required field">
-          <label>{{_ 'Email'}}</label>
-          <input type="email" name="email" id="email" value="{{user.email}}">
+<!--         <div class="required field">
+          <label>{{_ 'Username'}}</label>
+          <input type="text" name="username" id="username" value="{{user.username}}">
         </div>
-
+ -->
         <div class="field">
           <label>{{_ 'Name'}}</label>
           <input type="text" name="name" id="name" value="{{user.name}}" >
@@ -22,11 +22,11 @@
           <label for="fruit">{{_ 'Gender'}}:</label>
           <div class="field">
             <div class="ui radio checkbox">
-              <input type="radio" name="gender" value="male" data-toggle="radio" {{setChecked 'male' user.gender}}/>
+              <input type="radio" name="gender" value="male" data-toggle="radio" {{setChecked 'male' user.profile.gender}}/>
               <label>{{_ 'Male'}}</label>
             </div>
             <div class="ui radio checkbox">
-              <input type="radio" name="gender" value="female" data-toggle="radio" {{setChecked 'female' user.gender}}/>
+              <input type="radio" name="gender" value="female" data-toggle="radio" {{setChecked 'female' user.profile.gender}}/>
               <label>{{_ 'Female'}}</label>
             </div>
           </div>
@@ -34,14 +34,24 @@
 
         <div class="field">
           <label>{{_ 'Location'}}</label>
-          <input type="text" name="location" id="location" value="{{user.location}}">
+          <input type="text" name="location" id="location" value="{{user.profile.location}}">
         </div>
 
         <div class="field">
           <label>{{_ 'Website'}}</label>
-          <input type="text" name="website" id="website" value="{{user.website}}">
+          <input type="text" name="website" id="website" value="{{user.profile.website}}">
         </div>
          -->
+        <div class="field">
+          <label for="language">{{_ "Language"}}</label>
+          <div>
+            <select id="language" class="required">
+              {{#each languages}}
+              <option value="{{key}}" selected="{{userLanguage key}}" dir="auto">{{name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
         <div class="field">
           <label>{{_ 'Gravatar'}}</label>
           <img src="{{getGravatarURL user 100}}" width="100" height="100" class="profile"/>

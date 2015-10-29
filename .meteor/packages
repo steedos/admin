@@ -7,8 +7,13 @@ accounts-password
 accounts-google
 accounts-facebook
 service-configuration
+coffeescript
+
+underscorestring:underscore.string
+momentjs:moment
 
 semantic:ui
+steedos:lib
 steedos:useraccounts-core
 steedos:useraccounts-semantic-ui
 steedos:useraccounts-flow-routing
@@ -21,7 +26,6 @@ mongo
 blaze-html-templates
 session
 jquery
-coffeescript
 tracker
 logging
 reload
