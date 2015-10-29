@@ -16,8 +16,8 @@ Template.profile.helpers
 			return TimezonePicker.detectedZone()
 
 	userLanguage: (key) ->
-		if Meteor.user()?.profile?.language?
-			return Meteor.user().profile.language is key
+		if Session.get("language")
+			return Session.get("language") is key
 		else
 			return defaultUserLanguage() is key
 
@@ -73,6 +73,7 @@ Template.profile.onCreated ->
 
 		data.profile.language = selectedLanguage
 		if Meteor.user()?.profile?.language? isnt selectedLanguage
+			Session.set("language", selectedLanguage)
 			reload = true
 
 		# if _.trim $('#username').val()
