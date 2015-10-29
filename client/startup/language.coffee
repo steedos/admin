@@ -13,6 +13,13 @@ Meteor.startup ->
 	loadedLaguages = []
 
 	setLanguage = (language) ->
+		if language == "en-us"
+			language = "en"
+		if language == "zh-cn"
+			language = "zh-CN"
+
+		Session.set("language", language)
+
 		if loadedLaguages.indexOf(language) > -1
 			return
 
@@ -27,13 +34,11 @@ Meteor.startup ->
 				moment.locale(language)
 
 	Tracker.autorun (c) ->
-		if Meteor.user()?.profile?.language
+		if Meteor.user()?locale
 			c.stop()
-			Session.set("language", Meteor.user()?.profile?.language)
+			setLanguage Meteor.user().locale
 
-			setLanguage Meteor.user()?.profile?.language
-
-	userLanguage = Meteor.user()?.profile?.language
+	userLanguage = Meteor.user()?.locale
 
 	if !userLanguage
 		userLanguage = defaultUserLanguage()

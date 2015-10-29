@@ -98,6 +98,12 @@ Steedos.models.Users = new class extends Steedos.models._Base
 
 		return @update _id, update
 
+	setEmail: (_id, email) ->
+		update =
+			$set: email: email
+
+		return @update _id, update
+
 	setName: (_id, name) ->
 		update =
 			$set:
@@ -105,17 +111,10 @@ Steedos.models.Users = new class extends Steedos.models._Base
 
 		return @update _id, update
 
-	setAvatarOrigin: (_id, origin) ->
+	setAvatar: (_id, avatar) ->
 		update =
 			$set:
-				avatarOrigin: origin
-
-		return @update _id, update
-
-	unsetAvatarOrigin: (_id) ->
-		update =
-			$unset:
-				avatarOrigin: 1
+				avatar: avatar
 
 		return @update _id, update
 
@@ -140,10 +139,17 @@ Steedos.models.Users = new class extends Steedos.models._Base
 
 		return @update _id, update
 
-	setLanguage: (_id, language) ->
+	setLocale: (_id, locale) ->
 		update =
 			$set:
-				language: language
+				locale: locale
+
+		return @update _id, update
+
+	setTimezone: (_id, timezone) ->
+		update =
+			$set:
+				timezone: timezone
 
 		return @update _id, update
 
@@ -178,7 +184,6 @@ Steedos.models.Users = new class extends Steedos.models._Base
 	create: (data) ->
 		user =
 			createdAt: new Date
-			avatarOrigin: 'none'
 
 		_.extend user, data
 

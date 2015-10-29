@@ -10,8 +10,8 @@ Template.profile.helpers
 		return _.sortBy(result, 'key')
 
 	timezone: ->
-		if Meteor.user()?.profile?.timezone?
-			return Meteor.user().profile.timezone
+		if Meteor.user()?.timezone?
+			return Meteor.user().timezone
 		else
 			return TimezonePicker.detectedZone()
 
@@ -29,7 +29,7 @@ Template.profile.helpers
 
 	getGravatarURL: (user, size) ->
 		if (Meteor.user())
-			return Meteor.user().profile.avatar
+			return Meteor.user().avatar
 
 Template.nav.onRendered ->
 
@@ -71,8 +71,8 @@ Template.profile.onCreated ->
 
 		selectedLanguage = $('#language').val()
 
-		data.profile.language = selectedLanguage
-		if Meteor.user()?.profile?.language? isnt selectedLanguage
+		data.language = selectedLanguage
+		if Session.get("language") isnt selectedLanguage
 			Session.set("language", selectedLanguage)
 			reload = true
 
@@ -82,8 +82,11 @@ Template.profile.onCreated ->
 		if _.trim $('#name').val()
 			data.name = _.trim $('#name').val()
 
+		if _.trim $('#email').val()
+			data.email = _.trim $('#email').val()
+
 		if $('select[name=pickedTimezone]').val()
-			data.profile.timezone = $('select[name=pickedTimezone]').val()
+			data.timezone = $('select[name=pickedTimezone]').val()
 
 		Meteor.call 'saveUserProfile', data, (error, results) ->
 			if results

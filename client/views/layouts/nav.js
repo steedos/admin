@@ -21,8 +21,7 @@ Template.nav.helpers({
 
         avatar: function(){
                 if (Meteor.user())
-                        if (Meteor.user().profile)
-                                return Meteor.user().profile.avatar
+                    return Meteor.user().avatar
         }
 })
 
