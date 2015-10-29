@@ -9,8 +9,17 @@ Template.profile.helpers
 			result.push _.extend(language, { key: key })
 		return _.sortBy(result, 'key')
 
+	timezone: ->
+		if Meteor.user()?.profile?.timezone?
+			return Meteor.user().profile.timezone
+		else
+			return TimezonePicker.detectedZone()
+
 	userLanguage: (key) ->
-		return (localStorage.getItem('userLanguage') or defaultUserLanguage())?.split('-').shift().toLowerCase() is key
+		if Meteor.user()?.profile?.language?
+			return Meteor.user().profile.language is key
+		else
+			return defaultUserLanguage() is key
 
 	setChecked: (value, currentValue) ->
 	    if(value == currentValue) 
@@ -21,6 +30,10 @@ Template.profile.helpers
 	getGravatarURL: (user, size) ->
 		if (Meteor.user())
 			return Meteor.user().profile.avatar
+
+Template.nav.onRendered ->
+
+    $('select.dropdown').dropdown()
 
 Template.profile.onCreated ->
 
@@ -54,13 +67,12 @@ Template.profile.onCreated ->
 	@saveProfile = ->
 		instance = @
 		reload = false
-		data = {}
+		data = { profile: {} }
 
 		selectedLanguage = $('#language').val()
 
-		if localStorage.getItem('userLanguage') isnt selectedLanguage
-			localStorage.setItem 'userLanguage', selectedLanguage
-			data.language = selectedLanguage
+		data.profile.language = selectedLanguage
+		if Meteor.user()?.profile?.language? isnt selectedLanguage
 			reload = true
 
 		# if _.trim $('#username').val()
@@ -68,6 +80,9 @@ Template.profile.onCreated ->
 
 		if _.trim $('#name').val()
 			data.name = _.trim $('#name').val()
+
+		if $('select[name=pickedTimezone]').val()
+			data.profile.timezone = $('select[name=pickedTimezone]').val()
 
 		Meteor.call 'saveUserProfile', data, (error, results) ->
 			if results

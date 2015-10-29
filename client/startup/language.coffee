@@ -18,7 +18,7 @@ Meteor.startup ->
 
 		loadedLaguages.push language
 
-		language = language.split('-').shift()
+		#language = language.split('-').shift()
 		TAPi18n.setLanguage(language)
 
 		language = language.toLowerCase()
@@ -27,14 +27,15 @@ Meteor.startup ->
 				Function(localeFn)()
 				moment.locale(language)
 
-	Tracker.autorun (c) ->
-		if Meteor.user()?.language?
-			c.stop()
+	# Tracker.autorun (c) ->
+	# 	if Meteor.user().language
+	# 		c.stop()
 
-			localStorage.setItem("userLanguage", Meteor.user().language)
-			setLanguage Meteor.user().language
+	# 		setLanguage Meteor.user().language
 
-	userLanguage = localStorage.getItem("userLanguage")
-	userLanguage ?= defaultUserLanguage()
+	userLanguage = Meteor.user().profile.language
+	
+	if !userLanguage
+		userLanguage = defaultUserLanguage()
 
 	setLanguage userLanguage

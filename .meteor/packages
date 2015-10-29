@@ -14,6 +14,7 @@ momentjs:moment
 
 semantic:ui
 steedos:lib
+steedos:timezone-picker
 steedos:useraccounts-core
 steedos:useraccounts-semantic-ui
 steedos:useraccounts-flow-routing

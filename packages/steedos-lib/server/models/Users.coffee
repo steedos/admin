@@ -150,14 +150,14 @@ Steedos.models.Users = new class extends Steedos.models._Base
 	setProfile: (_id, profile) ->
 		update =
 			$set:
-				"settings.profile": profile
+				"profile": profile
 
 		return @update _id, update
 
 	setPreferences: (_id, preferences) ->
 		update =
 			$set:
-				"settings.preferences": preferences
+				"settings": preferences
 
 		return @update _id, update
 

@@ -78,6 +78,8 @@ monbro:mongodb-mapreduce-aggregation@1.0.1
 mongo@1.1.3
 mongo-id@1.0.1
 mongo-livedata@1.0.9
+mrt:moment@2.8.1
+mrt:moment-timezone@0.2.1
 natestrauser:animate-css@3.4.0
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
@@ -105,6 +107,7 @@ spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
 steedos:lib@0.0.1
+steedos:timezone-picker@0.1.2
 steedos:useraccounts-core@1.12.4
 steedos:useraccounts-flow-routing@1.12.4
 steedos:useraccounts-semantic-ui@1.12.4

@@ -10,8 +10,8 @@ Meteor.methods
 			if settings.name?
 				Steedos.models.Users.setName Meteor.userId(), settings.name
 
-			profile = {}
-
-			Steedos.models.Users.setProfile Meteor.userId(), profile
+			if settings.profile
+				profile = settings.profile
+				Steedos.models.Users.setProfile Meteor.userId(), profile
 
 			return true
