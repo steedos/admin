@@ -17,6 +17,12 @@ Meteor.methods
 			if settings.name?
 				Steedos.models.Users.setName Meteor.userId(), settings.name
 
+			if settings.company?
+				Steedos.models.Users.setCompany Meteor.userId(), settings.company
+
+			if settings.mobile?
+				Steedos.models.Users.setMobile Meteor.userId(), settings.mobile
+
 			if settings.email?
 				Steedos.models.Users.setEmail Meteor.userId(), settings.email
 

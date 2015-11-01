@@ -43,3 +43,5 @@ natestrauser:animate-css
 cfs:standard-packages
 cfs:filesystem
 chrismbeckett:toastr
+nimble:restivus
+percolate:migrations

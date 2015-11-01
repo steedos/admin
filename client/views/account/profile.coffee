@@ -37,32 +37,6 @@ Template.nav.onRendered ->
 
 Template.profile.onCreated ->
 
-	@clearForm = ->
-		@find('#oldPassword').value = ''
-		@find('#password').value = ''
-		@find('#confirmPassword').value = ''
-
-	@changePassword = (callback) ->
-		instance = @
-
-		oldPassword = $('#oldPassword').val()
-		password = $('#password').val()
-		confirmPassword = $('#confirmPassword').val()
-
-		if !oldPassword or !password or !confirmPassword
-			toastr.warning t('Old_and_new_password_required')
-
-		else if password == confirmPassword
-			Accounts.changePassword oldPassword, password, (error) ->
-				if error
-					toastr.error t('Incorrect_Password')
-				else
-					toastr.success t('Password_changed_successfully')
-					instance.clearForm();
-					return callback()
-		else
-			toastr.error t('Confirm_Password_Not_Match')
-
 
 	@saveProfile = ->
 		instance = @
@@ -81,6 +55,12 @@ Template.profile.onCreated ->
 
 		if _.trim $('#name').val()
 			data.name = _.trim $('#name').val()
+
+		if _.trim $('#company').val()
+			data.company = _.trim $('#company').val()
+
+		if _.trim $('#mobile').val()
+			data.mobile = _.trim $('#mobile').val()
 
 		if _.trim $('#email').val()
 			data.email = _.trim $('#email').val()
@@ -106,7 +86,3 @@ Template.profile.onCreated ->
 Template.profile.events
 	'click #saveProfile': (e, t) ->
 		t.saveProfile()
-
-	'click #changePassword': (e, t) ->
-		t.changePassword()
-

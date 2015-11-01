@@ -111,6 +111,20 @@ Steedos.models.Users = new class extends Steedos.models._Base
 
 		return @update _id, update
 
+	setCompany: (_id, company) ->
+		update =
+			$set:
+				company: company
+
+		return @update _id, update
+
+	setMobile: (_id, mobile) ->
+		update =
+			$set:
+				mobile: mobile
+
+		return @update _id, update
+
 	setAvatar: (_id, avatar) ->
 		update =
 			$set:

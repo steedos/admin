@@ -81,12 +81,14 @@ mongo-livedata@1.0.9
 mrt:moment@2.8.1
 mrt:moment-timezone@0.2.1
 natestrauser:animate-css@3.4.0
+nimble:restivus@0.8.4
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 oauth@1.1.6
 oauth2@1.1.5
 observe-sequence@1.0.7
 ordered-dict@1.0.4
+percolate:migrations@0.9.6
 promise@0.5.1
 raix:eventemitter@0.1.3
 raix:handlebar-helpers@0.2.5
@@ -102,6 +104,7 @@ semantic:ui-data@2.1.4_5
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
+simple:json-routes@1.0.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
