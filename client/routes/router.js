@@ -24,9 +24,7 @@ FlowRouter.route('/account/profile', {
   name: "profile",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {
-        footer: "footer",
         main: "profile",
-        nav: "nav",
       });
   }
 });
@@ -36,19 +34,15 @@ FlowRouter.route('/account/password', {
   name: "password",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {
-        footer: "footer",
         main: "password",
-        nav: "nav",
       });
   }
 });
 
 FlowRouter.notFound = {
   action: function() {
-    BlazeLayout.render('masterLayout', {
-      footer: "footer",
+    BlazeLayout.render('loginLayout', {
       main: "pageNotFound",
-      nav: "nav",
     });
   }
 };

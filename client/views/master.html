@@ -1,0 +1,21 @@
+<template name="masterLayout">
+
+	{{#unless logged}}
+	    <div class="full-page">
+	    	<div class="background"></div>
+	    	{{> loginNav}}
+	    	<div id="content">
+	        	{{> Template.dynamic template=main}}
+	    	</div>
+	    	{{> loginFooter}}
+	    </div>
+	{{else}}
+	    <div class="full-page">
+	    	{{> dockLeft}}
+	    	<div id="content">
+	        	{{> Template.dynamic template=main}}
+	    	</div>
+	    </div>
+	{{/unless}}
+	
+</template>

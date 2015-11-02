@@ -1,6 +1,6 @@
-<template name="nav">
+<template name="dockLeft">
 
-        <div class="ui fixed inverted borderless menu" id="topbar">
+        <div class="ui fixed inverted borderless vertical menu" id="dock">
           &nbsp;
           <a class="ui header item" href="/">
             {{_ 'Steedos Cloud'}}
@@ -8,10 +8,8 @@
 
           <div class="right small menu">
               
-              <a class="ui {{#if user}} hidden{{/if}} horizontally fitted item" href="/sign-in">{{_ 'Log in'}}</a>
-              <a class="ui {{#if user}} hidden{{/if}} horizontally fitted item" href="/sign-up">{{_ 'Sign up'}}</a>
 
-              <div class="ui horizontally fitted dropdown item {{#unless user}} hidden{{/unless}}">
+              <div class="ui horizontally fitted dropdown item">
                 <img class="ui avatar image" src="{{avatar}}"/>
                 <span>{{displayName}}</span>
                 <i class="dropdown icon"></i>
@@ -20,7 +18,7 @@
                     <a class="item" href="/logout">{{_ 'Logout'}}</a>
                 </div>
               </div>
-              <a class="ui horizontally fitted item" href="https://www.steedos.com/us/help/" target="_blank"><i class="icon help circle"></i></a>
+              <a class="ui horizontally fitted item" href="https://www.steedos.com/us/help/" target="_blank"><i class="icon large help circle" style="margin:0px"></i></a>
           </div>
         </div>
 

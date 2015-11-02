@@ -1,4 +1,4 @@
-Template.nav.helpers({
+Template.dockLeft.helpers({
         
         "user": function(){
 
@@ -25,7 +25,7 @@ Template.nav.helpers({
         }
 })
 
-Template.nav.onRendered(function(){
+Template.dockLeft.onRendered(function(){
     
         $('.ui.menu .ui.dropdown').dropdown({
                 on: 'hover'
