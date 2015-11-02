@@ -31,7 +31,7 @@ Template.profile.helpers
 		if (Meteor.user())
 			return Meteor.user().avatar
 
-Template.nav.onRendered ->
+Template.profile.onRendered ->
 
     $('select.dropdown').dropdown()
 

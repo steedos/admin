@@ -8,17 +8,21 @@ FlowRouter.route( '/logout', {
 FlowRouter.route('/', {
   name: "home",
   action: function(params, queryParams) {
-  	//if (Meteor.user())
-	    BlazeLayout.render('masterLayout', {
-	      footer: "footer",
-	      main: "home",
-	      nav: "nav",
-	    });
-  	//else 
-  	// 	FlowRouter.go("/sign-in");
+  	if (Meteor.userId())
+      FlowRouter.go("/launchpad/");
+  	else 
+  	 	FlowRouter.go("/sign-in");
   }
 });
 
+FlowRouter.route('/launchpad', {
+  name: "launchpad",
+  action: function(params, queryParams) {
+      BlazeLayout.render('masterLayout', {
+        main: "launchpad",
+      });
+  }
+});
 
 FlowRouter.route('/account/profile', {
   name: "profile",
@@ -29,12 +33,29 @@ FlowRouter.route('/account/profile', {
   }
 });
 
-
 FlowRouter.route('/account/password', {
   name: "password",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {
         main: "password",
+      });
+  }
+});
+
+FlowRouter.route('/account/linked', {
+  name: "linked",
+  action: function(params, queryParams) {
+      BlazeLayout.render('masterLayout', {
+        main: "linked",
+      });
+  }
+});
+
+FlowRouter.route('/app/chat', {
+  name: "apps",
+  action: function(params, queryParams) {
+      BlazeLayout.render('masterLayout', {
+        main: "app",
       });
   }
 });

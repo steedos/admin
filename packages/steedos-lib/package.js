@@ -5,6 +5,10 @@ Package.describe({
 	git: ''
 });
 
+// Npm.depends({
+//   "formidable":"1.0.17"
+// });
+
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
 
@@ -17,7 +21,9 @@ Package.onUse(function(api) {
 	api.use('underscore');
 	api.use('underscorestring:underscore.string');
 	api.use('monbro:mongodb-mapreduce-aggregation@1.0.1');
+	api.use('nimble:restivus');
 
+	api.use(['webapp'], 'server');
 	// COMMON
 	api.addFiles('lib/core.coffee');
 
@@ -25,6 +31,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/models/_Base.coffee', 'server');
 	api.addFiles('server/models/Users.coffee', 'server');
 
+	api.addFiles('server/restapi.coffee');
 
 	// EXPORT
 	api.export('Steedos');

@@ -1,4 +1,4 @@
-<template name="home">
+<template name="launchpad">
   <style>
   .apps .column {
     text-align:center;
@@ -12,33 +12,33 @@
 
   <div class="ui container">
 
-    <div class="apps ui six column doubling center grid animated fadeIn zoomIn">
+    <div class="apps ui five column doubling center grid animated fadeIn zoomIn">
       <div class="column">
-          <a href="https://www.steedos.com/applications/workflow/" target="_blank">
+          <a href="/app/workflow">
             <img class="ui centered image" src="/apps/workflow/AppIcon76x76.png"/>
-            <span class="ui row">Workflow</span>
+            <span class="ui row">{{_ "Workflow"}}</span>
           </a>
       </div>
       <div class="column">
-          <a href="https://chat.steedos.com" target="_blank">
+          <a href="/app/chat">
             <img class="ui centered image" src="/apps/chat/AppIcon76x76.png"/>
-            <span>Chat</span>
+            <span>{{_ "Chat"}}</span>
           </a>
       </div>
       <div class="column">
-          <a href="https://drive.steedos.com/" target="_blank">
+          <a href="https://drive.steedos.com/">
             <img class="ui centered image" src="/apps/drive/AppIcon76x76.png"/>
             <span>Drive</span>
           </a>
       </div>
       <div class="column">
-          <a href="https://otask.steedos.com" target="_blank">
+          <a href="https://otask.steedos.com">
             <img class="ui centered image" src="/apps/otask/AppIcon76x76.png"/>
             <span>oTask</span>
           </a>
       </div>
       <div class="column">
-          <a href="https://mail.steedos.com" target="_blank">
+          <a href="https://mail.steedos.com">
             <img class="ui centered image" src="/apps/mail/AppIcon76x76.png"/>
             <span>Email</span>
           </a>

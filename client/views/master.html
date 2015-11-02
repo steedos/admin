@@ -1,18 +1,18 @@
 <template name="masterLayout">
 
 	{{#unless logged}}
-	    <div class="full-page">
+	    <div class="full-page login">
 	    	<div class="background"></div>
 	    	{{> loginNav}}
-	    	<div id="content">
+	    	<div class="loginContent">
 	        	{{> Template.dynamic template=main}}
 	    	</div>
 	    	{{> loginFooter}}
 	    </div>
 	{{else}}
-	    <div class="full-page">
+	    <div class="full-page logged">
 	    	{{> dockLeft}}
-	    	<div id="content">
+	    	<div class="userContent">
 	        	{{> Template.dynamic template=main}}
 	    	</div>
 	    </div>
