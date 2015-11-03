@@ -45,3 +45,5 @@ cfs:filesystem
 chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
+aldeed:autoform
+aldeed:tabular
