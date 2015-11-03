@@ -2,79 +2,65 @@
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-               <h3 class='font-size-h3'>{{instance.NO}}</h3>
+               <h3 class='font-size-h3'>{{instance.name}}</h3>
             </div>
         </div>
     </nav>
     <div class="container">
         {{#autoForm id='instanceform' schema=fields type="method" meteormethod="demoSubmission"}}
-            
             <div class="row">
-
                 {{#each steedos_form.fields}}
-                    
-                        <!--table2-->
-                        {{#if equals this.type 'table'}}
-                            <div class="col-md-12">
-                            <!-- multiple=true afFieldInput-->
-                            
-                            <!-- {{this.code}}
-                            {{# afEachArrayItem name=this.code}}{{this.current.name}}
-                                {{> afFormGroup name=this.current.name }}
-                            {{/afEachArrayItem}} -->
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">{{this.code}}</div>
-                                    <!-- <div class="panel-body"> -->
-                                        <table class="table table-bordered table-condensed">
-                                            <thead>
-                                              <tr>
-                                                {{#each this.fields}}
-                                                    <td><label class="control-label">{{this.code}}</label></td>
-                                                {{/each}}
-                                                <td style="width: 70px">
-                                                    
-                                                </td>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- <tr>
-                                                    {{#each this.sFields}}
-                                                    <td>
-                                                        {{> afFormGroup name=this.code}}
-                                                    </td>
-                                                    {{/each}}
-                                                    <td style="width: 70px">
-                                                        <button type="button" class="btn btn-primary">增加</button>
-                                                    <button type="button" class="btn btn-success">修改</button>
-                                                    </td>
-                                                </tr> -->
+                    {{#if equals this.type 'table'}}
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{{this.code}}</div>
+                            <!-- <div class="panel-body"> -->
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                        {{#each this.fields}}
+                                            <td><label class="control-label">{{this.code}}</label></td>
+                                        {{/each}}
+                                            <td style="width: 70px">
+                                            
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr>
+                                            {{#each this.sFields}}
+                                            <td>
+                                                {{> afFormGroup name=this.code}}
+                                            </td>
+                                            {{/each}}
+                                            <td style="width: 70px">
+                                                <button type="button" class="btn btn-primary">增加</button>
+                                            <button type="button" class="btn btn-success">修改</button>
+                                            </td>
+                                        </tr> -->
 
-                                                <!-- {{#each value this.code}}
-                                                <tr>
-                                                    {{#each this}}
-                                                        <td>{{this}}</td>
-                                                    {{/each}}
-                                                    <td style="width: 70px">
-                                                        <button type="button" class="btn btn-danger">删除</button>
-                                                    </td>
-                                                </tr>
-                                                {{/each}} -->
-                                                
-                                            </tbody>
-                                        </table> 
-                                    <!-- </div> -->
-                                </div><!-- 
-                                <p class="bg-info">afArrayField,未找到autoform自动生产table的控件</p>
-                                {{> afArrayField name=this.code }} -->
+                                        {{#each subformValue this.code}}
+                                        <tr>
+                                            {{#each this}}
+                                                <td>{{this}}</td>
+                                            {{/each}}
+                                            <td style="width: 70px">
+                                                <button type="button" class="btn btn-danger">删除</button>
+                                            </td>
+                                        </tr>
+                                        {{/each}}
+                                        
+                                    </tbody>
+                                </table> 
+                            <!-- </div> -->
                             </div>
-                        {{else}}
-                            <div class="col-md-6">
-                            <!-- multiple=true afFieldInput type="select2"-->
-                            {{> afFormGroup name=this.code}}
-                            </div>
-                        {{/if}}
+                        </div>
+                    {{else}}
+                        <div class="col-md-6">
+                        {{> afFormGroup name=this.code}}
+                        </div>
+                    {{/if}}
                     
                 {{/each}}
             </div>
