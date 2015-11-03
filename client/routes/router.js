@@ -60,6 +60,15 @@ FlowRouter.route('/app/chat', {
   }
 });
 
+FlowRouter.route('/flow/form', {
+  name: "instanceform",
+  action: function(params, queryParams) {
+      BlazeLayout.render('masterLayout', {
+        main: "instanceform",
+      });
+  }
+});
+
 FlowRouter.notFound = {
   action: function() {
     BlazeLayout.render('loginLayout', {
