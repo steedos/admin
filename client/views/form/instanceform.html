@@ -14,7 +14,10 @@
                     {{#if equals this.type 'table'}}
                         <div class="col-md-12">
                             <div class="panel panel-default">
-                                <div class="panel-heading">{{this.code}}</div>
+                                <div class="panel-heading">
+                                    <span class="panel-title">{{this.code}}</span>
+                                    <span class="panel-controls"><i class="write icon"></i></span>
+                                </div>
                             <!-- <div class="panel-body"> -->
                                 <table class="table table-bordered table-condensed">
                                     <thead>
@@ -22,32 +25,14 @@
                                         {{#each this.fields}}
                                             <td><label class="control-label">{{this.code}}</label></td>
                                         {{/each}}
-                                            <td style="width: 70px">
-                                            
-                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr>
-                                            {{#each this.sFields}}
-                                            <td>
-                                                {{> afFormGroup name=this.code}}
-                                            </td>
-                                            {{/each}}
-                                            <td style="width: 70px">
-                                                <button type="button" class="btn btn-primary">增加</button>
-                                            <button type="button" class="btn btn-success">修改</button>
-                                            </td>
-                                        </tr> -->
-
                                         {{#each subformValue this.code}}
                                         <tr>
                                             {{#each this}}
                                                 <td>{{this}}</td>
                                             {{/each}}
-                                            <td style="width: 70px">
-                                                <button type="button" class="btn btn-danger">删除</button>
-                                            </td>
                                         </tr>
                                         {{/each}}
                                         

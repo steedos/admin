@@ -89,70 +89,9 @@
     console.log(JSON.stringify(afFields));
     return afFields;
   };
-
-  var values = {
-    '请假类别':'年假',
-    '请假天数':'5.5',
-    '报销明细':[
-      {'金额':1024,'dd':'上海'},
-      {'金额':2048,'dd':'西安'}
-    ],
-    
-  };
+  
   var fields = sFToAF(steedos_form,instance);
-/*
-    var fields = {
-          '请假类别': {
-            type: String,
-            optional: true,
-            label:'请假类别',
-            autoform: {
-              type: "select2",
-              value: '年假',
-              options: function () {
-                return [
-                  {label: "事假", value: '事假'},
-                  {label: "年假", value: '年假'},
-                  {label: "调休", value: '调休'}
-                ];
-              }
-            }
-          },
-          '请假天数': {
-            type: String,
-            label:'请假天数',
-            autoform: {
-              value:0.5,
-              afFieldInput: {
-                type: "number",
-                min:0.5,
-                step:0.5
-              }
-            }
-          },
-          '报销明细': {
-            type: Array,
-            optional: true,
-            minCount: 0,
-            maxCount: 5
-          },
-          '报销明细.$': {
-            type: Object,
-            optional: true
-          },
-          '报销明细.$.金额': {
-            type: Number,
-            label: '金额',
-            optional: true
-          },
-          '报销明细.$.地点': {
-            type: String,
-            label: '地点',
-            optional: true
-          }
-          
-        };
-*/
+
   Template.instanceform.helpers({
     
     steedos_form: steedos_form,
@@ -174,8 +113,6 @@
         rev_sub.push(sfv);
       }
       return rev_sub;
-      //return fields[code].autoform.value;
-      //return [[111,'上海','上海','上海','上海','上海','上海','上海','上海'],[222,'西安','西安','西安','西安','西安','西安','西安','西安']];
     },
     getValue: function(value , code){
 
