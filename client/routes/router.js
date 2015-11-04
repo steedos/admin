@@ -51,11 +51,11 @@ FlowRouter.route('/account/linked', {
   }
 });
 
-FlowRouter.route('/app/chat', {
-  name: "apps",
+FlowRouter.route('/app/:app_name', {
+  name: "appFrame",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {
-        main: "app",
+        main: "appFrame",
       });
   }
 });

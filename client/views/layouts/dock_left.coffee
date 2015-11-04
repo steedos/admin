@@ -3,6 +3,8 @@ Template.dockLeft.helpers
 	user: ->
 		return Meteor.user();
 
+	userApps: ->
+		return Apps.find();
 
 	displayName: ->
 

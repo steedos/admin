@@ -11,8 +11,9 @@
 		<div class="item">
 			<div class="header">{{_ "Apps"}}</div>
 			<div class="menu">
-				<a class="item" id="app-workflow" href="/app/workflow">{{_ "Workflow"}}</a>
-				<a class="item" id="app-chat" href="/app/chat">{{_ "Chat"}}</a>
+				{{#each userApps}}
+				<a class="item" id="app-{{name}}" href="/app/{{name}}">{{_ description}}</a>
+				{{/each}}
 			</div>
 		</div>
 

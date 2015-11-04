@@ -1,8 +1,5 @@
-# Meteor.publish 'apps', ->
+Meteor.publish 'apps', ->
 
-# 	unless this.userId
-# 		return this.ready()
+ 	console.log '[publish] apps'
 
-# 	console.log '[publish] apps'
-
-# 	return Apps.find()
+ 	return Apps.find()

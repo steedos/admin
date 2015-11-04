@@ -1,5 +1,7 @@
 @Apps = new Meteor.Collection 'apps'
 
+Meteor.isClient && Meteor.subscribe "apps"
+
 @Apps.attachSchema(new SimpleSchema({
   name: {
     type: String,
@@ -9,6 +11,11 @@
   description: {
     type: String,
     label: "Description",
+    max: 200
+  },
+  url: {
+    type: String,
+    label: "URL",
     max: 200
   },
   iconURL: {
