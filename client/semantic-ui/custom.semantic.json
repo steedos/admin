@@ -10,7 +10,7 @@
     "colorize": true,
     "comment": false,
     "container": true,
-    "dimmer": false,
+    "dimmer": true,
     "divider": true,
     "dropdown": true,
     "embed": true,

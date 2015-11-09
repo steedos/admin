@@ -46,4 +46,5 @@ chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
 aldeed:autoform
-aldeed:tabular
+steedos:datatables
+ongoworks:security

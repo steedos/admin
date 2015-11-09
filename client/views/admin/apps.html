@@ -1,27 +1,17 @@
 <template name="adminApps">
 	<div class="ui container segment">
 		<h1>{{_ "Apps"}}</h1>
-		<!--
-		<table class="ui celled table">
-			<thead>
-				<tr>
-					<th width="34%">{{_ "App Name"}}</th>
-					<th width="33%">{{_ "App Description"}}</th>
-					<th width="33%">{{_ "App URL"}}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{{#each apps}}
-				<tr class="app-info" data-id="{{_id}}">
-					<td>{{name}}</td>
-					<td>{{desription}}</td>
-					<td>{{url}}</td>
-				</tr>
-				{{/each}}
-			</tbody>
-		</table>
-		-->
-		  {{> tabular table=TabularTables.Apps class="ui celled table table-striped table-bordered table-condensed"}}
+		<button id="tableAdd">{{_ "Add"}}</button>
+		<button id="tableEdit">{{_ "Edit"}}</button>
+		<button id="tableDelete">{{_ "Delete"}}</button>
+			{{> tabular table=TabularTables.Apps class="ui celled table table-striped table-bordered table-condensed"}}
 
+	</div>
+	<div class="ui small modal" id="appAdd">
+  		<i class="close icon"></i>
+		<div class="header">Add App</div>
+		<div class="content">
+			{{> quickForm collection="Apps" id="insertAppForm" type="insert"}}
+		</div>
 	</div>
 </template>

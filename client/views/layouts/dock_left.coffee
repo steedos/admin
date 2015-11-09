@@ -35,8 +35,3 @@ Template.dockLeft.events
 
 	"click .ui.menu a.item": ->
 		$(this).addClass('active').siblings().removeClass('active')
-
-	"click #app-chat": ->
-		FlowRouter.go("/app/chat");
-
-

@@ -1,5 +1,7 @@
 @Apps = new Meteor.Collection 'apps'
 
+@Apps.permit(['insert', 'update', 'remove']).apply();
+
 Meteor.isClient && Meteor.subscribe "apps"
 
 @Apps.attachSchema(new SimpleSchema({
@@ -34,6 +36,11 @@ Meteor.isClient && Template.registerHelper('TabularTables', TabularTables);
 @TabularTables.Apps = new Tabular.Table({
   name: "Apps",
   collection: Apps,
+  select: true,
+  lengthChange: false,
+  buttons: [
+      'copy', 'excel', 'pdf'
+  ],
   columns: [
     {data: "name", title: "Name"},
     {data: "description", title: "Description"},
