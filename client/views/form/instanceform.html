@@ -8,7 +8,7 @@
         </div>
     </nav>
     <div class="container">
-        {{#autoForm id='instanceform' schema=fields type="method" doc=doc meteormethod="demoSubmission"}}
+        {{#autoForm id='instanceform' schema=fields type="method" doc=doc meteormethod='instance'}}
             <div class="row">
                 {{#each steedos_form.fields}}
                     {{#if equals this.type 'table'}}
@@ -16,9 +16,11 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <span class="panel-title">{{this.code}}</span>
+                                    {{#if equals this.permission 'editable'}}
                                     <span class="panel-controls">
                                         <!-- Button trigger modal -->
                                         <i class="write icon" id="edit" data-toggle="modal" data-target="#{{this.code}}modal"></i></span>
+                                    {{/if}}
                                 </div>
                             <!-- <div class="panel-body"> -->
                                 <table class="table table-bordered table-condensed">
@@ -42,6 +44,7 @@
                                 </table> 
                             <!-- </div> -->
                             </div>
+                            {{#if equals this.permission 'editable'}}
                             <!-- Modal -->
                             <div class="modal fade" id="{{this.code}}modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                               <div class="modal-dialog" role="document">
@@ -60,6 +63,7 @@
                                 </div>
                               </div>
                             </div>
+                            {{/if}}
                         </div>
                     {{else}}
                         <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
@@ -69,7 +73,7 @@
                     
                 {{/each}}
             </div>
-
+            <button type="submit" id='submit' class="btn btn-primary">Submit</button>
         {{/autoForm}}
     </div>
 
