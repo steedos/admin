@@ -16,7 +16,7 @@
 
       {{#each userApps}}
       <div class="column">
-          <a href="/app/{{name}}">
+          <a href="{{url}}" target="app-{{name}}">
             <img class="ui centered image" src="/apps/{{name}}/AppIcon76x76.png"/>
             <span class="ui row">{{_ description}}</span>
           </a>

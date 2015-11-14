@@ -1,6 +1,6 @@
 FlowRouter.route( '/logout', { 
         name: 'logout', 
-        action: function(){
+        action: function(params, queryParams){
                 AccountsTemplates.logout();
         }
 })
@@ -9,9 +9,9 @@ FlowRouter.route('/', {
   name: "home",
   action: function(params, queryParams) {
   	if (Meteor.userId())
-      FlowRouter.go("/launchpad/");
+      FlowRouter.go("/launchpad", params, queryParams);
   	else 
-  	 	FlowRouter.go("/sign-in");
+  	 	FlowRouter.go("/sign-in", params, queryParams);
   }
 });
 
@@ -51,7 +51,7 @@ FlowRouter.route('/account/linked', {
   }
 });
 
-FlowRouter.route('/app/:app_name', {
+FlowRouter.route('/app-frame/:app_name', {
   name: "appFrame",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {

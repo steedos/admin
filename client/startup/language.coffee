@@ -4,19 +4,20 @@ Meteor.startup ->
 
 	@defaultUserLanguage = ->
 		lng = window.navigator.userLanguage || window.navigator.language || 'en'
-		# Fix browsers having all-lowercase language settings eg. pt-br, en-us
-		re = /([a-z]{2}-)([a-z]{2})/
-		if re.test lng
-			lng = lng.replace re, (match, parts...) -> return parts[0] + parts[1].toUpperCase()
-		return lng
+		if lng.indexOf("zh") >=0
+			return "zh-CN"
+		else
+			return "en"
 		
 	loadedLaguages = []
 
+	# Only support [en, zh-CN]
 	setLanguage = (language) ->
-		if language == "en-us"
-			language = "en"
+
 		if language == "zh-cn"
 			language = "zh-CN"
+		if language == "en-us"
+			language = "en"
 
 		Session.set("language", language)
 
@@ -27,6 +28,11 @@ Meteor.startup ->
 
 		TAPi18n.setLanguage(language)
 
+		if language == "zh-CN"
+			T9n.setLanguage "zh_cn"
+		else
+			T9n.setLanguage "en"
+
 		language = language.toLowerCase()
 		if language isnt 'en'
 			Meteor.call 'loadLocale', language, (err, localeFn) ->
@@ -34,13 +40,11 @@ Meteor.startup ->
 				moment.locale(language)
 
 	Tracker.autorun (c) ->
-		if Meteor.user()?locale
-			c.stop()
-			setLanguage Meteor.user().locale
+		if Meteor.user()
+			if Meteor.user().locale
+				setLanguage Meteor.user().locale
+				c.stop()
 
-	userLanguage = Meteor.user()?.locale
-
-	if !userLanguage
-		userLanguage = defaultUserLanguage()
+	userLanguage = defaultUserLanguage()
 
 	setLanguage userLanguage

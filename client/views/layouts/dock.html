@@ -1,0 +1,28 @@
+<template name="dock">
+
+	<div class="ui fixed inverted borderless menu" id="dock">
+		
+		<div class="item">
+		  <a class="ui inverted header" href="/">
+			{{_ 'Steedos Cloud'}}
+		  </a>
+		</div>
+
+
+
+		<div class="right menu">
+			<div class="ui dropdown item">
+				<img class="ui avatar image" src="{{avatar}}"/>
+				<span>{{displayName}}</span>
+				<i class="dropdown icon"></i>
+				<div class="ui menu">
+					<a class="item" href="/account/profile">{{_ 'My Account'}}</a>
+					<a class="item" href="/logout">{{_ 'Logout'}}</a>
+				</div>
+			</div>
+			<a class="ui item" href="https://www.steedos.com/us/help/" target="_blank"><i class="icon large help circle" style="margin:0px"></i></a>
+		</div>
+		
+	</div>
+
+</template>
