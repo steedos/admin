@@ -1,0 +1,80 @@
+<template name="steedos_table">
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title">{{this.code}}</span>
+            {{#if equals this.permission 'editable'}}
+            <span class="panel-controls">
+                <!-- Button trigger modal -->
+                <i class="write icon" id="edit" data-toggle="modal" data-target="#{{this.code}}row"></i>
+            </span>
+            {{/if}}
+        </div>
+    <!-- <div class="panel-body"> -->
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                {{#each this.sfields}}
+                    <td>序</td>
+                    <td><label class="control-label">{{this.code}}</label></td>
+                {{/each}}  
+                <td></td>
+                </tr>
+            </thead>
+            <tbody id='{{this.code}}tbody'>
+                {{#each subformValue this.code}}
+                <tr class="person-row" data-toggle="modal" data-target="#{{this.code}}row">
+                    {{#each this}}
+                        <td>{{this}}</td>
+                    {{/each}}
+                    <td>
+                        <span class="panel-controls">
+                            <!-- Button trigger modal 
+                            <i class="write icon" id="edit" data-toggle="modal" data-target="#{{this.code}}row"></i>-->
+                        </span>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table> 
+    <!-- </div> -->
+    </div>
+    {{#if equals this.permission 'editable'}}
+
+    <div class="modal fade" id="{{this.code}}row" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">编辑子表</h4>
+          </div>
+          <div class="modal-body">
+            {{> afObjectField name=(append 'steedosSubFormObj-' this.code)}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="au-sb-ok" class="btn btn-default" data-dismiss="modal">好</button>
+            <button type="reset" class="btn btn-default">reset form</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal 
+    <div class="modal fade" id="{{this.code}}modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">编辑子表</h4>
+          </div>
+          <div class="modal-body">
+            {{> afArrayField name=this.code}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="au-sb-ok" class="btn btn-default" data-dismiss="modal">好</button>
+            <button type="reset" class="btn btn-default">reset form</button>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    {{/if}}
+</template>

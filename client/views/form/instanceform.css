@@ -27,6 +27,10 @@
     padding: 15px;
 }
 
+textarea {
+    resize: none;
+}
+
 @media (min-width: 768px){
     .container{
         width:760px;

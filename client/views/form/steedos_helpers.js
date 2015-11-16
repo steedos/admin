@@ -26,12 +26,11 @@ Steedos_Helpers.get_subFormValue = function (code, fields, values){
   var rev_sub = new Array();
 
   var sfieldcodes = fields[code].autoform.sfieldcodes;
-  
   for(var i = 0 ; i < subV.length; i++){
     var sfv = new Array();
-    for(f in sfieldcodes){
-      if (subV[i][sfieldcodes[f]])
-        sfv.push(subV[i][sfieldcodes[f]]);
+    for(var j = 0; j < sfieldcodes.length; j++){
+      if (subV[i][sfieldcodes[j]])
+        sfv.push(subV[i][sfieldcodes[j]]);
       else
         sfv.push('');
   

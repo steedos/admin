@@ -13,57 +13,8 @@
                 {{#each steedos_form.fields}}
                     {{#if equals this.type 'table'}}
                         <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <span class="panel-title">{{this.code}}</span>
-                                    {{#if equals this.permission 'editable'}}
-                                    <span class="panel-controls">
-                                        <!-- Button trigger modal -->
-                                        <i class="write icon" id="edit" data-toggle="modal" data-target="#{{this.code}}modal"></i></span>
-                                    {{/if}}
-                                </div>
-                            <!-- <div class="panel-body"> -->
-                                <table class="table table-bordered table-condensed">
-                                    <thead>
-                                        <tr>
-                                        {{#each this.sfields}}
-                                            <td><label class="control-label">{{this.code}}</label></td>
-                                        {{/each}}
-                                        </tr>
-                                    </thead>
-                                    <tbody id='{{this.code}}tbody'>
-                                        {{#each subformValue this.code}}
-                                        <tr>
-                                            {{#each this}}
-                                                <td>{{this}}</td>
-                                            {{/each}}
-                                        </tr>
-                                        {{/each}}
-                                        
-                                    </tbody>
-                                </table> 
-                            <!-- </div> -->
-                            </div>
-                            {{#if equals this.permission 'editable'}}
-                            <!-- Modal -->
-                            <div class="modal fade" id="{{this.code}}modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="exampleModalLabel">编辑子表</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    {{> afArrayField name=this.code}}
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" id="au-sb-ok" class="btn btn-default" data-dismiss="modal">好</button>
-                                    <button type="reset" class="btn btn-default">reset form</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            {{/if}}
+                        
+                        {{> steedos_table}}
                         </div>
                     {{else}}
                         <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">

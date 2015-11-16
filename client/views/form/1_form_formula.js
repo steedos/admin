@@ -129,9 +129,16 @@ Form_formula.codeIsUseInFormula = function(code,formula){
     return false;
 };
 
-Form_formula.run = function(code, formula_fields, formula_values){
+Form_formula.mixin = function(dest, src){
+    for(var key in src){
+        dest[key] = src[key];
+    }
+    return dest;
+};
+Form_formula.formula_values = null;
+
+Form_formula.run = function(code, formula_fields, autoFormDoc, fields){
     var run = false;
-    var formula_field
     for(var i = 0 ; i < formula_fields.length; i++){
         formula_field = formula_fields[i];
         if (formula_field.formula.indexOf("[" + code + "]")){
@@ -139,12 +146,81 @@ Form_formula.run = function(code, formula_fields, formula_values){
         }
 
         if(run){
+            if (!Form_formula.formula_values || true){
+                console.debug("Form_formula.init_formula_values: 重新计算formula_values");
+                var startTrack = new Date * 1;
+                Form_formula.formula_values = init_formula_values(fields,autoFormDoc);
+                console.debug("Form_formula.init_formula_values: 退出计算formula_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
+            }
+
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
-            $("[name='"+formula_field.code+"']").val(formula_values[formula_field.code]);
+            $("[name='"+formula_field.code+"']").val(Form_formula.formula_values[formula_field.code]);
         }
     }
 };
 
+/**
+    * 获得公式需要用到的初始值
+    * 输入：fields, values, applicant
+    * 输出：__values
+**/
+
+function init_formula_values(fields, autoFormDoc){
+    var __values = {};
+    //申请单中填的值处理
+    if(fields && fields.length && autoFormDoc) {
+        //debugger;
+        fields.forEach(function(field){
+            var type = field.type;
+            if(type) {
+                if(type === 'table') {
+                    /*
+                    * 将表格字段的值进行转换后传入__values中
+                    * values中表格的值格式为
+                    * [{"a":1,"b":4},{"a":2,"b":5},{"a":3,"b":6}]
+                    * __values需要转化为下面格式且和主表的值一样放到第一层
+                    * {"a":[1,2,3],"b":[4,5,6]}
+                    **/
+                    var tableFields = field.sfields,
+                        tableValues = autoFormDoc[field.code],
+                        formulaTableValues = [],
+                        __tableValues = {};
+                    //按公式的格式转换值为__tableValues
+                    if(tableFields && tableFields.length && tableValues) {
+                        tableValues.forEach(function(tableValue){
+                            formulaTableValues.push(init_formula_values(tableFields, tableValue));
+                        }, this);
+                        //按主表的格式转换__tableValues加到
+                        tableFields.forEach(function(tablefield){
+                            __tableValues[tablefield.code] = formulaTableValues.getEach(tablefield.code);
+                        });
+                        __values = Form_formula.mixin(__values, __tableValues);
+                    }
+                } else {
+                    //此处传spaceId给选人控件的旧数据计算roles和organization
+                    __values[field.code] = autoFormDoc[field.code];
+                }
+            }
+        }, this);
+    }
+    //approver 当前用户
+    // var currentUserId = CS.getPath('currentUser.id');
+    // __approverValues = this.getUserValues(spaceId, currentUserId, 'approver');
+    // //applicant 申请人
+    // __applicantValues = this.getUserValues(spaceId, applicantId, 'applicant');
+
+    // __values = SC.mixin(__values, __approverValues, __applicantValues);
+    //debugger;
+    return __values;
+};
+
+Array.prototype.getEach = function(code){
+    var rev = [];
+    for(var i = 0 ; i < this.length ; i++){
+        rev.push(this[i][code]);
+    }
+    return rev;
+};
 
 //定义string的to_integer方法
 String.prototype.to_integer = function(defaultValue)
