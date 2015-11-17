@@ -22,7 +22,13 @@ Template.steedos_table.helpers({
 });
 
 Template.steedos_table.events({
-    'click .person-row': function (event) {
+    'click .subform-row': function (event) {
         debugger;
+        $(".ui.modal")
+            .modal({
+                inverted:true
+            })
+            .modal('show')
+        ;
     }
 })
