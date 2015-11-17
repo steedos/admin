@@ -1,8 +1,10 @@
-Template.dockLeft.helpers
+Template.dock.helpers
 		
 	user: ->
 		return Meteor.user();
 
+	userApps: ->
+		return Apps.find();
 
 	displayName: ->
 
@@ -22,19 +24,14 @@ Template.dockLeft.helpers
 			return Meteor.user().avatar
 
 
-Template.dockLeft.onRendered ->
+Template.dock.onRendered ->
 	
-	$('html').addClass "dockOnLeft"
+	$('html').addClass "dockOnTop"
 
 	$('.ui.menu .ui.dropdown').dropdown({on: 'hover'});
 
 
-Template.dockLeft.events
+Template.dock.events
 
 	"click .ui.menu a.item": ->
 		$(this).addClass('active').siblings().removeClass('active')
-
-	"click #app-chat": ->
-		FlowRouter.go("/app/chat");
-
-

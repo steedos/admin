@@ -2,7 +2,7 @@ Meteor.publish 'userData', ->
 	unless this.userId
 		return this.ready()
 
-	console.log '[publish] userData'.green
+	console.log '[publish] userData'
 
 	Steedos.models.Users.find this.userId,
 		fields:

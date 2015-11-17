@@ -22,6 +22,8 @@ Package.onUse(function(api) {
 	api.use('underscorestring:underscore.string');
 	api.use('monbro:mongodb-mapreduce-aggregation@1.0.1');
 	api.use('nimble:restivus');
+	api.use('aldeed:simple-schema');
+	api.use('aldeed:collection2');
 
 	api.use(['webapp'], 'server');
 	// COMMON
@@ -30,6 +32,8 @@ Package.onUse(function(api) {
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');
 	api.addFiles('server/models/Users.coffee', 'server');
+	api.addFiles('server/models/Apps.coffee', 'server');
+	api.addFiles('server/models/Settings.coffee', 'server');
 
 	api.addFiles('server/restapi.coffee');
 

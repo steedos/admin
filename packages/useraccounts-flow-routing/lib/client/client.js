@@ -124,7 +124,10 @@ AccountsTemplates.logout = function() {
 };
 
 AccountsTemplates.postSubmitRedirect = function(route) {
-  if (AccountsTemplates.avoidRedirect) {
+  var redirectTo = FlowRouter.getQueryParam("redirectTo");
+  if (redirectTo)
+    document.location = redirectTo;
+  else if (AccountsTemplates.avoidRedirect) {
     AccountsTemplates.avoidRedirect = false;
     if (AccountsTemplates.redirectToPrevPath) {
       FlowRouter.redirect(AccountsTemplates.getPrevPath());

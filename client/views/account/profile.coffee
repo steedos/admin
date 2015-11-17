@@ -45,7 +45,7 @@ Template.profile.onCreated ->
 
 		selectedLanguage = $('#language').val()
 
-		data.language = selectedLanguage
+		data.locale = selectedLanguage
 		if Session.get("language") isnt selectedLanguage
 			Session.set("language", selectedLanguage)
 			reload = true
@@ -71,7 +71,6 @@ Template.profile.onCreated ->
 		Meteor.call 'saveUserProfile', data, (error, results) ->
 			if results
 				toastr.success t('Profile_saved_successfully')
-				instance.clearForm()
 				if reload
 					setTimeout ->
 						Meteor._reload.reload()
