@@ -45,6 +45,10 @@ cfs:filesystem
 chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
+mizzao:bootstrap-3
 aldeed:autoform
-steedos:datatables
-ongoworks:security
+aldeed:collection2
+zimme:select2-bootstrap3-css
+aldeed:autoform-select2
+natestrauser:select2
+aldeed:tabular

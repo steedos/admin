@@ -1,0 +1,44 @@
+/* CSS declarations go here */
+
+.userContent {
+    background: #ffffff;
+    height:100%;
+    width:calc(100% - 200px);
+    margin-left: 200px;
+    position:static !important;
+}
+
+.panel-controls{
+    float:right;
+    display: block;
+    cursor:pointer;
+}
+
+.font-size-h3{
+    font-size: 24px;
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+}
+.text-center {
+    text-align: center;
+}
+
+.bg-info{
+    padding: 15px;
+}
+
+textarea {
+    resize: none;
+}
+
+@media (min-width: 768px){
+    .container{
+        width:760px;
+    }
+}
+
+
+[data-required] label::after {
+    content:' *';
+    color:red;
+}
