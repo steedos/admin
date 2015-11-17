@@ -1,33 +1,33 @@
 <template name="instanceform">
-
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="instanceContent">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                   <h3 class='font-size-h3'>{{instance.name}}</h3>
+                </div>
+            </div>
+        </nav>
         <div class="container">
-            <div class="navbar-header">
-               <h3 class='font-size-h3'>{{instance.name}}</h3>
-            </div>
-        </div>
-    </nav>
-    <div class="container">
-        {{#autoForm id='instanceform' schema=fields type="method" doc=doc meteormethod='instance'}}
-            <div class="row">
-                {{#each steedos_form.fields}}
-                    {{#if equals this.type 'table'}}
-                        <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
+            {{#autoForm id='instanceform' schema=fields type="method" doc=doc meteormethod='instance'}}
+                <div class="row">
+                    {{#each steedos_form.fields}}
+                        {{#if equals this.type 'table'}}
+                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-16{{/if}}">
+                            
+                            {{> steedos_table}}
+                            </div>
+                        {{else}}
+                            <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
+                            {{> afFormGroup name=this.code}}
+                            </div>
+                        {{/if}}
                         
-                        {{> steedos_table}}
-                        </div>
-                    {{else}}
-                        <div class="{{#if this.is_wide}}col-md-12{{else}}col-md-6{{/if}}">
-                        {{> afFormGroup name=this.code}}
-                        </div>
-                    {{/if}}
-                    
-                {{/each}}
-            </div>
-            <button type="submit" id='submit' class="btn btn-primary">Submit</button>
-        {{/autoForm}}
+                    {{/each}}
+                </div>
+                <button type="submit" id='submit' class="btn btn-primary">Submit</button>
+            {{/autoForm}}
+        </div>
     </div>
-
 </template>
 
 

@@ -1,8 +1,7 @@
 /* CSS declarations go here */
 
-.userContent {
+.instanceContent {
     background: #ffffff;
-    height:100%;
     width:calc(100% - 200px);
     margin-left: 200px;
     position:static !important;
