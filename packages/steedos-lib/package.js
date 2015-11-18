@@ -5,9 +5,9 @@ Package.describe({
 	git: ''
 });
 
-// Npm.depends({
-//   "formidable":"1.0.17"
-// });
+Npm.depends({
+  "tough-cookie":"2.2.1"
+});
 
 Package.onUse(function(api) {
 	api.versionsFrom('1.0');
@@ -35,7 +35,8 @@ Package.onUse(function(api) {
 	api.addFiles('server/models/Apps.coffee', 'server');
 	api.addFiles('server/models/Settings.coffee', 'server');
 
-	api.addFiles('server/restapi.coffee');
+	api.addFiles('server/restapi.coffee', 'server');
+	api.addFiles('server/routes/onLogin.coffee', 'server');
 
 	// EXPORT
 	api.export('Steedos');

@@ -1,11 +1,9 @@
 Steedos.models._Base = class
-	_baseName: ->
-		return ''
 
-	_initModel: (name) ->
+	_initModel: (name, options) ->
 		check name, String
 
-		@model = new Meteor.Collection @_baseName() + name
+		@model = new Meteor.Collection name, options
 
 	find: ->
 		return @model.find.apply @model, arguments
