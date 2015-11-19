@@ -36,11 +36,13 @@ Meteor.isClient && Template.registerHelper('TabularTables', TabularTables);
 @TabularTables.Apps = new Tabular.Table({
   name: "Apps",
   collection: Apps,
-  select: true,
   lengthChange: false,
   buttons: [
       'copy', 'excel', 'pdf'
   ],
+  select: {
+    style: 'single'
+  },
   columns: [
     {data: "name", title: "Name"},
     {data: "description", title: "Description"},

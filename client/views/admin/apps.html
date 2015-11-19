@@ -1,17 +1,21 @@
 <template name="adminApps">
-	<div class="ui container segment">
-		<h1>{{_ "Apps"}}</h1>
-		<button id="tableAdd">{{_ "Add"}}</button>
-		<button id="tableEdit">{{_ "Edit"}}</button>
-		<button id="tableDelete">{{_ "Delete"}}</button>
-			{{> tabular table=TabularTables.Apps class="ui celled table table-striped table-bordered table-condensed"}}
 
-	</div>
-	<div class="ui small modal" id="appAdd">
-  		<i class="close icon"></i>
-		<div class="header">Add App</div>
-		<div class="content">
-			{{> quickForm collection="Apps" id="insertAppForm" type="insert"}}
+  	<div class="ui centered relaxed stackable grid">
+	    {{> adminMenu}}
+
+		<div class="ui eleven wide column segment">
+			<h1>{{_ "Apps"}}</h1>
+			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
+			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
+			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
+				{{> tabular table=TabularTables.Apps class="ui celled table dataTable"}}
+
+		</div>
+		<div class="ui small modal" id="appFormPopup">
+	  		<i class="close icon"></i>
+			<div class="content">
+				{{> quickForm collection="Apps" doc=selectedRow id="appForm" type=formType}}
+			</div>
 		</div>
 	</div>
 </template>

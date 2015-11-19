@@ -45,7 +45,6 @@ cfs:filesystem
 chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
-mizzao:bootstrap-3
 aldeed:autoform
 aldeed:collection2
 aldeed:autoform-select2

@@ -7,9 +7,9 @@ Package.describe({
   git: 'https://github.com/steedos/core/packages/steedos-datatables'
 });
 
-Npm.depends({
-  datatables: '1.10.7'
-});
+// Npm.depends({
+//   datatables: '1.10.9'
+// });
 
 Package.onUse(function(api) {
   api.versionsFrom(['METEOR@0.9.4', 'METEOR@1.0']);
@@ -35,7 +35,7 @@ Package.onUse(function(api) {
   api.addFiles('common.js');
   api.addFiles('server/tabular.js', 'server');
   api.addFiles([
-    '.npm/package/node_modules/datatables/media/js/jquery.dataTables.js',
+    'client/lib/jquery.dataTables.js',
     'client/lib/dataTables.bootstrap.js',
     'client/lib/dataTables.bootstrap.css',
     'client/lib/dataTables.buttons.js',
