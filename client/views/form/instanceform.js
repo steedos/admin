@@ -8,11 +8,14 @@ var fields = Steedos_data.steedosFieldToAutoField(steedos_form);
 var formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.formula_values", steedos_form.fields);
 
 console.log(formula_fields);
-
 Template.instanceform.helpers({
   
   steedos_form: function (){
     return steedos_form;
+  },
+  innersubformContext:function (obj){
+    obj["tableValues"] = steedos_instance.values[obj.code]
+    return obj;
   },
   instance: function (){
     return steedos_instance;
@@ -37,9 +40,7 @@ Template.instanceform.events({
 
   },
 
-  'click #au-sb-ok': function(){
-    Steedos_Helpers.update_subFormView("出差费用明细", fields, AutoForm.getFormValues("instanceform").insertDoc);
-  },
+  
 
   'change .form-control': function(event){
 

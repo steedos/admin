@@ -2,13 +2,7 @@
     
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span class="panel-title">{{this.code}}</span>
-            {{#if equals this.permission 'editable'}}
-            <span class="panel-controls">
-                <!-- Button trigger modal 
-                <i class="write icon" id="edit" data-toggle="modal" data-target="#{{this.code}}row"></i>-->
-            </span>
-            {{/if}}
+            {{afFieldLabelText name=this.code}}
         </div>
     <!-- <div class="panel-body"> -->
         <table class="table table-bordered table-condensed">
@@ -22,17 +16,17 @@
                 <td></td>
                 </tr>
             </thead>
-            <tbody id='{{this.code}}tbody'>
-                {{#each subformValue this.code}}
-                <tr class="person-row" data-toggle="modal" data-target="#{{this.code}}row">
+            <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
+                {{#each this.tableValues}}
+                <tr class="person-row" data-toggle="modal" >
                     <td >{{@index}}</td>
-                    {{#each this}}
-                        <td>{{this}}</td>
+                    {{#each arrayify this}}
+                        <td>{{value}}</td>
                     {{/each}}
                     <td>
                         <span class="panel-controls">
                             <!-- Button trigger modal -->
-                            <i class="{{@index}} write icon subform-row"></i>
+                            <i class="write icon subform-row" data-rowindex="{{@index}}"></i>
                         </span>
                     </td>
                 </tr>
@@ -43,18 +37,25 @@
     </div>
     {{#if equals this.permission 'editable'}}
 
-    <div class="ui modal" id="{{this.code}}row" >
+    <div class="{{this.code}} ui modal" name="{{this.code}}.modal" data-rowindex="2" data-formcode="{{this.code}}">
         <i class="close icon"></i>
         <div class='header'>
             编辑子表
         </div>
         <div class="content">
-            {{> afObjectField name=(append 'steedosSubFormObj-' this.code)}}
+            <div class="description">
+                {{> afObjectField name=(append this.code '.$' )}}
+            </div>
         </div>
         <div class="actions">
-            <div class="ui black deny button" id="au-sb-ok">好</div>
-            <div class="ui positive right labeled icon button">reset form</div>
+            <div class="ui black deny button" >取消</div>
+            <button type="button" id="au-sb-ok" class="btn btn-default" data-dismiss="modal">好</button>
+            <div class="ui positive right labeled icon button" >好</div>
         </div>
+    </div>
+
+    <div style = 'display:none'>
+        {{> afArrayField name=this.code}}
     </div>
     <!-- Modal 
     <div class="modal fade" id="{{this.code}}modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -73,6 +74,7 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </div>
+    -->
     {{/if}}
 </template>

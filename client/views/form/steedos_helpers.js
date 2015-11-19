@@ -2,6 +2,14 @@
 Steedos_Helpers = {};
 Template.registerHelper("Steedos_Helpers", Steedos_Helpers);
 
+Template.registerHelper("arrayify", function(obj){
+  result = [];
+  for(var key in obj){
+    result.push({code:key, value:obj[key]})
+  }
+  return result;
+});
+
 
 // Useful for looping through lines in some long text, as diliniated by "\n" (newline) character
 // Usage: {{#each Helpers.lineIn someLongTextString}}{{this}}<br>{{/each}}
@@ -39,8 +47,7 @@ Steedos_Helpers.get_subFormValue = function (code, fields, values){
     rev_sub.push(sfv);
   
   }
-  
-  return rev_sub;
+  return subV;
 };
 
 Steedos_Helpers.update_subFormView = function (code, fields, Formvalues){

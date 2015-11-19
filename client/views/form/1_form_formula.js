@@ -152,7 +152,6 @@ Form_formula.run = function(code, formula_fields, autoFormDoc, fields){
                 Form_formula.formula_values = init_formula_values(fields,autoFormDoc);
                 console.debug("Form_formula.init_formula_values: 退出计算formula_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
             }
-
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
             $("[name='"+formula_field.code+"']").val(Form_formula.formula_values[formula_field.code]);
         }
