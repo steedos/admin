@@ -9,13 +9,14 @@ Npm.depends({
   "tough-cookie":"2.2.1"
 });
 
-Package.onUse(function(api) {
+Package.onUse(function(api) { 
 	api.versionsFrom('1.0');
 
 	api.use('reactive-var');
 	api.use('reactive-dict');
 	api.use('coffeescript');
 	api.use('random');
+	api.use('ddp');
 	api.use('check');
 	api.use('ddp-rate-limiter');
 	api.use('underscore');

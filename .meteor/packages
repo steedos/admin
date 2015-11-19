@@ -48,7 +48,6 @@ percolate:migrations
 mizzao:bootstrap-3
 aldeed:autoform
 aldeed:collection2
-zimme:select2-bootstrap3-css
 aldeed:autoform-select2
 natestrauser:select2
 
