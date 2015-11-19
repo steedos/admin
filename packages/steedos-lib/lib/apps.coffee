@@ -1,10 +1,9 @@
-@Apps = new Meteor.Collection 'apps'
+Steedos.collections.Apps = new Meteor.Collection 'apps'
 
-@Apps.permit(['insert', 'update', 'remove']).apply();
+Steedos.collections.Apps.permit(['insert', 'update', 'remove']).apply();
 
-Meteor.isClient && Meteor.subscribe "apps"
 
-@Apps.attachSchema(new SimpleSchema({
+Steedos.collections.Apps.attachSchema(new SimpleSchema({
   name: {
     type: String,
     label: "Name",
@@ -28,14 +27,9 @@ Meteor.isClient && Meteor.subscribe "apps"
   }
 }));
 
-
-@TabularTables = {}
-
-Meteor.isClient && Template.registerHelper('TabularTables', TabularTables);
-
-@TabularTables.Apps = new Tabular.Table({
+Steedos.tables.Apps = new Tabular.Table({
   name: "Apps",
-  collection: Apps,
+  collection: Steedos.collections.Apps,
   lengthChange: false,
   buttons: [
       'copy', 'excel', 'pdf'

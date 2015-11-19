@@ -4,4 +4,8 @@
 ###
 
 Steedos =
-	models: {}
+	models: {},
+	collections: {},
+	tables: {}
+
+

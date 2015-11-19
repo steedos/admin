@@ -1,20 +1,20 @@
-<template name="adminApps">
+<template name="adminUsers">
 
   	<div class="ui centered relaxed stackable grid">
 	    {{> adminMenu}}
 
 		<div class="ui eleven wide column segment">
-			<h1>{{_ "Apps"}}</h1>
+			<h1>{{_ "Users"}}</h1>
 			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
 			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
 			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
-				{{> tabular table=TabularTables.Apps class="ui celled table dataTable"}}
+				{{> tabular table=TabularTables.Users class="ui celled table dataTable"}}
 
 		</div>
 		<div class="ui small modal" id="dataFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.collections.Apps" doc=selectedRow id="dataForm" type=formType}}
+				{{> quickForm collection="Steedos.collections.Users" doc=selectedRow id="dataForm" type=formType}}
 			</div>
 		</div>
 	</div>

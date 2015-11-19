@@ -2,4 +2,4 @@ Meteor.publish 'apps', ->
 
  	console.log '[publish] apps'
 
- 	return Apps.find()
+ 	return Steedos.collections.Apps.find()

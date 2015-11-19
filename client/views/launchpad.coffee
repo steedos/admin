@@ -1,4 +1,8 @@
 Template.launchpad.helpers
 		
 	userApps: ->
-		return Apps.find();
+		return Steedos.collections.Apps.find();
+
+Template.launchpad.onCreated ->
+	
+	Meteor.subscribe "apps"

@@ -25,10 +25,15 @@ Package.onUse(function(api) {
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
+	api.use('ongoworks:security');
+	api.use('steedos:datatables');
+	api.use('blaze-html-templates');
 
 	api.use(['webapp'], 'server');
 	// COMMON
 	api.addFiles('lib/core.coffee');
+	api.addFiles('lib/apps.coffee');
+	api.addFiles('lib/users.coffee');
 
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');
