@@ -20,6 +20,18 @@ Steedos.collections.Users.attachSchema(new SimpleSchema({
 		regEx: SimpleSchema.RegEx.Email
 		max: 200
 	},
+	company: {
+		type: String,
+		label: t("Users_Company"),
+		optional: true
+		max: 200
+	},
+	mobile: {
+		type: String,
+		label: t("Users_Mobile"),
+		optional: true
+		max: 200
+	},
 	locale: {
 		type: String,
 		label: t("Users_Locale"),
