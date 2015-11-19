@@ -8,12 +8,12 @@ FlowRouter.route '/admin/users/',
 Template.adminUsers.helpers
 
 	selectedRow: ->
-		if Session.get("selectedRow")
-			return Session.get("selectedRow")
+		if Session.get("selectedRowId")
+			return Steedos.collections.Users.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
-		if Session.get("selectedRow")
+		if Session.get("selectedRowId")
 			return "update"
 		else
 			return "insert"
@@ -34,23 +34,23 @@ Template.adminUsers.onRendered ->
 Template.adminUsers.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
-		Session.set("selectedRow", null)
+		Session.set("selectedRowId", null)
 		$('#dataFormPopup').modal('show')
 	
 	"click #buttonEdit": (e, t) ->
-		if !Session.get("selectedRow")
+		if !Session.get("selectedRowId")
 			return
 		$('#dataFormPopup').modal('show')
 
 	"click #buttonDelete": (e, t) ->
-		if !Session.get("selectedRow")
+		if !Session.get("selectedRowId")
 			return
-		Steedos.collections.Users.remove({_id: Session.get("selectedRow")._id})
+		Steedos.collections.Users.remove({_id: Session.get("selectedRowId")})
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()
 		selected = dt.rows( { selected: true } ).data()
 		if selected.count()
-			Session.set("selectedRow", selected[0])
+			Session.set("selectedRowId", selected[0]._id)
 		else
-			Session.set("selectedRow", null);
+			Session.set("selectedRowId", null);

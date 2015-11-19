@@ -30,10 +30,28 @@ Package.onUse(function(api) {
 	api.use('blaze-html-templates');
 
 	api.use(['webapp'], 'server');
+
+
+	// TAPi18n
+	api.use('templating', 'client');
+	var _ = Npm.require('underscore');
+	var fs = Npm.require('fs');
+	// tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/steedos-lib/i18n'), function(filename) {
+	// 	if (fs.statSync('packages/steedos-lib/i18n/' + filename).size > 16) {
+	// 		return 'i18n/' + filename;
+	// 	}
+	// }));
+	api.use('tap:i18n', ['client', 'server']);
+	api.imply('tap:i18n');
+	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
+	api.addFiles(tapi18nFiles, ['client', 'server']);
+	
 	// COMMON
 	api.addFiles('lib/core.coffee');
-	api.addFiles('lib/apps.coffee');
-	api.addFiles('lib/users.coffee');
+	api.addFiles('lib/tapi18n.coffee');
+
+	api.addFiles('lib/models/apps.coffee');
+	api.addFiles('lib/models/users.coffee');
 
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');
@@ -43,6 +61,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/restapi.coffee', 'server');
 	api.addFiles('server/routes/onLogin.coffee', 'server');
+
 
 	// EXPORT
 	api.export('Steedos');
