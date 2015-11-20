@@ -2,6 +2,8 @@ Steedos.collections.Users = Meteor.users;
 
 Steedos.collections.Users.permit(['insert', 'update', 'remove']).apply();
 
+debugger;
+
 Steedos.collections.Users.attachSchema(new SimpleSchema({
 	name: {
 		type: String,

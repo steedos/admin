@@ -1,0 +1,21 @@
+<template name="adminSpaces">
+
+  	<div class="ui centered relaxed stackable grid">
+	    {{> adminMenu}}
+
+		<div class="ui eleven wide column segment">
+			<h1>{{_ "Spaces"}}</h1>
+			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
+			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
+			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
+				{{> tabular table=TabularTables.Spaces class="ui celled table dataTable"}}
+
+		</div>
+		<div class="ui small modal" id="dataFormPopup">
+	  		<i class="close icon"></i>
+			<div class="content">
+				{{> quickForm collection="Steedos.collections.Spaces" fields="name,admins,balance" doc=selectedRow id="dataForm" type=formType}}
+			</div>
+		</div>
+	</div>
+</template> 

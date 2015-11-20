@@ -53,6 +53,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('lib/models/apps.js');
 	api.addFiles('lib/models/users.js');
+	api.addFiles('lib/models/spaces.js');
 
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');
