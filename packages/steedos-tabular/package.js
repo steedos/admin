@@ -1,10 +1,10 @@
 /* global Package, Npm */
 
 Package.describe({
-  name: 'steedos:datatables',
+  name: 'steedos:tabular',
   summary: 'Datatables for large or small datasets in Meteor',
   version: '1.4.2',
-  git: 'https://github.com/steedos/core/packages/steedos-datatables'
+  git: 'https://github.com/steedos/core/packages/steedos-tabular'
 });
 
 // Npm.depends({

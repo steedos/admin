@@ -2,7 +2,6 @@ Steedos.collections.Users = Meteor.users;
 
 Steedos.collections.Users.permit(['insert', 'update', 'remove']).apply();
 
-
 Steedos.collections.Users.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
@@ -17,26 +16,40 @@ Steedos.collections.Users.attachSchema(new SimpleSchema({
 	email: {
 		type: String,
 		label: t("Users_Email"),
-		regEx: SimpleSchema.RegEx.Email
+		regEx: SimpleSchema.RegEx.Email,
 		max: 200
 	},
 	company: {
 		type: String,
 		label: t("Users_Company"),
-		optional: true
+		optional: true,
 		max: 200
 	},
 	mobile: {
 		type: String,
 		label: t("Users_Mobile"),
-		optional: true
+		optional: true,
 		max: 200
 	},
 	locale: {
 		type: String,
 		label: t("Users_Locale"),
-		optional: true
-		max: 200
+		optional: true,
+		allowedValues: [
+			"en-us",
+			"zh-cn"
+		],
+		autoform: {
+			//type: "select-radio",
+			options: [{
+				label: "Chinese",
+				value: "zh-cn"
+			},
+			{
+				label: "English",
+				value: "en-us"
+			}]
+		}
 	},
 	timezone: {
 		type: String,

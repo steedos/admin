@@ -5,4 +5,4 @@ Template.launchpad.helpers
 
 Template.launchpad.onCreated ->
 	
-	Meteor.subscribe "apps"
+	#Meteor.subscribe "apps"

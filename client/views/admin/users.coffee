@@ -20,14 +20,14 @@ Template.adminUsers.helpers
 
 
 Template.adminUsers.onCreated ->
-
-
-Template.adminUsers.onRendered ->
 	hooks =
 		dataForm:
 			onSuccess: (formType, result)->
 				$('#dataFormPopup').modal("hide")
 	AutoForm.hooks(hooks)
+
+Template.adminUsers.onRendered ->
+	Session.set("selectedRowId", null);
 
 
 

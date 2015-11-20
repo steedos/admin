@@ -1,4 +1,4 @@
-Steedos.collections.Apps = new Meteor.Collection 'apps'
+Steedos.collections.Apps = new Meteor.Collection('apps')
 
 Steedos.collections.Apps.permit(['insert', 'update', 'remove']).apply();
 
@@ -38,5 +38,9 @@ Steedos.tables.Apps = new Tabular.Table({
 		{data: "name", title: t("Apps_Name")},
 		{data: "description", title: t("Apps_Description")},
 		{data: "url", title: t("Apps_URL")}
-	]
+	],
+	// Filter data by permission
+	selector: function() {
+		return {}
+	}
 });

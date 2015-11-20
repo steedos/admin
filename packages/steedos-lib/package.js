@@ -25,8 +25,9 @@ Package.onUse(function(api) {
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
+	api.use('aldeed:autoform');
 	api.use('ongoworks:security');
-	api.use('steedos:datatables');
+	api.use('steedos:tabular');
 	api.use('blaze-html-templates');
 
 	api.use(['webapp'], 'server');
@@ -50,8 +51,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/tapi18n.coffee');
 
-	api.addFiles('lib/models/apps.coffee');
-	api.addFiles('lib/models/users.coffee');
+	api.addFiles('lib/models/apps.js');
+	api.addFiles('lib/models/users.js');
 
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');

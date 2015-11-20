@@ -115,8 +115,8 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
-steedos:datatables@1.4.2
 steedos:lib@0.0.1
+steedos:tabular@1.4.2
 steedos:timezone-picker@0.1.2
 steedos:useraccounts-core@1.12.4
 steedos:useraccounts-flow-routing@1.12.4
