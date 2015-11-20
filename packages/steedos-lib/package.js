@@ -20,6 +20,8 @@ Package.onUse(function(api) {
 	api.use('check');
 	api.use('ddp-rate-limiter');
 	api.use('underscore');
+	api.use('tracker');
+	api.use('session');
 	api.use('underscorestring:underscore.string');
 	api.use('monbro:mongodb-mapreduce-aggregation@1.0.1');
 	api.use('nimble:restivus');
@@ -36,16 +38,12 @@ Package.onUse(function(api) {
 	// TAPi18n
 	api.use('templating', 'client');
 	var _ = Npm.require('underscore');
-	var fs = Npm.require('fs');
-	// tapi18nFiles = _.compact(_.map(fs.readdirSync('packages/steedos-lib/i18n'), function(filename) {
-	// 	if (fs.statSync('packages/steedos-lib/i18n/' + filename).size > 16) {
-	// 		return 'i18n/' + filename;
-	// 	}
-	// }));
+
 	api.use('tap:i18n', ['client', 'server']);
-	api.imply('tap:i18n');
+	//api.add_files("package-tap.i18n", ["client", "server"]);
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles, ['client', 'server']);
+	api.imply('tap:i18n');
 	
 	// COMMON
 	api.addFiles('lib/core.coffee');

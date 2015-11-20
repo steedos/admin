@@ -26,6 +26,7 @@ Steedos.collections.Apps.attachSchema(new SimpleSchema({
 		max: 1000
 	}
 }));
+Steedos.collections.Apps.i18n()
 
 Steedos.tables.Apps = new Tabular.Table({
 	name: "Apps",
@@ -35,9 +36,9 @@ Steedos.tables.Apps = new Tabular.Table({
 		style: 'single'
 	},
 	columns: [
-		{data: "name", title: t("Apps_Name")},
-		{data: "description", title: t("Apps_Description")},
-		{data: "url", title: t("Apps_URL")}
+		{data: "name"},
+		{data: "description"},
+		{data: "url"}
 	],
 	// Filter data by permission
 	selector: function() {

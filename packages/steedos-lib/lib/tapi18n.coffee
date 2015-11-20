@@ -14,17 +14,37 @@
 	# https://en.wikipedia.org/wiki/Right-to-left#cite_note-2
 	return language?.split('-').shift().toLowerCase() in ['ar', 'dv', 'fa', 'he', 'ku', 'ps', 'sd', 'ug', 'ur', 'yi']
 
-if Meteor.isClient
-	TAPi18n.setLanguage "zh-CN"
-
-SimpleSchema.prototype.i18n = (tableName) ->
+Mongo.Collection.prototype.i18n = () ->
 	if (Meteor.isServer) 
 		return;
 
 	self = this;
-	_.each(self._schema, (value, key) ->
+
+	if (!self._c2)
+		return;
+
+	if (!self._c2._simpleSchema)
+		return;
+
+	_schema = self._c2._simpleSchema._schema;
+
+	_.each(_schema, (value, key) ->
 		if (!value) 
 			return
-		self._schema[key].label = (key) ->
-			return t(tableName + "_" + key)
+		self._c2._simpleSchema._schema[key].label = t(self._name + "_" + key)
 	)
+
+if Meteor.isClient
+	Tracker.autorun ->
+		lang = Session.get("TAPi18n::loaded_lang")
+		_.each(Steedos.collections, (collection) ->
+			collection.i18n()
+		)
+
+		_.each(Steedos.tables, (table) ->
+			_.each(table.options.columns, (column) ->
+				if (!column.data)
+					return
+				column.title = t(table.collection._name + "_" + column.data);
+			)
+		)

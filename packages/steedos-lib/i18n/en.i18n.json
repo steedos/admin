@@ -1,7 +1,7 @@
 {
 	"Steedos Cloud": "Steedos Cloud",
 	
-	"Users": "Users",
-	"Users_Name": "Name",
-	"Users_Email": "Email"
+	"users": "Users",
+	"users_name": "Name",
+	"users_email": "Email"
 }

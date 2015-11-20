@@ -53,4 +53,5 @@ Tabular.Table = function (options) {
   self.options = _.omit(options, 'collection', 'pub', 'sub', 'onUnload', 'allow', 'allowFields', 'extraFields', 'name', 'selector');
 
   Tabular.tablesByName[self.name] = self;
+
 };

@@ -56,6 +56,7 @@ Steedos.collections.Spaces.attachSchema(new SimpleSchema({
 		optional: true,
 	},
 }));
+Steedos.collections.Spaces.i18n()
 
 Steedos.tables.Spaces = new Tabular.Table({
 	name: "Spaces",
@@ -65,10 +66,10 @@ Steedos.tables.Spaces = new Tabular.Table({
 		style: 'single'
 	},
 	columns: [
-		{data: "name", title: t("Spaces_Name")},
-		{data: "owner", title: t("Spaces_Owner")},
-		{data: "admins", title: t("Spaces_Admins")},
-		{data: "is_paid", title: t("Spaces_isPaid")},
+		{data: "name"},
+		{data: "owner"},
+		{data: "admins"},
+		{data: "is_paid"},
 	],
 	extraFields: ["balance"]
 });

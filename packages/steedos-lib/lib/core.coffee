@@ -6,6 +6,7 @@
 Steedos =
 	models: {},
 	collections: {},
-	tables: {}
+	tables: {},
+	schemas: {}
 
 
