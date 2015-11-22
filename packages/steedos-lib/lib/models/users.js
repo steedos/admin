@@ -1,8 +1,8 @@
-Steedos.collections.Users = Meteor.users;
+Steedos.Users = Meteor.users;
 
-Steedos.collections.Users.permit(['insert', 'update', 'remove']).apply();
+Steedos.Users.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.schemas.Users = new SimpleSchema({
+Steedos.Users._schema = new SimpleSchema({
 	name: {
 		type: String,
 		max: 50
@@ -56,9 +56,9 @@ Steedos.schemas.Users = new SimpleSchema({
 	// }
 });
 
-Steedos.tables.Users = new Tabular.Table({
+Steedos.Users._table = new Tabular.Table({
 	name: "Users",
-	collection: Steedos.collections.Users,
+	collection: Steedos.Users,
 	lengthChange: false,
 	select: {
 		style: 'single'
@@ -67,5 +67,6 @@ Steedos.tables.Users = new Tabular.Table({
 		{data: "name"},
 		{data: "email"},
 		{data: "locale"}
-	]
+	],
 });
+	

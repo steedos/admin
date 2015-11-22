@@ -9,7 +9,7 @@ Template.adminSpaces.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.collections.Spaces.findOne({_id: Session.get("selectedRowId")})
+			return Steedos.Spaces.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -45,7 +45,7 @@ Template.adminSpaces.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.collections.Spaces.remove({_id: Session.get("selectedRowId")})
+		Steedos.Spaces.remove({_id: Session.get("selectedRowId")})
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()

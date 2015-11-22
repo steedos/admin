@@ -9,7 +9,7 @@ Template.adminUsers.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.collections.Users.findOne({_id: Session.get("selectedRowId")})
+			return Steedos.Users.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -45,7 +45,7 @@ Template.adminUsers.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.collections.Users.remove({_id: Session.get("selectedRowId")})
+		Steedos.Users.remove({_id: Session.get("selectedRowId")})
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()

@@ -49,6 +49,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/tapi18n.coffee');
 
+	api.addFiles('lib/models/_base.js');
 	api.addFiles('lib/models/apps.js');
 	api.addFiles('lib/models/users.js');
 	api.addFiles('lib/models/spaces.js');

@@ -1,18 +1,16 @@
-Steedos.collections.Spaces = new Meteor.Collection('spaces')
+Steedos.Spaces = new Meteor.Collection('spaces')
 
-Steedos.collections.Spaces.permit(['insert', 'update', 'remove']).apply();
+Steedos.Spaces.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.collections.Spaces.attachSchema(new SimpleSchema({
+Steedos.Spaces.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
 	name: {
 		type: String,
-		label: t("Spaces_Name"),
   		unique: true,
 		max: 200
 	},	
 	// 第一个管理员就是owner
 	owner: {
 		type: String,
-		label: t("Spaces_Owner"),
 		autoValue: function(){
 			var admins = this.field("admins");
 			if (admins.isSet && admins.value.length>0) {
@@ -24,7 +22,10 @@ Steedos.collections.Spaces.attachSchema(new SimpleSchema({
 	},
 	admins: {
 		type: [String],
-		label: t("Spaces_Admins"),
+	},
+	balance: {
+		type: Number,
+		optional: true,
 	},
 	is_paid: {
 		type: Boolean,
@@ -39,28 +40,20 @@ Steedos.collections.Spaces.attachSchema(new SimpleSchema({
 				this.unset()
 		}
 	},
-	balance: {
-		type: Number,
-		label: t("Spaces_Balance"),
-		optional: true,
-	},
 
 	google_domain_name: {
 		type: String,
-		label: t("Spaces_GoogleDomainName"),
 		optional: true,
 	},
 	imo_cid: {
 		type: String,
-		label: t("Spaces_ImoCid"),
 		optional: true,
 	},
-}));
-Steedos.collections.Spaces.i18n()
+})));
 
-Steedos.tables.Spaces = new Tabular.Table({
+Steedos.Spaces._table = new Tabular.Table({
 	name: "Spaces",
-	collection: Steedos.collections.Spaces,
+	collection: Steedos.Spaces,
 	lengthChange: false,
 	select: {
 		style: 'single'
@@ -71,5 +64,7 @@ Steedos.tables.Spaces = new Tabular.Table({
 		{data: "admins"},
 		{data: "is_paid"},
 	],
-	extraFields: ["balance"]
+	extraFields: ["balance"],
 });
+	
+Steedos.Spaces._formFields = "name,admins,balance"
