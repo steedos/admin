@@ -31,6 +31,7 @@ Package.onUse(function(api) {
 	api.use('ongoworks:security');
 	api.use('steedos:tabular');
 	api.use('blaze-html-templates');
+	api.use('matb33:collection-hooks');
 
 	api.use(['webapp'], 'server');
 
@@ -53,6 +54,7 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/apps.js');
 	api.addFiles('lib/models/users.js');
 	api.addFiles('lib/models/spaces.js');
+	api.addFiles('lib/models/organizations.js');
 
 	// MODELS SERVER
 	api.addFiles('server/models/_Base.coffee', 'server');

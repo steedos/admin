@@ -24,6 +24,8 @@ Template.adminUsers.onCreated ->
 		dataForm:
 			onSuccess: (formType, result)->
 				$('#dataFormPopup').modal("hide")
+			onError: (formType, error) ->
+				toastr.error(error.message);
 	AutoForm.hooks(hooks)
 
 Template.adminUsers.onRendered ->

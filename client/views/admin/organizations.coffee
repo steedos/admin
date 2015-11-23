@@ -1,15 +1,15 @@
-FlowRouter.route '/admin/apps/', 
-  name: "adminApps",
+FlowRouter.route '/admin/organizations/', 
+  name: "adminOrganizations",
   action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminApps"}
+      BlazeLayout.render 'masterLayout', {main: "adminOrganizations"}
   
 
 
-Template.adminApps.helpers
+Template.adminOrganizations.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Apps.findOne({_id: Session.get("selectedRowId")})
+			return Steedos.Organizations.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -19,21 +19,22 @@ Template.adminApps.helpers
 			return "insert"
 
 
-Template.adminApps.onCreated ->
+Template.adminOrganizations.onCreated ->
 	hooks =
 		dataForm:
 			onSuccess: (formType, result)->
 				$('#dataFormPopup').modal("hide")
 			onError: (formType, error) ->
 				toastr.error(error.message);
+
 	AutoForm.hooks(hooks)
 
-Template.adminApps.onRendered ->
+Template.adminOrganizations.onRendered ->
 	Session.set("selectedRowId", null);
 
 
 
-Template.adminApps.events
+Template.adminOrganizations.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
@@ -47,7 +48,7 @@ Template.adminApps.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Apps.remove({_id: Session.get("selectedRowId")})
+		Steedos.Organizations.remove({_id: Session.get("selectedRowId")})
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()
