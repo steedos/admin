@@ -1,21 +1,22 @@
-FlowRouter.route '/admin/spaces/', 
-  name: "adminSpaces",
+FlowRouter.route '/admin/organizations/', 
+  name: "adminOrganizations",
   action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminSpaces"}
+      BlazeLayout.render 'masterLayout', {main: "adminOrganizations"}
   
 
+
 AutoForm.hooks
-	spacesForm:
+	organizationsForm:
 		onSuccess: (formType, result)->
-			$('#spacesFormPopup').modal("hide")
+			$('#organizationsFormPopup').modal("hide")
 		onError: (formType, error) ->
 			toastr.error(error.message);
 
-Template.adminSpaces.helpers
+Template.adminOrganizations.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Spaces.findOne({_id: Session.get("selectedRowId")})
+			return Steedos.Organizations.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -25,28 +26,29 @@ Template.adminSpaces.helpers
 			return "insert"
 
 
-Template.adminSpaces.onCreated ->
+Template.adminOrganizations.onCreated ->
 
-Template.adminSpaces.onRendered ->
+
+Template.adminOrganizations.onRendered ->
 	Session.set("selectedRowId", null);
 
 
 
-Template.adminSpaces.events
+Template.adminOrganizations.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
-		$('#spacesFormPopup').modal('show')
+		$('#organizationsFormPopup').modal('show')
 	
 	"click #buttonEdit": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		$('#spacesFormPopup').modal('show')
+		$('#organizationsFormPopup').modal('show')
 
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Spaces.remove({_id: Session.get("selectedRowId")})
+		Steedos.Organizations.remove({_id: Session.get("selectedRowId")})
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()

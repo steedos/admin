@@ -1,8 +1,8 @@
-Steedos.Spaces = new Meteor.Collection('spaces')
+Steedos.Spaces = new Meteor.Collection('spaces', {idGeneration: "MONGO"})
 
 Steedos.Spaces.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Spaces.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
+Steedos.Spaces.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
   		unique: true,
@@ -22,6 +22,23 @@ Steedos.Spaces.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
 	},
 	admins: {
 		type: [String],
+		autoform: {
+			type: "select2",
+			afFieldInput: {
+				multiple: true
+			},
+			options: function() {
+				options = []
+				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
 	},
 	balance: {
 		type: Number,
@@ -49,7 +66,7 @@ Steedos.Spaces.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
 		type: String,
 		optional: true,
 	},
-})));
+}));
 
 Steedos.Spaces._table = new Tabular.Table({
 	name: "Spaces",
