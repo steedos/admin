@@ -172,7 +172,7 @@ if (Meteor.isServer) {
 
 	Steedos.Organizations.before.update(function(userId, doc, fieldNames, modifier, options){
 		modifier.$set = modifier.$set || {};
-		modifier.$set.modofied_by = userId;
+		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
 		if (modifier.$set.parent){
