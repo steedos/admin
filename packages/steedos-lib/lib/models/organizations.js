@@ -173,6 +173,11 @@ if (Meteor.isServer) {
 		return parents
 	};
 
+	Steedos.Organizations.before.remove(function(userId, doc){
+		if (doc.children && doc.children.length>0)
+			throw new Meteor.Error(400, "Can not delete organizations with children.");
+	});
+
 	Steedos.Organizations.before.insert(function(userId, doc){
 		doc.created_by = userId;
 		doc.created = new Date();
@@ -188,7 +193,8 @@ if (Meteor.isServer) {
 
 		if (modifier.$set.parent){
 			// parent 不能等于自己或者children
-			if (doc._id == modifier.$set.parent)
+			parentOrg = Steedos.Organizations.findOne({_id: modifier.$set.parent})
+			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
 				throw new Meteor.Error(400, "Organization parent can not point to self.");
 
 			// 更新parents

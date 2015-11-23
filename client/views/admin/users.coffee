@@ -46,7 +46,11 @@ Template.adminUsers.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Users.remove({_id: Session.get("selectedRowId")})
+		Steedos.Users.remove {_id: Session.get("selectedRowId")}, (error) ->
+			if error
+				toastr.error(error.message);
+			else
+				toastr.info("Entry deleted.");
 
 	'click tbody > tr': (event) ->
 		dt = $('.dataTable').DataTable()
