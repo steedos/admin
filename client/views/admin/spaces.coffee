@@ -4,6 +4,12 @@ FlowRouter.route '/admin/spaces/',
       BlazeLayout.render 'masterLayout', {main: "adminSpaces"}
   
 
+AutoForm.hooks
+	spacesForm:
+		onSuccess: (formType, result)->
+			$('#spacesFormPopup').modal("hide")
+		onError: (formType, error) ->
+			toastr.error(error.message);
 
 Template.adminSpaces.helpers
 
@@ -20,13 +26,6 @@ Template.adminSpaces.helpers
 
 
 Template.adminSpaces.onCreated ->
-	hooks =
-		spacesForm:
-			onSuccess: (formType, result)->
-				$('#spacesFormPopup').modal("hide")
-			onError: (formType, error) ->
-				toastr.error(error.message);
-	AutoForm.hooks(hooks)
 
 Template.adminSpaces.onRendered ->
 	Session.set("selectedRowId", null);

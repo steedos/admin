@@ -4,6 +4,12 @@ FlowRouter.route '/admin/users/',
       BlazeLayout.render 'masterLayout', {main: "adminUsers"}
   
 
+AutoForm.hooks
+	usersForm:
+		onSuccess: (formType, result)->
+			$('#usersFormPopup').modal("hide")
+		onError: (formType, error) ->
+			toastr.error(error.message);
 
 Template.adminUsers.helpers
 
@@ -20,13 +26,6 @@ Template.adminUsers.helpers
 
 
 Template.adminUsers.onCreated ->
-	hooks =
-		usersForm:
-			onSuccess: (formType, result)->
-				$('#usersFormPopup').modal("hide")
-			onError: (formType, error) ->
-				toastr.error(error.message);
-	AutoForm.hooks(hooks)
 
 Template.adminUsers.onRendered ->
 	Session.set("selectedRowId", null);

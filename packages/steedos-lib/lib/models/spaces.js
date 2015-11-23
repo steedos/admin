@@ -1,4 +1,4 @@
-Steedos.Spaces = new Meteor.Collection('spaces')
+Steedos.Spaces = new Meteor.Collection('spaces', {idGeneration: "MONGO"})
 
 Steedos.Spaces.permit(['insert', 'update', 'remove']).apply();
 

@@ -1,4 +1,4 @@
-Steedos.Organizations = new Meteor.Collection('organizations')
+Steedos.Organizations = new Meteor.Collection('organizations', {idGeneration: "MONGO"})
 
 Steedos.Organizations.permit(['insert', 'update', 'remove']).apply();
 
@@ -178,7 +178,7 @@ if (Meteor.isServer) {
 		if (modifier.$set.parent){
 			// parent 不能等于自己或者children
 			if (doc._id == modifier.$set.parent)
-				throw new Meteor.Error(400, "Invalid value parent for organization object.");
+				throw new Meteor.Error(400, "Organization parent can not point to self.");
 
 			// 更新parents
 			modifier.$set.parents = Steedos.Organizations.getParents(modifier.$set.parent);

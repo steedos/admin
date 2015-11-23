@@ -5,6 +5,13 @@ FlowRouter.route '/admin/organizations/',
   
 
 
+AutoForm.hooks
+	organizationsForm:
+		onSuccess: (formType, result)->
+			$('#organizationsFormPopup').modal("hide")
+		onError: (formType, error) ->
+			toastr.error(error.message);
+
 Template.adminOrganizations.helpers
 
 	selectedRow: ->
@@ -20,14 +27,7 @@ Template.adminOrganizations.helpers
 
 
 Template.adminOrganizations.onCreated ->
-	hooks =
-		organizationsForm:
-			onSuccess: (formType, result)->
-				$('#organizationsFormPopup').modal("hide")
-			onError: (formType, error) ->
-				toastr.error(error.message);
 
-	AutoForm.hooks(hooks)
 
 Template.adminOrganizations.onRendered ->
 	Session.set("selectedRowId", null);
