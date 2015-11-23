@@ -14,7 +14,7 @@
 		<div class="ui small modal" id="dataFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.Users" schema="Steedos.Users._schema" fields="name,username,email,company,mobile,locale,timezone"  doc=selectedRow id="dataForm" type=formType}}
+				{{> quickForm collection="Steedos.Users" schema="Steedos.Users._simpleSchema" fields="name,username,email,company,mobile,locale,timezone"  doc=selectedRow id="dataForm" type=formType}}
 			</div>
 		</div>
 	</div>

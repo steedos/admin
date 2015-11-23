@@ -20,18 +20,18 @@ Mongo.Collection.prototype.i18n = () ->
 
 	self = this;
 
-	if (!self._c2)
-		return;
+	if (self._c2 && self._c2._simpleSchema)
+		_schema = self._c2._simpleSchema._schema;
+	else
+		_schema = self._simpleSchema._schema
 
-	if (!self._c2._simpleSchema)
-		return;
-
-	_schema = self._c2._simpleSchema._schema;
+	if (!_schema)
+		return	
 
 	_.each(_schema, (value, key) ->
 		if (!value) 
 			return
-		self._c2._simpleSchema._schema[key].label = t(self._name + "_" + key)
+		_schema[key].label = t(self._name + "_" + key)
 	)
 
 if Meteor.isClient

@@ -2,7 +2,7 @@ Steedos.Users = Meteor.users;
 
 Steedos.Users.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Users._schema = new SimpleSchema({
+Steedos.Users._simpleSchema = new SimpleSchema({
 	name: {
 		type: String,
 		max: 50
