@@ -20,7 +20,7 @@ Template.instanceform.helpers({
     return steedos_instance;
   },
   equals: function(a,b) {
-    return Steedos_Helpers.equals(a,b);
+    return Instanceform_Helpers.equals(a,b);
   },
   fields: function (){
     return new SimpleSchema(fields);

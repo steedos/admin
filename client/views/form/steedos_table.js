@@ -2,7 +2,7 @@
 Template.steedos_table.helpers({
 
   equals: function(a,b) {
-    return Steedos_Helpers.equals(a,b);
+    return Steedos_table_Helpers.equals(a,b);
   },
 
   append: function(a,b) {
@@ -23,14 +23,13 @@ Template.steedos_table.events({
           $("[name='"+(formcode + ".$." + key)+"']").val(this[key]);
         }
 
-        $("[name='"+formcode+".modal']")[0].dataset.row_index = row_index;
+        $("[name='"+formcode+".modal']")[0].dataset.rowindex = row_index;
         $("[name='"+formcode+".modal']")[0].dataset.rowobj = JSON.stringify(this);
 
         $("." + formcode + ".ui.modal")
             .modal({
                 inverted:true,
                 closable:false,
-                row_index:row_index,
                 onDeny : function() {
                   alert('not yet');
                   return false;
@@ -46,14 +45,10 @@ Template.steedos_table.events({
                     $("[name='"+(formcode + "."+row_index+"." + key)+"']").val($("[name='"+(formcode + ".$." + key)+"']").val());
                   }
 
-                  alert('ok');
+                  Steedos_table_Helpers.update_tableView(formcode,"instanceform");
                 }
             })
             .modal('show')
         ;
-    },
-    'click #au-sb-ok': function(event){
-      debugger;
-      Steedos_Helpers.update_subFormView("出差费用明细", fields, AutoForm.getFormValues("instanceform").insertDoc);
-    },
+    }
 })
