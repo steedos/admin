@@ -37,13 +37,13 @@ Mongo.Collection.prototype.i18n = () ->
 if Meteor.isClient
 	Tracker.autorun ->
 		lang = Session.get("TAPi18n::loaded_lang")
-		_.each(Steedos.collections, (collection) ->
+		_.each Steedos.collections, (collection) ->
 			collection.i18n()
 
 			if (collection._table)
-				_.each(collection._table.options.columns, (column) ->
+				_.each collection._table.options.columns, (column) ->
 					if (!column.data)
 						return
 					column.title = t(collection._table.collection._name + "_" + column.data);
-				)
-		)
+				
+		

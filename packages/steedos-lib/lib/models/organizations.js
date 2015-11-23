@@ -109,11 +109,11 @@ Steedos.Organizations._table = new Tabular.Table({
 		style: 'single'
 	},
 	columns: [
-		{data: "space"},
+		{data: "space_name()"},
 		{data: "fullname"},
 		{data: "sort_no"}
 	],
-	extraFields: ["name",'parent','users'],
+	extraFields: ["space", "name",'parent','users'],
 	// Filter data by permission
 	// selector: function() {
 	// 	return {}
@@ -121,6 +121,16 @@ Steedos.Organizations._table = new Tabular.Table({
 });
 
 Steedos.collections.Organizations = Steedos.Organizations
+
+
+if (Meteor.isClient) {
+	Steedos.Organizations.helpers({
+		space_name: function(){
+			space = Steedos.Spaces.findOne({_id: this.space});
+			return space && space.name;
+		}
+	})
+}
 
 if (Meteor.isServer) {
 

@@ -22,8 +22,8 @@ Package.onUse(function(api) {
 	api.use('underscore');
 	api.use('tracker');
 	api.use('session');
-	api.use('underscorestring:underscore.string');
-	api.use('monbro:mongodb-mapreduce-aggregation@1.0.1');
+	//api.use('underscorestring:underscore.string');
+	//api.use('monbro:mongodb-mapreduce-aggregation@1.0.1');
 	api.use('nimble:restivus');
 	api.use('aldeed:simple-schema');
 	api.use('aldeed:collection2');
@@ -39,15 +39,16 @@ Package.onUse(function(api) {
 
 	// TAPi18n
 	api.use('templating', 'client');
-	var _ = Npm.require('underscore');
+	//var _ = Npm.require('underscore');
 
 	api.use('tap:i18n', ['client', 'server']);
 	//api.add_files("package-tap.i18n", ["client", "server"]);
 	tapi18nFiles = ['i18n/en.i18n.json', 'i18n/zh-CN.i18n.json']
 	api.addFiles(tapi18nFiles, ['client', 'server']);
-	api.imply('tap:i18n');
+	//api.imply('tap:i18n');
 	
 	// COMMON
+	api.addFiles('lib/collection_helpers.js');
 	api.addFiles('lib/core.coffee');
 	api.addFiles('lib/tapi18n.coffee');
 

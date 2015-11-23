@@ -86,15 +86,32 @@ Steedos.Spaces._table = new Tabular.Table({
 	},
 	columns: [
 		{data: "name"},
-		{data: "owner"},
-		{data: "admins"},
+		{data: "owner_name()"},
+		{data: "admins_name()"},
 		{data: "is_paid"},
 	],
-	extraFields: ["balance"],
+	extraFields: ["owner", "admins", "balance"],
 });
 	
 Steedos.collections.Spaces = Steedos.Spaces
 
+
+if (Meteor.isClient) {
+	Steedos.Spaces.helpers({
+		owner_name: function(){
+			owner = Steedos.Users.findOne({_id: this.owner});
+			return owner && owner.name;
+		},
+		admins_name: function(){
+			admins = Steedos.Users.find({_id: {$in: this.admins}}, {fields: {name:1}});
+			adminNames = []
+			admins.forEach(function(admin){
+				adminNames.push(admin.name)
+			})
+			return adminNames.toString();
+		}
+	})
+}
 
 if (Meteor.isServer) {
 

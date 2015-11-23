@@ -175,7 +175,6 @@ var tabularOnRendered = function () {
     }
 
     //console.log('tabular_getInfo autorun');
-
     Meteor.subscribe(
       "tabular_getInfo",
       template.tabular.tableName.get(),
@@ -209,7 +208,7 @@ var tabularOnRendered = function () {
         template.tabular.recordsFiltered === 0) {
       return;
     }
-
+    
     template.tabular.tableDef.sub.subscribe(
       template.tabular.docPub.get(),
       tableName,

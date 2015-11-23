@@ -12,6 +12,7 @@ AutoForm.hooks
 		onError: (formType, error) ->
 			toastr.error(error.message);
 
+
 Template.adminOrganizations.helpers
 
 	selectedRow: ->
