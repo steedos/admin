@@ -1,7 +1,30 @@
 {
 	"Steedos Cloud": "Steedos Cloud",
+	"Apps": "Apps",
+	"Users": "Users",
+	"Spaces": "Spaces",
+
+	"Add": "Add",
+	"Edit": "Edit",
+	"Delete": "Delete",
 	
 	"users": "Users",
 	"users_name": "Name",
-	"users_email": "Email"
+	"users_username": "Username",
+	"users_email": "Email",
+	"users_company": "Company",
+	"users_mobile": "Moblie",
+	"users_locale": "Locale",
+	"users_timezone": "Timezone",
+	
+	"apps_name": "Name",
+	"apps_description": "Description",
+	"apps_url": "URL",
+	"apps_iconURL": "IconURL",
+
+	"spaces_name": "Name",
+	"spaces_admins": "Admins",
+	"spaces_owner": "Owner",
+	"spaces_balance": "Balance",
+	"spaces_is_paid": "Is Paid"
 }

@@ -10,12 +10,13 @@ Steedos._BaseSchema = {
 	},
 	created_by: {
 		type: String,
-		autoValue: function(){
-			if (this.isInsert) 
-				return Meteor.userId();
-			else
-				this.unset()
-		},
+		// autoValue: function(){
+		// 	if (this.isInsert) 
+		// 		return Meteor.userId();
+		// 	else
+		// 		this.unset()
+		// },
+	    optional: true
 	},
 	modified: {
 		type: Date,
@@ -30,12 +31,12 @@ Steedos._BaseSchema = {
 	},
 	modified_by: {
 		type: String,
-		autoValue: function(){
-			if (this.isUpdate) 
-				return Meteor.userId();
-			else
-				this.unset()
-		},
+		// autoValue: function(){
+		// 	if (this.isUpdate) 
+		// 		return Meteor.userId();
+		// 	else
+		// 		this.unset()
+		// },
 	    optional: true
 	},
 }
