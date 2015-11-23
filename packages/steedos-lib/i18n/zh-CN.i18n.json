@@ -27,5 +27,11 @@
 	"spaces_admins": "管理员",
 	"spaces_balance": "账户余额",
 	"spaces_owner": "所有者",
-	"spaces_is_paid": "已付费"
+	"spaces_is_paid": "已付费",
+
+
+	"organizations_fullname": "名称",
+	"organizations_users": "用户",
+	"organizations_name": "组织名称",
+	"organizations_parent": "上级部门"
 }

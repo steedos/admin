@@ -27,5 +27,10 @@
 	"spaces_admins": "Admins",
 	"spaces_owner": "Owner",
 	"spaces_balance": "Balance",
-	"spaces_is_paid": "Is Paid"
+	"spaces_is_paid": "Is Paid",
+
+	"organizations_fullname": "Fullname",
+	"organizations_users": "Users",
+	"organizations_name": "Name",
+	"organizations_parent": "Parent"
 }
