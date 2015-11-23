@@ -21,9 +21,9 @@ Template.adminSpaces.helpers
 
 Template.adminSpaces.onCreated ->
 	hooks =
-		dataForm:
+		spacesForm:
 			onSuccess: (formType, result)->
-				$('#dataFormPopup').modal("hide")
+				$('#spacesFormPopup').modal("hide")
 			onError: (formType, error) ->
 				toastr.error(error.message);
 	AutoForm.hooks(hooks)
@@ -37,12 +37,12 @@ Template.adminSpaces.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
-		$('#dataFormPopup').modal('show')
+		$('#spacesFormPopup').modal('show')
 	
 	"click #buttonEdit": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		$('#dataFormPopup').modal('show')
+		$('#spacesFormPopup').modal('show')
 
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")

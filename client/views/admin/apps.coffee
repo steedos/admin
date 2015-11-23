@@ -21,9 +21,9 @@ Template.adminApps.helpers
 
 Template.adminApps.onCreated ->
 	hooks =
-		dataForm:
+		appsForm:
 			onSuccess: (formType, result)->
-				$('#dataFormPopup').modal("hide")
+				$('#appsFormPopup').modal("hide")
 			onError: (formType, error) ->
 				toastr.error(error.message);
 	AutoForm.hooks(hooks)
@@ -37,12 +37,12 @@ Template.adminApps.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
-		$('#dataFormPopup').modal('show')
+		$('#appsFormPopup').modal('show')
 	
 	"click #buttonEdit": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		$('#dataFormPopup').modal('show')
+		$('#appsFormPopup').modal('show')
 
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")

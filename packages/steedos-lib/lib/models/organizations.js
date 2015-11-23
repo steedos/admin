@@ -14,10 +14,41 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 	parent: {
 		type: String,
 		optional: true,
+		autoform: {
+			type: "select2",
+			options: function() {
+				options = []
+				objs = Steedos.Organizations.find({}, {name:1, sort: {fullname:1}})
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
 	},
 	users: {
 		type: [String],
 		optional: true,
+		autoform: {
+			type: "select2",
+			afFieldInput: {
+				multiple: true
+			},
+			options: function() {
+				options = []
+				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
 	},
 	is_company: {
 		type: Boolean,
@@ -47,6 +78,7 @@ Steedos.Organizations._table = new Tabular.Table({
 	},
 	columns: [
 		{data: "fullname"},
+		{data: "users"},
 	],
 	extraFields: ["name",'parent','space'],
 	// Filter data by permission
@@ -61,7 +93,7 @@ if (Meteor.isServer) {
 
 	Steedos.Organizations.getChildren = function(id){
 		children = []
-		childrenObjs = Steedos.Organizations.find({parent: id}, {}, {_id:1});
+		childrenObjs = Steedos.Organizations.find({parent: id}, {});
 		childrenObjs.forEach(function(child) {
 			children.push(child._id);
 		})
@@ -69,7 +101,7 @@ if (Meteor.isServer) {
 	};
 	Steedos.Organizations.getRecursiveChildren = function(id){
 		children = []
-		childrenObjs = Steedos.Organizations.find({parents: id}, {}, {_id:1});
+		childrenObjs = Steedos.Organizations.find({parents: id}, {});
 		childrenObjs.forEach(function(child) {
 			children.push(child._id);
 		})
@@ -87,7 +119,7 @@ if (Meteor.isServer) {
 	};
 
 	Steedos.Organizations.getFullname = function(id){
-		org = Steedos.Organizations.findOne({_id: id}, {}, {parent: 1, name: 1});
+		org = Steedos.Organizations.findOne({_id: id}, {parent: 1, name: 1});
 
 		fullname = org.name;
 

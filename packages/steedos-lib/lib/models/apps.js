@@ -2,7 +2,7 @@ Steedos.Apps = new Meteor.Collection('apps')
 
 Steedos.Apps.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Apps.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
+Steedos.Apps.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
 		max: 50
@@ -20,7 +20,7 @@ Steedos.Apps.attachSchema(new SimpleSchema(_.extend(Steedos._BaseSchema, {
 		optional: true,
 		max: 1000
 	}
-})));
+}));
 
 Steedos.Apps._table = new Tabular.Table({
 	name: "Apps",

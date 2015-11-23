@@ -21,9 +21,9 @@ Template.adminUsers.helpers
 
 Template.adminUsers.onCreated ->
 	hooks =
-		dataForm:
+		usersForm:
 			onSuccess: (formType, result)->
-				$('#dataFormPopup').modal("hide")
+				$('#usersFormPopup').modal("hide")
 			onError: (formType, error) ->
 				toastr.error(error.message);
 	AutoForm.hooks(hooks)
@@ -37,12 +37,12 @@ Template.adminUsers.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
-		$('#dataFormPopup').modal('show')
+		$('#usersFormPopup').modal('show')
 	
 	"click #buttonEdit": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		$('#dataFormPopup').modal('show')
+		$('#usersFormPopup').modal('show')
 
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
