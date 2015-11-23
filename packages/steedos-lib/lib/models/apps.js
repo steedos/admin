@@ -1,4 +1,4 @@
-Steedos.Apps = new Meteor.Collection('apps', {idGeneration: "MONGO"})
+Steedos.Apps = new Meteor.Collection('apps')
 
 Steedos.Apps.permit(['insert', 'update', 'remove']).apply();
 

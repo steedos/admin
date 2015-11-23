@@ -1,4 +1,4 @@
-Steedos.SpaceUsers = new Meteor.Collection('space_users', {idGeneration: "MONGO"})
+Steedos.SpaceUsers = new Meteor.Collection('space_users')
 
 Steedos.SpaceUsers.permit(['insert', 'update', 'remove']).apply();
 

@@ -1,4 +1,4 @@
-Steedos.Organizations = new Meteor.Collection('organizations', {idGeneration: "MONGO"})
+Steedos.Organizations = new Meteor.Collection('organizations')
 
 Steedos.Organizations.permit(['insert', 'update', 'remove']).apply();
 
@@ -17,12 +17,19 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 		autoform: {
 			type: "select2",
 			options: function() {
-				options = []
-				objs = Steedos.Organizations.find({}, {name:1, sort: {fullname:1}})
+				options = [{
+					label: "",
+					value: ""
+				}]
+				objs = Steedos.Organizations.find({}, 
+						{
+							fields: {fullname: 1}, 
+							sort: {fullname:1}
+						})
 				objs.forEach(function(obj){
 					options.push({
 						label: obj.fullname,
-						value: String(obj._id)
+						value: obj._id
 					})
 				});
 				return options
@@ -95,7 +102,7 @@ if (Meteor.isServer) {
 		children = []
 		childrenObjs = Steedos.Organizations.find({parent: id}, {});
 		childrenObjs.forEach(function(child) {
-			children.push(String(child._id));
+			children.push(child._id);
 		})
 		return children;
 	};
@@ -103,15 +110,13 @@ if (Meteor.isServer) {
 		children = []
 		childrenObjs = Steedos.Organizations.find({parents: id}, {});
 		childrenObjs.forEach(function(child) {
-			children.push(String(child._id));
+			children.push(child._id);
 		})
 		return children;
 	};
 
 	Steedos.Organizations.updateChildren = function(id) {
-		console.log(id)
 		children = Steedos.Organizations.getChildren(id);
-		console.log(children)
 		Steedos.Organizations.direct.update({
 			_id: id
 		}, {
@@ -209,7 +214,7 @@ if (Meteor.isServer) {
 		// 如果更改 parent 或 name, 需要更新 自己和孩子们的 fullname	
 		if (modifier.$set.parent || modifier.$set.name){
 			Steedos.Organizations.updateFullname(doc._id);
-			children = Steedos.Organizations.getRecursiveChildren(doc._id)
+			children = Steedos.Organizations.getRecursiveChildren(doc._id);
 			_.each(children, function(childId){
 				Steedos.Organizations.updateFullname(childId);
 			})
