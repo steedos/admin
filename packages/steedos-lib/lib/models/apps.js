@@ -41,3 +41,5 @@ Steedos.Apps._table = new Tabular.Table({
 	// },
 	
 });
+
+Steedos.collections.Apps = Steedos.Apps

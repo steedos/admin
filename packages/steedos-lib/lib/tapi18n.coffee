@@ -39,12 +39,11 @@ if Meteor.isClient
 		lang = Session.get("TAPi18n::loaded_lang")
 		_.each(Steedos.collections, (collection) ->
 			collection.i18n()
-		)
 
-		_.each(Steedos.tables, (table) ->
-			_.each(table.options.columns, (column) ->
-				if (!column.data)
-					return
-				column.title = t(table.collection._name + "_" + column.data);
-			)
+			if (collection._table)
+				_.each(collection._table.options.columns, (column) ->
+					if (!column.data)
+						return
+					column.title = t(collection._table.collection._name + "_" + column.data);
+				)
 		)

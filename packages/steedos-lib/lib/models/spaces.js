@@ -67,4 +67,4 @@ Steedos.Spaces._table = new Tabular.Table({
 	extraFields: ["balance"],
 });
 	
-Steedos.Spaces._formFields = "name,admins,balance"
+Steedos.collections.Spaces = Steedos.Spaces

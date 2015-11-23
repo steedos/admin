@@ -70,3 +70,4 @@ Steedos.Users._table = new Tabular.Table({
 	],
 });
 	
+Steedos.collections.Users = Steedos.Users
