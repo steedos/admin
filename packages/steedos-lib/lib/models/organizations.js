@@ -21,8 +21,8 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 				objs = Steedos.Organizations.find({}, {name:1, sort: {fullname:1}})
 				objs.forEach(function(obj){
 					options.push({
-						label: obj.name,
-						value: obj._id
+						label: obj.fullname,
+						value: String(obj._id)
 					})
 				});
 				return options
@@ -95,7 +95,7 @@ if (Meteor.isServer) {
 		children = []
 		childrenObjs = Steedos.Organizations.find({parent: id}, {});
 		childrenObjs.forEach(function(child) {
-			children.push(child._id);
+			children.push(String(child._id));
 		})
 		return children;
 	};
@@ -103,13 +103,15 @@ if (Meteor.isServer) {
 		children = []
 		childrenObjs = Steedos.Organizations.find({parents: id}, {});
 		childrenObjs.forEach(function(child) {
-			children.push(child._id);
+			children.push(String(child._id));
 		})
 		return children;
 	};
 
 	Steedos.Organizations.updateChildren = function(id) {
+		console.log(id)
 		children = Steedos.Organizations.getChildren(id);
+		console.log(children)
 		Steedos.Organizations.direct.update({
 			_id: id
 		}, {
@@ -153,7 +155,11 @@ if (Meteor.isServer) {
 		parentId = parent;
 		while (parentId){
 			parentOrg = Steedos.Organizations.findOne({_id: parentId}, {parent: 1, name: 1});
-			parentId = parentOrg.parent
+			if (parentOrg)
+				parentId = parentOrg.parent
+			else
+				parentId = null
+
 			if (parentId){
 				parents.push(parentId)
 			}
