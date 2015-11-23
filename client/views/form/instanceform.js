@@ -7,7 +7,6 @@ var fields = Steedos_data.steedosFieldToAutoField(steedos_form);
 
 var formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.formula_values", steedos_form.fields);
 
-console.log(formula_fields);
 Template.instanceform.helpers({
   
   steedos_form: function (){
@@ -44,7 +43,6 @@ Template.instanceform.events({
 
   'change .form-control': function(event){
 
-    console.log("change............");
     //debugger;
     var code = event.target.name;
     

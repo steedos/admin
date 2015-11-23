@@ -143,6 +143,5 @@ Steedos_data.steedosFieldToAutoField = function (steedosForm){
     
     }
   }
-  console.log(JSON.stringify(afFields));
   return afFields;
 };
