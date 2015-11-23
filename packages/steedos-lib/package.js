@@ -55,16 +55,8 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/apps.js');
 	api.addFiles('lib/models/users.js');
 	api.addFiles('lib/models/spaces.js');
+	api.addFiles('lib/models/space_users.js');
 	api.addFiles('lib/models/organizations.js');
-
-	// MODELS SERVER
-	api.addFiles('server/models/_Base.coffee', 'server');
-	api.addFiles('server/models/Users.coffee', 'server');
-	api.addFiles('server/models/Apps.coffee', 'server');
-	api.addFiles('server/models/Settings.coffee', 'server');
-
-	api.addFiles('server/restapi.coffee', 'server');
-	api.addFiles('server/routes/onLogin.coffee', 'server');
 
 
 	// EXPORT

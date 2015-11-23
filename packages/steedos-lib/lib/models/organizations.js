@@ -5,7 +5,27 @@ Steedos.Organizations.permit(['insert', 'update', 'remove']).apply();
 Steedos.Organizations._simpleSchema = new SimpleSchema({
 	space: {
 		type: String,
-		optional: true,
+		autoform: {
+			type: "select2",
+			options: function() {
+				options = [{
+					label: "",
+					value: ""
+				}]
+				objs = Steedos.Spaces.find({}, 
+						{
+							fields: {name: 1}, 
+							sort: {name:1}
+						})
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
 	},
 	name: {
 		type: String,
@@ -35,6 +55,11 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 				return options
 			}
 		}
+	},
+	sort_no: {
+		type: Number,
+		optional: true,
+		defaultValue: 100
 	},
 	users: {
 		type: [String],
@@ -84,10 +109,11 @@ Steedos.Organizations._table = new Tabular.Table({
 		style: 'single'
 	},
 	columns: [
+		{data: "space"},
 		{data: "fullname"},
-		{data: "users"},
+		{data: "sort_no"}
 	],
-	extraFields: ["name",'parent','space'],
+	extraFields: ["name",'parent','users'],
 	// Filter data by permission
 	// selector: function() {
 	// 	return {}

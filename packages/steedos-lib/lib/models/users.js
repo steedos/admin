@@ -71,3 +71,21 @@ Steedos.Users._table = new Tabular.Table({
 });
 	
 Steedos.collections.Users = Steedos.Users
+
+
+if (Meteor.isServer) {
+
+	Steedos.Users.before.insert(function(userId, doc){
+		doc.created_by = userId;
+		doc.created = new Date();
+
+
+	});
+
+	Steedos.Users.before.update(function(userId, doc, fieldNames, modifier, options){
+		modifier.$set = modifier.$set || {};
+		modifier.$set.modified_by = userId;
+		modifier.$set.modified = new Date();
+
+	});
+}

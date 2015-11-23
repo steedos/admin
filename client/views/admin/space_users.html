@@ -1,20 +1,20 @@
-<template name="adminOrganizations">
+<template name="adminSpaceUsers">
 
   	<div class="ui centered relaxed stackable grid">
 	    {{> adminMenu}}
 
 		<div class="ui eleven wide column segment">
-			<h1>{{_ "organizations"}}</h1>
+			<h1>{{_ "space_users"}}</h1>
 			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
 			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
 			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
-				{{> tabular table=TabularTables.Organizations class="ui celled table dataTable"}}
+				{{> tabular table=TabularTables.SpaceUsers class="ui celled table dataTable"}}
 
 		</div>
-		<div class="ui small modal" id="organizationsFormPopup">
+		<div class="ui small modal" id="spaceUsersFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.Organizations" fields="space,name,parent,sort_no" doc=selectedRow id="organizationsForm" type=formType}}
+				{{> quickForm collection="Steedos.SpaceUsers" fields="space,email,name" doc=selectedRow id="spaceUsersForm" type=formType}}
 			</div>
 		</div>
 	</div>

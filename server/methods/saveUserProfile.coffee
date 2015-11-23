@@ -1,36 +1,38 @@
 Meteor.methods
 	saveUserProfile: (settings) ->
 		if Meteor.userId()
+			updateValues = {}
+
 			if settings.locale?
 				if (settings.locale == "en")
 					settings.locale = "en-us";
 				if (settings.locale == "zh-CN")
 					settings.locale = "zh-cn";
-				Steedos.models.Users.setLocale Meteor.userId(), settings.locale
+				updateValues.locale = settings.locale
 
 			if settings.username?
-				Steedos.models.Users.setUsername Meteor.userId(), settings.username
+				updateValues.username = settings.username
 
 			if settings.timezone?
-				Steedos.models.Users.setTimezone Meteor.userId(), settings.timezone
+				updateValues.timezone = settings.timezone
 
 			if settings.name?
-				Steedos.models.Users.setName Meteor.userId(), settings.name
+				updateValues.name = settings.name
 
 			if settings.company?
-				Steedos.models.Users.setCompany Meteor.userId(), settings.company
+				updateValues.company = settings.company
 
 			if settings.mobile?
-				Steedos.models.Users.setMobile Meteor.userId(), settings.mobile
+				updateValues.mobile = settings.mobile
 
 			if settings.email?
-				Steedos.models.Users.setEmail Meteor.userId(), settings.email
+				updateValues.email = settings.email
 
 			if settings.avatar?
-				Steedos.models.Users.setAvatar Meteor.userId(), settings.avatar
+				updateValues.avatar = settings.avatar
 
-			# if settings.profile
-			# 	profile = settings.profile
-			# 	Steedos.models.Users.setProfile Meteor.userId(), profile
+			Steedos.Users.update(Meteor.userId(), {
+				$set: updateValues
+			})
 
 			return true

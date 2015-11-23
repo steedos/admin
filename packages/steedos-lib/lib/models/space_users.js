@@ -5,6 +5,33 @@ Steedos.SpaceUsers.permit(['insert', 'update', 'remove']).apply();
 Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 	space: {
 		type: String,
+		autoform: {
+			type: "select2",
+			options: function() {
+				options = [{
+					label: "",
+					value: ""
+				}]
+				objs = Steedos.Spaces.find({}, 
+					{
+						fields: {name: 1}, 
+						sort: {name:1}
+					}
+				)
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
+	},
+	email: {
+		type: String,
+		regEx: SimpleSchema.RegEx.Email,
+		max: 200
 	},
 	user: {
 		type: String,
@@ -12,14 +39,11 @@ Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 	},
 	name: {
 		type: String,
-		max: 50
-	},
-	email: {
-		type: String,
-		regEx: SimpleSchema.RegEx.Email,
-		max: 200
+		max: 50,
+		optional: true,
 	},
 });
+Steedos.SpaceUsers.attachSchema(Steedos.SpaceUsers._simpleSchema);
 
 Steedos.SpaceUsers._table = new Tabular.Table({
 	name: "SpaceUsers",
@@ -29,9 +53,36 @@ Steedos.SpaceUsers._table = new Tabular.Table({
 		style: 'single'
 	},
 	columns: [
-		{data: "name"},
+		{data: "space"},
 		{data: "email"},
+		{data: "user"},
 	],
 });
 	
 Steedos.collections.SpaceUsers = Steedos.SpaceUsers
+
+
+if (Meteor.isServer) {
+
+	Steedos.SpaceUsers.before.insert(function(userId, doc){
+		doc.created_by = userId;
+		doc.created = new Date();
+
+		userObj = Steedos.Users.findOne({"emails.address": doc.email});
+		if (userObj)
+			doc.user = userObj._id
+
+	});
+
+	Steedos.SpaceUsers.before.update(function(userId, doc, fieldNames, modifier, options){
+		modifier.$set = modifier.$set || {};
+		modifier.$set.modified_by = userId;
+		modifier.$set.modified = new Date();
+
+		if (modifier.$set.email){
+			userObj = Steedos.Users.findOne({"emails.address": modifier.$set.email});
+			if (userObj)
+				modifier.$set.user = userObj._id
+		}
+	});
+}

@@ -4,7 +4,7 @@ Meteor.publish 'userData', ->
 
 	console.log '[publish] userData'
 
-	Steedos.models.Users.find this.userId,
+	Steedos.Users.find this.userId,
 		fields:
 			name: 1
 			email: 1

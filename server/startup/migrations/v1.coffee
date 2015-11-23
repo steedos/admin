@@ -2,7 +2,7 @@ Meteor.startup ->
 	Migrations.add
 		version: 1
 		up: ->
-			Steedos.models.Users.find().forEach (user) ->
+			Steedos.Users.find().forEach (user) ->
 				if user.email? 
 					if !user.emails || user.emails.length == 0
 						console.log "Upgrade user email " + user._id

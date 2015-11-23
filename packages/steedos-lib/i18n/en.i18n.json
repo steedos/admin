@@ -1,9 +1,5 @@
 {
 	"Steedos Cloud": "Steedos Cloud",
-	"Apps": "Apps",
-	"Users": "Users",
-	"Spaces": "Spaces",
-	"Organizations": "Organizations",
 
 	"Add": "Add",
 	"Edit": "Edit",
@@ -15,20 +11,23 @@
 	"users_email": "Email",
 	"users_company": "Company",
 	"users_mobile": "Moblie",
-	"users_locale": "Locale",
+	"users_locale": "Language",
 	"users_timezone": "Timezone",
 	
+	"apps": "Apps",
 	"apps_name": "Name",
 	"apps_description": "Description",
 	"apps_url": "URL",
 	"apps_iconURL": "IconURL",
 
+	"spaces": "Spaces",
 	"spaces_name": "Name",
 	"spaces_admins": "Admins",
 	"spaces_owner": "Owner",
 	"spaces_balance": "Balance",
 	"spaces_is_paid": "Is Paid",
 
+	"organizations": "Organizations",
 	"organizations_fullname": "Fullname",
 	"organizations_users": "Users",
 	"organizations_name": "Name",

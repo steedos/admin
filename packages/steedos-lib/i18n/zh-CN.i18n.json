@@ -1,9 +1,5 @@
 {
 	"Steedos Cloud": "华炎云",
-	"Apps": "应用",
-	"Users": "用户",
-	"Spaces": "工作区",
-	"Organizations": "部门",
 
 	"Add": "添加",
 	"Edit": "编辑",
@@ -15,14 +11,16 @@
 	"users_email": "邮件",
 	"users_company": "公司",
 	"users_mobile": "电话",
-	"users_locale": "本地语言",
+	"users_locale": "语言",
 	"users_timezone": "时区",
 	
+	"apps": "应用",
 	"apps_name": "名称",
 	"apps_description": "描述",
 	"apps_url": "链接",
 	"apps_iconURL": "图标链接",
 	
+	"spaces": "工作区",
 	"spaces_name": "名称",
 	"spaces_admins": "管理员",
 	"spaces_balance": "账户余额",
@@ -30,6 +28,7 @@
 	"spaces_is_paid": "已付费",
 
 
+	"organizations": "部门",
 	"organizations_fullname": "名称",
 	"organizations_users": "用户",
 	"organizations_name": "组织名称",

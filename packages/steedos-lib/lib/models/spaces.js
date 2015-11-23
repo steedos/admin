@@ -14,7 +14,10 @@ Steedos.Spaces.attachSchema(new SimpleSchema({
 		autoform: {
 			type: "select2",
 			options: function() {
-				options = []
+				options = [{
+					label: "",
+					value: ""
+				}]
 				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
 				objs.forEach(function(obj){
 					options.push({
