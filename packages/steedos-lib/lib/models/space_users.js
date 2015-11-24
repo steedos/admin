@@ -44,6 +44,7 @@ Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 	},
 	organization: {
 		type: String,
+		optional: true,
 		autoform: {
 			type: "select2",
 			options: function() {

@@ -1,7 +1,11 @@
-Meteor.publish 'organizations', ->
+Meteor.publish 'organizations', (spaceId)->
 	unless this.userId
 		return this.ready()
 
-	console.log '[publish] organizations'
+	selector = {}
+	if spaceId
+		selector.space = spaceId
 
-	return Steedos.Organizations.find({}, {fields: {name:1}})
+	console.log '[publish] organizations ' + spaceId
+
+	return Steedos.Organizations.find(selector, {fields: {name:1}})
