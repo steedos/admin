@@ -36,6 +36,8 @@ datatables_i18n =
 		"oAria": 
 			"sSortAscending":  ": activate to sort column ascending",
 			"sSortDescending": ": activate to sort column descending"
+		"select" : 
+			"rows": "%d row(s) selected"
 		
 	"zh-CN":
 		"sProcessing":   "处理中...",
@@ -58,7 +60,8 @@ datatables_i18n =
 		"oAria": 
 			"sSortAscending":  ": 以升序排列此列",
 			"sSortDescending": ": 以降序排列此列"
-		
+		"select" : 
+			"rows": "选中%d行"
 	
 
 Mongo.Collection.prototype.i18n = () ->

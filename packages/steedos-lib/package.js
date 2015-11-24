@@ -34,8 +34,11 @@ Package.onUse(function(api) {
 	api.use('blaze-html-templates');
 	api.use('matb33:collection-hooks');
 
+
 	api.use(['webapp'], 'server');
 
+	api.use('momentjs:moment', 'client');
+	api.use('mrt:moment-timezone', 'client');
 
 	// TAPi18n
 	api.use('templating', 'client');
@@ -54,7 +57,7 @@ Package.onUse(function(api) {
 
 	api.addFiles('lib/models/_base.js');
 	api.addFiles('lib/models/apps.js');
-	api.addFiles('lib/models/users.js');
+	api.addFiles('lib/models/users.coffee');
 	api.addFiles('lib/models/spaces.js');
 	api.addFiles('lib/models/space_users.js');
 	api.addFiles('lib/models/organizations.js');

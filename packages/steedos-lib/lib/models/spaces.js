@@ -67,14 +67,6 @@ Steedos.Spaces.attachSchema(new SimpleSchema({
 		}
 	},
 
-	google_domain_name: {
-		type: String,
-		optional: true,
-	},
-	imo_cid: {
-		type: String,
-		optional: true,
-	},
 }));
 
 Steedos.Spaces._table = new Tabular.Table({
@@ -82,7 +74,8 @@ Steedos.Spaces._table = new Tabular.Table({
 	collection: Steedos.Spaces,
 	lengthChange: false,
 	select: {
-		style: 'single'
+		style: 'single',
+		info: false
 	},
 	columns: [
 		{data: "name"},
@@ -103,6 +96,8 @@ if (Meteor.isClient) {
 			return owner && owner.name;
 		},
 		admins_name: function(){
+			if (!this.admins)
+				return ""
 			admins = Steedos.Users.find({_id: {$in: this.admins}}, {fields: {name:1}});
 			adminNames = []
 			admins.forEach(function(admin){

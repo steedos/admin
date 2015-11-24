@@ -1,5 +1,7 @@
 Meteor.publish 'users', ->
+	unless this.userId
+		return this.ready()
 
- 	console.log '[publish] users'
+	console.log '[publish] users'
 
- 	return Steedos.Users.find({}, {fields: {name: 1}})
+	return Steedos.Users.find({}, {fields: {name: 1}})

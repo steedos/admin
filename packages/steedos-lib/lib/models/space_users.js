@@ -42,6 +42,39 @@ Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 		max: 50,
 		optional: true,
 	},
+	organization: {
+		type: String,
+		autoform: {
+			type: "select2",
+			options: function() {
+				options = [{
+					label: "",
+					value: ""
+				}]
+				objs = Steedos.Organizations.find({}, 
+					{
+						fields: {name: 1}, 
+						sort: {name:1}
+					}
+				)
+				objs.forEach(function(obj){
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				});
+				return options
+			}
+		}
+	},
+	user_accepted: {
+		type: Boolean,
+		optional: true,
+	},
+	manager: {
+		type: String,
+		optional: true,
+	},
 });
 Steedos.SpaceUsers.attachSchema(Steedos.SpaceUsers._simpleSchema);
 
@@ -50,13 +83,16 @@ Steedos.SpaceUsers._table = new Tabular.Table({
 	collection: Steedos.SpaceUsers,
 	lengthChange: false,
 	select: {
-		style: 'single'
+		style: 'single',
+		info: false
 	},
 	columns: [
-		{data: "space"},
+		{data: "name"},
 		{data: "email"},
-		{data: "user"},
+		{data: "organization"},
+		{data: "user_accepted"}
 	],
+	extraFields: ["user", "name", "space", "manager"]
 });
 	
 Steedos.collections.SpaceUsers = Steedos.SpaceUsers

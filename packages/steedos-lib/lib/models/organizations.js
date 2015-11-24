@@ -106,7 +106,8 @@ Steedos.Organizations._table = new Tabular.Table({
 	collection: Steedos.Organizations,
 	lengthChange: false,
 	select: {
-		style: 'single'
+		style: 'single',
+		info: false
 	},
 	columns: [
 		{data: "space_name()"},
@@ -211,7 +212,7 @@ if (Meteor.isServer) {
 
 	Steedos.Organizations.before.remove(function(userId, doc){
 		if (doc.children && doc.children.length>0)
-			throw new Meteor.Error(400, "Can not delete organizations with children.");
+			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
 	});
 
 	Steedos.Organizations.before.insert(function(userId, doc){
@@ -231,7 +232,7 @@ if (Meteor.isServer) {
 			// parent 不能等于自己或者children
 			parentOrg = Steedos.Organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
-				throw new Meteor.Error(400, "Organization parent can not point to self.");
+				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
 
 			// 更新parents
 			modifier.$set.parents = Steedos.Organizations.getParents(modifier.$set.parent);

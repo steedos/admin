@@ -27,7 +27,8 @@ Steedos.Apps._table = new Tabular.Table({
 	collection: Steedos.Apps,
 	lengthChange: false,
 	select: {
-		style: 'single'
+		style: 'single',
+		info: false
 	},
 	columns: [
 		{data: "name"},

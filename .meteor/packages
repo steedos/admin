@@ -11,6 +11,7 @@ coffeescript
 
 underscorestring:underscore.string
 momentjs:moment
+mrt:moment-timezone
 
 semantic:ui
 steedos:lib
