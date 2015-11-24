@@ -2,10 +2,16 @@
 
 	<div class="ui fixed inverted borderless menu" id="dock">
 		
-		<div class="item">
-		  <a class="ui inverted header" href="/">
-			{{_ 'Steedos Cloud'}}
-		  </a>
+		<div class="ui dropdown item">
+			<a class="ui inverted header" href="/">
+				{{_ 'Steedos Cloud'}}
+			</a>
+			<i class="dropdown icon"></i>
+			<div class="ui menu">
+				{{#each spaces}}
+					<a class="item" href="/space/{{_id}}">{{name}}</a>
+				{{/each}}
+			</div>
 		</div>
 
 

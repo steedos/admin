@@ -23,6 +23,9 @@ Template.dock.helpers
 		if (Meteor.user())
 			return Meteor.user().avatar
 
+	spaces: ->
+		return Steedos.Spaces.find();
+
 
 Template.dock.onRendered ->
 	
