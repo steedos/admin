@@ -54,12 +54,12 @@ table.dataTable thead .sorting_desc_disabled {
 	cursor: pointer;
 }
 
-table.ui.table.dataTable thead th.sorting { background: url('/packages/steedos_datatables/images/sort_both.png') no-repeat center right; }
-table.ui.table.dataTable thead th.sorting_asc { background: url('/packages/steedos_datatables/images/sort_asc.png') no-repeat center right; }
-table.ui.table.dataTable thead th.sorting_desc { background: url('/packages/steedos_datatables/images/sort_desc.png') no-repeat center right; }
+table.ui.table.dataTable thead th.sorting { background: url('/packages/steedos_tabular/images/sort_both.png') no-repeat center right; }
+table.ui.table.dataTable thead th.sorting_asc { background: url('/packages/steedos_tabular/images/sort_asc.png') no-repeat center right; }
+table.ui.table.dataTable thead th.sorting_desc { background: url('/packages/steedos_tabular/images/sort_desc.png') no-repeat center right; }
 
-table.ui.table.dataTable thead th.sorting_asc_disabled { background: url('/packages/steedos_datatables/images/sort_asc_disabled.png') no-repeat center right; }
-table.ui.table.dataTable thead th.sorting_desc_disabled { background: url('/packages/steedos_datatables/images/sort_desc_disabled.png') no-repeat center right; }
+table.ui.table.dataTable thead th.sorting_asc_disabled { background: url('/packages/steedos_tabular/images/sort_asc_disabled.png') no-repeat center right; }
+table.ui.table.dataTable thead th.sorting_desc_disabled { background: url('/packages/steedos_tabular/images/sort_desc_disabled.png') no-repeat center right; }
 
 table.dataTable thead > tr > th {
 	padding-left: 18px;
