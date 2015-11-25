@@ -5,7 +5,6 @@
 
 db = {}
 
-
 Steedos =
 	db: db,
 

@@ -2,15 +2,31 @@ Meteor.publish 'spaces', ->
 	unless this.userId
 		return this.ready()
 
-	user = db.users.findOne(this.userId);
-	user_space_ids = []
-	user_spaces = db.space_users.find({user: this.userId});
-	user_spaces.forEach (space_user) ->
-		user_space_ids.push(space_user.space)
+	console.log '[publish] user spaces'
 
-	selector = {}
-	selector._id = {$in: user_space_ids}
+	self = this;
 
-	console.log '[publish] spaces ' + JSON.stringify(user_space_ids)
+	handle = db.space_users.find({user: this.userId}).observe 
+		added: (doc) ->
+			if doc.space
+				console.log "[publish] user space added " + doc.space
+				space = db.spaces.findOne doc.space
+				if space
+					self.added "spaces", doc.space, space;
+		changed: (newDoc, oldDoc) ->
+			console.log "[publish] user space changed " + newDoc.space
+			newSpace = db.spaces.findOne newDoc.space
+			if newSpace
+				self.added "spaces", newDoc.space, newSpace;
+			if oldDoc.space
+				self.removed "spaces", oldDoc.space;
+		removed: (oldDoc) ->
+			if oldDoc.space
+				console.log "[publish] user space removed " + oldDoc.space
+				self.removed "spaces", oldDoc.space;
+		
+	
+	self.ready();
 
-	return db.spaces.find(selector)
+	self.onStop ->
+		handle.stop();

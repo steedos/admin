@@ -156,4 +156,8 @@ if (Meteor.isServer) {
 		}
 
 	});
+
+	db.spaces.before.remove(function(userId, doc){
+		db.space_users.remove({space: doc._id});
+	});
 }
