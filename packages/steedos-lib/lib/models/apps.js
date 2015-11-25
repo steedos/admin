@@ -1,8 +1,8 @@
-Steedos.Apps = new Meteor.Collection('apps')
+db.apps = new Meteor.Collection('apps')
 
-Steedos.Apps.permit(['insert', 'update', 'remove']).apply();
+db.apps.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Apps.attachSchema(new SimpleSchema({
+db.apps.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
 		max: 50
@@ -22,9 +22,9 @@ Steedos.Apps.attachSchema(new SimpleSchema({
 	}
 }));
 
-Steedos.Apps._table = new Tabular.Table({
+db.apps._table = new Tabular.Table({
 	name: "Apps",
-	collection: Steedos.Apps,
+	collection: db.apps,
 	lengthChange: false,
 	select: {
 		style: 'single',
@@ -42,5 +42,3 @@ Steedos.Apps._table = new Tabular.Table({
 	// },
 	
 });
-
-Steedos.collections.Apps = Steedos.Apps

@@ -4,4 +4,4 @@ Meteor.publish 'users', ->
 
 	console.log '[publish] users'
 
-	return Steedos.Users.find({}, {fields: {name: 1}})
+	return db.users.find({}, {fields: {name: 1}})

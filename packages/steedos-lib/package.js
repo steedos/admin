@@ -65,6 +65,7 @@ Package.onUse(function(api) {
 
 	// EXPORT
 	api.export('Steedos');
+	api.export('db');
 });
 
 Package.onTest(function(api) {

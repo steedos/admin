@@ -1,8 +1,8 @@
-Steedos.Spaces = new Meteor.Collection('spaces')
+db.spaces = new Meteor.Collection('spaces')
 
-Steedos.Spaces.permit(['insert', 'update', 'remove']).apply();
+db.spaces.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Spaces.attachSchema(new SimpleSchema({
+db.spaces.attachSchema(new SimpleSchema({
 	name: {
 		type: String,
   		unique: true,
@@ -18,7 +18,7 @@ Steedos.Spaces.attachSchema(new SimpleSchema({
 					label: "",
 					value: ""
 				}]
-				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
+				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach(function(obj){
 					options.push({
 						label: obj.name,
@@ -38,7 +38,7 @@ Steedos.Spaces.attachSchema(new SimpleSchema({
 			},
 			options: function() {
 				options = []
-				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
+				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach(function(obj){
 					options.push({
 						label: obj.name,
@@ -69,9 +69,9 @@ Steedos.Spaces.attachSchema(new SimpleSchema({
 
 }));
 
-Steedos.Spaces._table = new Tabular.Table({
+db.spaces._table = new Tabular.Table({
 	name: "Spaces",
-	collection: Steedos.Spaces,
+	collection: db.spaces,
 	lengthChange: false,
 	select: {
 		style: 'single',
@@ -92,19 +92,18 @@ Steedos.Spaces._table = new Tabular.Table({
 	// },
 });
 	
-Steedos.collections.Spaces = Steedos.Spaces
 
 
 if (Meteor.isClient) {
-	Steedos.Spaces.helpers({
+	db.spaces.helpers({
 		owner_name: function(){
-			owner = Steedos.Users.findOne({_id: this.owner});
+			owner = db.users.findOne({_id: this.owner});
 			return owner && owner.name;
 		},
 		admins_name: function(){
 			if (!this.admins)
 				return ""
-			admins = Steedos.Users.find({_id: {$in: this.admins}}, {fields: {name:1}});
+			admins = db.users.find({_id: {$in: this.admins}}, {fields: {name:1}});
 			adminNames = []
 			admins.forEach(function(admin){
 				adminNames.push(admin.name)
@@ -116,7 +115,7 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
 
-	Steedos.Spaces.before.insert(function(userId, doc){
+	db.spaces.before.insert(function(userId, doc){
 		doc.created_by = userId;
 		doc.created = new Date();
 
@@ -130,7 +129,7 @@ if (Meteor.isServer) {
 		}
 	});
 
-	Steedos.Spaces.before.update(function(userId, doc, fieldNames, modifier, options){
+	db.spaces.before.update(function(userId, doc, fieldNames, modifier, options){
 		modifier.$set = modifier.$set || {};
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();

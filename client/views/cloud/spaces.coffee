@@ -15,7 +15,7 @@ Template.cloudSpaces.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Spaces.findOne({_id: Session.get("selectedRowId")})
+			return db.spaces.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -46,7 +46,7 @@ Template.cloudSpaces.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Spaces.remove {_id: Session.get("selectedRowId")}, (error) ->
+		db.spaces.remove {_id: Session.get("selectedRowId")}, (error) ->
 			if error
 				toastr.error(error.message);
 			else

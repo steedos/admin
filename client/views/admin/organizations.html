@@ -14,7 +14,7 @@
 		<div class="ui small modal" id="organizationsFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.Organizations" fields="space,name,parent,sort_no" doc=selectedRow id="organizationsForm" type=formType}}
+				{{> quickForm collection="db.organizations" fields="space,name,parent,sort_no" doc=selectedRow id="organizationsForm" type=formType}}
 			</div>
 		</div>
 	</div>

@@ -15,7 +15,7 @@ Template.adminSpaceUsers.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.SpaceUsers.findOne({_id: Session.get("selectedRowId")})
+			return db.space_users.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -46,7 +46,7 @@ Template.adminSpaceUsers.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.SpaceUsers.remove {_id: Session.get("selectedRowId")}, (error) ->
+		db.space_users.remove {_id: Session.get("selectedRowId")}, (error) ->
 			if error
 				toastr.error(error.message);
 			else

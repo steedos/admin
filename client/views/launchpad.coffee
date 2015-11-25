@@ -1,7 +1,7 @@
 Template.launchpad.helpers
 		
 	userApps: ->
-		return Steedos.Apps.find();
+		return db.apps.find();
 
 Template.launchpad.onCreated ->
 	

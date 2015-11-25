@@ -1,8 +1,8 @@
-Steedos.Users = Meteor.users;
+db.users = Meteor.users;
 
-Steedos.Users.permit(['insert', 'update', 'remove']).apply();
+db.users.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Users._simpleSchema = new SimpleSchema
+db.users._simpleSchema = new SimpleSchema
 	name: 
 		type: String,
 	username: 
@@ -58,9 +58,9 @@ Steedos.Users._simpleSchema = new SimpleSchema
 		optional: true
 
 
-Steedos.Users._table = new Tabular.Table
+db.users._table = new Tabular.Table
 	name: "Users",
-	collection: Steedos.Users,
+	collection: db.users,
 	lengthChange: false,
 	select: 
 		style: 'single',
@@ -71,25 +71,25 @@ Steedos.Users._table = new Tabular.Table
 		{data: "locale"}
 	],
 
-Steedos.collections.Users = Steedos.Users
 
 
 if Meteor.isServer
 
-	Steedos.Users.checkEmailValid = (email) ->
-		existed = Steedos.Users.find 
+	db.users.checkEmailValid = (email) ->
+		existed = db.users.find 
 			"emails.address": email
 		if existed.count()>0
 			throw new Meteor.Error(400, t("users_error.email_exists"));
 
-	Steedos.Users.checkUsernameValid = (username) ->
-		existed = Steedos.Users.find 
+	db.users.checkUsernameValid = (username) ->
+		existed = db.users.find 
 			"username": email
 		if existed.count()>0
 			throw new Meteor.Error(400, t("users_error.username_exists"));
 
-	Steedos.Users.before.insert (userId, doc) ->
-		doc.created_by = userId;
+	db.users.before.insert (userId, doc) ->
+		if userId
+			doc.created_by = userId;
 		doc.created = new Date();
 
 		if (doc.email && !doc.emails)
@@ -101,10 +101,11 @@ if Meteor.isServer
 			doc.steedos_id = doc.email
 
 		_.each doc.emails, (obj)->
-			Steedos.Users.checkEmailValid(obj.address);
+			db.users.checkEmailValid(obj.address);
 		
 
-	Steedos.Users.before.update  (userId, doc, fieldNames, modifier, options) ->
+	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
-		modifier.$set.modified_by = userId;
+		if userId
+			modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();

@@ -15,7 +15,7 @@ Template.cloudApps.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Apps.findOne({_id: Session.get("selectedRowId")})
+			return db.apps.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -46,7 +46,7 @@ Template.cloudApps.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Apps.remove {_id: Session.get("selectedRowId")}, (error) ->
+		db.apps.remove {_id: Session.get("selectedRowId")}, (error) ->
 			if error
 				toastr.error(error.message);
 			else

@@ -1,8 +1,8 @@
-Steedos.Organizations = new Meteor.Collection('organizations')
+db.organizations = new Meteor.Collection('organizations')
 
-Steedos.Organizations.permit(['insert', 'update', 'remove']).apply();
+db.organizations.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.Organizations._simpleSchema = new SimpleSchema({
+db.organizations._simpleSchema = new SimpleSchema({
 	space: {
 		type: String,
 		autoform: {
@@ -26,7 +26,7 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 					label: "",
 					value: ""
 				}]
-				objs = Steedos.Organizations.find({}, 
+				objs = db.organizations.find({}, 
 						{
 							fields: {fullname: 1}, 
 							sort: {fullname:1}
@@ -56,7 +56,7 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 			},
 			options: function() {
 				options = []
-				objs = Steedos.Users.find({}, {name:1, sort: {name:1}})
+				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach(function(obj){
 					options.push({
 						label: obj.name,
@@ -84,11 +84,11 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 		optional: true,
 	},
 });
-Steedos.Organizations.attachSchema(Steedos.Organizations._simpleSchema);
+db.organizations.attachSchema(db.organizations._simpleSchema);
 
-Steedos.Organizations._table = new Tabular.Table({
+db.organizations._table = new Tabular.Table({
 	name: "Organizations",
-	collection: Steedos.Organizations,
+	collection: db.organizations,
 	lengthChange: false,
 	select: {
 		style: 'single',
@@ -112,31 +112,29 @@ Steedos.Organizations._table = new Tabular.Table({
 	},
 });
 
-Steedos.collections.Organizations = Steedos.Organizations
-
 
 if (Meteor.isServer) {
 
-	Steedos.Organizations.getChildren = function(id){
+	db.organizations.getChildren = function(id){
 		children = []
-		childrenObjs = Steedos.Organizations.find({parent: id}, {});
+		childrenObjs = db.organizations.find({parent: id}, {});
 		childrenObjs.forEach(function(child) {
 			children.push(child._id);
 		})
 		return children;
 	};
-	Steedos.Organizations.getRecursiveChildren = function(id){
+	db.organizations.getRecursiveChildren = function(id){
 		children = []
-		childrenObjs = Steedos.Organizations.find({parents: id}, {});
+		childrenObjs = db.organizations.find({parents: id}, {});
 		childrenObjs.forEach(function(child) {
 			children.push(child._id);
 		})
 		return children;
 	};
 
-	Steedos.Organizations.updateChildren = function(id) {
-		children = Steedos.Organizations.getChildren(id);
-		Steedos.Organizations.direct.update({
+	db.organizations.updateChildren = function(id) {
+		children = db.organizations.getChildren(id);
+		db.organizations.direct.update({
 			_id: id
 		}, {
 			$set: {children: children}
@@ -144,8 +142,8 @@ if (Meteor.isServer) {
 		return children;
 	};
 
-	Steedos.Organizations.getFullname = function(id){
-		org = Steedos.Organizations.findOne({_id: id}, {parent: 1, name: 1});
+	db.organizations.getFullname = function(id){
+		org = db.organizations.findOne({_id: id}, {parent: 1, name: 1});
 
 		fullname = org.name;
 
@@ -154,7 +152,7 @@ if (Meteor.isServer) {
 
 		parentId = org.parent;
 		while (parentId){
-			parentOrg = Steedos.Organizations.findOne({_id: parentId}, {parent: 1, name: 1});
+			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
 			fullname = parentOrg.name + "/" + fullname;
 			parentId = parentOrg.parent
 		}
@@ -162,23 +160,23 @@ if (Meteor.isServer) {
 		return fullname
 	};
 
-	Steedos.Organizations.updateFullname = function(id) {
+	db.organizations.updateFullname = function(id) {
 		fullname = this.getFullname(id)
-		Steedos.Organizations.direct.update({
+		db.organizations.direct.update({
 			_id: id
 		}, {
 			$set: {fullname: fullname}
 		})
 	};
 
-	Steedos.Organizations.getParents = function(parent){
+	db.organizations.getParents = function(parent){
 		if (!parent)
 			return []
 		parents = [parent];
 
 		parentId = parent;
 		while (parentId){
-			parentOrg = Steedos.Organizations.findOne({_id: parentId}, {parent: 1, name: 1});
+			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
 			if (parentOrg)
 				parentId = parentOrg.parent
 			else
@@ -192,56 +190,56 @@ if (Meteor.isServer) {
 		return parents
 	};
 
-	Steedos.Organizations.before.remove(function(userId, doc){
+	db.organizations.before.remove(function(userId, doc){
 		if (doc.children && doc.children.length>0)
 			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
 	});
 
-	Steedos.Organizations.before.insert(function(userId, doc){
+	db.organizations.before.insert(function(userId, doc){
 		doc.created_by = userId;
 		doc.created = new Date();
 
-		doc.parents = Steedos.Organizations.getParents(doc.parent);
+		doc.parents = db.organizations.getParents(doc.parent);
 		doc.is_company = !doc.parent;
 	});
 
-	Steedos.Organizations.before.update(function(userId, doc, fieldNames, modifier, options){
+	db.organizations.before.update(function(userId, doc, fieldNames, modifier, options){
 		modifier.$set = modifier.$set || {};
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
 		if (modifier.$set.parent){
 			// parent 不能等于自己或者children
-			parentOrg = Steedos.Organizations.findOne({_id: modifier.$set.parent})
+			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
 				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
 
 			// 更新parents
-			modifier.$set.parents = Steedos.Organizations.getParents(modifier.$set.parent);
+			modifier.$set.parents = db.organizations.getParents(modifier.$set.parent);
 		} 
 
 	});
 
-	Steedos.Organizations.after.insert(function(userId, doc){
+	db.organizations.after.insert(function(userId, doc){
 		if (doc.parent)
-			Steedos.Organizations.updateChildren(doc.parent);
-		Steedos.Organizations.updateFullname(doc._id);
+			db.organizations.updateChildren(doc.parent);
+		db.organizations.updateFullname(doc._id);
 	});
 
-	Steedos.Organizations.after.update(function(userId, doc, fieldNames, modifier, options){
+	db.organizations.after.update(function(userId, doc, fieldNames, modifier, options){
 		// 如果更改 parent，更改前后的对象都需要重新生成children
 		if (doc.parent){
-			children = Steedos.Organizations.updateChildren(doc.parent);
+			children = db.organizations.updateChildren(doc.parent);
 		}
 		if (modifier.$set.parent)
-			children = Steedos.Organizations.updateChildren(modifier.$set.parent);
+			children = db.organizations.updateChildren(modifier.$set.parent);
 
 		// 如果更改 parent 或 name, 需要更新 自己和孩子们的 fullname	
 		if (modifier.$set.parent || modifier.$set.name){
-			Steedos.Organizations.updateFullname(doc._id);
-			children = Steedos.Organizations.getRecursiveChildren(doc._id);
+			db.organizations.updateFullname(doc._id);
+			children = db.organizations.getRecursiveChildren(doc._id);
 			_.each(children, function(childId){
-				Steedos.Organizations.updateFullname(childId);
+				db.organizations.updateFullname(childId);
 			})
 		}
 

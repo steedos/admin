@@ -15,7 +15,7 @@ Template.cloudUsers.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Users.findOne({_id: Session.get("selectedRowId")})
+			return db.users.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -46,7 +46,7 @@ Template.cloudUsers.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Users.remove {_id: Session.get("selectedRowId")}, (error) ->
+		db.users.remove {_id: Session.get("selectedRowId")}, (error) ->
 			if error
 				toastr.error(error.message);
 			else

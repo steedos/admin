@@ -1,8 +1,8 @@
-Steedos.SpaceUsers = new Meteor.Collection('space_users')
+db.space_users = new Meteor.Collection('space_users')
 
-Steedos.SpaceUsers.permit(['insert', 'update', 'remove']).apply();
+db.space_users.permit(['insert', 'update', 'remove']).apply();
 
-Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
+db.space_users._simpleSchema = new SimpleSchema({
 	space: {
 		type: String,
 		autoform: {
@@ -36,7 +36,7 @@ Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 					label: "",
 					value: ""
 				}]
-				objs = Steedos.Organizations.find({}, 
+				objs = db.organizations.find({}, 
 					{
 						sort: {name:1}
 					}
@@ -60,11 +60,11 @@ Steedos.SpaceUsers._simpleSchema = new SimpleSchema({
 		optional: true,
 	},
 });
-Steedos.SpaceUsers.attachSchema(Steedos.SpaceUsers._simpleSchema);
+db.space_users.attachSchema(db.space_users._simpleSchema);
 
-Steedos.SpaceUsers._table = new Tabular.Table({
+db.space_users._table = new Tabular.Table({
 	name: "SpaceUsers",
-	collection: Steedos.SpaceUsers,
+	collection: db.space_users,
 	lengthChange: false,
 	select: {
 		style: 'single',
@@ -84,29 +84,27 @@ Steedos.SpaceUsers._table = new Tabular.Table({
 		return {}
 	}
 });
-	
-Steedos.collections.SpaceUsers = Steedos.SpaceUsers
 
 
 if (Meteor.isServer) {
 
-	Steedos.SpaceUsers.before.insert(function(userId, doc){
+	db.space_users.before.insert(function(userId, doc){
 		doc.created_by = userId;
 		doc.created = new Date();
 
-		userObj = Steedos.Users.findOne({"emails.address": doc.email});
+		userObj = db.users.findOne({"emails.address": doc.email});
 		if (userObj)
 			doc.user = userObj._id
 
 	});
 
-	Steedos.SpaceUsers.before.update(function(userId, doc, fieldNames, modifier, options){
+	db.space_users.before.update(function(userId, doc, fieldNames, modifier, options){
 		modifier.$set = modifier.$set || {};
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
 		if (modifier.$set.email){
-			userObj = Steedos.Users.findOne({"emails.address": modifier.$set.email});
+			userObj = db.users.findOne({"emails.address": modifier.$set.email});
 			if (userObj)
 				modifier.$set.user = userObj._id
 		}

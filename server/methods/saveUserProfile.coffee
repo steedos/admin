@@ -31,7 +31,7 @@ Meteor.methods
 			if settings.avatar?
 				updateValues.avatar = settings.avatar
 
-			Steedos.Users.update(Meteor.userId(), {
+			db.users.update(Meteor.userId(), {
 				$set: updateValues
 			})
 

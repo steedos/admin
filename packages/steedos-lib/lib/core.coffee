@@ -9,7 +9,7 @@ Steedos =
 	tables: {},
 	schemas: {},
 
-
+db = {}
 
 if Meteor.isClient
 	Steedos._timezones = _.map moment.tz.names(), (name) ->

@@ -14,7 +14,7 @@
 		<div class="ui small modal" id="spaceUsersFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.SpaceUsers" fields="space,email,name,organization,manager,user_accepted" doc=selectedRow id="spaceUsersForm" type=formType}}
+				{{> quickForm collection="db.space_users" fields="space,email,name,organization,manager,user_accepted" doc=selectedRow id="spaceUsersForm" type=formType}}
 			</div>
 		</div>
 	</div>

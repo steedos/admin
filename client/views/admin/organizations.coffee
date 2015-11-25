@@ -17,7 +17,7 @@ Template.adminOrganizations.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
-			return Steedos.Organizations.findOne({_id: Session.get("selectedRowId")})
+			return db.organizations.findOne({_id: Session.get("selectedRowId")})
 		return null
 
 	formType: ->
@@ -49,7 +49,7 @@ Template.adminOrganizations.events
 	"click #buttonDelete": (e, t) ->
 		if !Session.get("selectedRowId")
 			return
-		Steedos.Organizations.remove {_id: Session.get("selectedRowId")}, (error) ->
+		db.organizations.remove {_id: Session.get("selectedRowId")}, (error) ->
 			if error
 				toastr.error(error.message);
 			else
