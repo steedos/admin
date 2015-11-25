@@ -1,4 +1,4 @@
-FlowRouter.route '/admin/spaceUsers/', 
+FlowRouter.route '/admin/space_users/', 
   name: "adminSpaceUsers",
   action: (params, queryParams) ->
       BlazeLayout.render 'masterLayout', {main: "adminSpaceUsers"}

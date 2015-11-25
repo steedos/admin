@@ -1,7 +1,7 @@
-FlowRouter.route '/admin/spaces/', 
-  name: "adminSpaces",
+FlowRouter.route '/cloud/spaces/', 
+  name: "cloudSpaces",
   action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminSpaces"}
+      BlazeLayout.render 'masterLayout', {main: "cloudSpaces"}
   
 
 AutoForm.hooks
@@ -11,7 +11,7 @@ AutoForm.hooks
 		onError: (formType, error) ->
 			toastr.error(error.message);
 
-Template.adminSpaces.helpers
+Template.cloudSpaces.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
@@ -25,14 +25,14 @@ Template.adminSpaces.helpers
 			return "insert"
 
 
-Template.adminSpaces.onCreated ->
+Template.cloudSpaces.onCreated ->
 
-Template.adminSpaces.onRendered ->
+Template.cloudSpaces.onRendered ->
 	Session.set("selectedRowId", null);
 
 
 
-Template.adminSpaces.events
+Template.cloudSpaces.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)

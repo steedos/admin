@@ -3,16 +3,25 @@
 	<div class="ui fixed inverted borderless menu" id="dock">
 		
 		<div class="ui dropdown item">
-			<a class="ui inverted header" href="/">
-				{{_ 'Steedos Cloud'}}
-			</a>
+			<span>{{_ 'Steedos Cloud'}}</span>
 			<i class="dropdown icon"></i>
-			<div class="ui menu">
-				{{#each spaces}}
-					<a class="item" href="/space/{{_id}}">{{name}}</a>
-				{{/each}}
+			<div class="menu">		
+				<div class="item">
+					<i class="dropdown icon"></i>
+					<span>{{_ 'spaces'}}</span>
+					<div class="menu">
+						{{#each spaces}}
+							<div id="switchSpace" class="item">{{name}}</div>
+						{{/each}}
+					</div>
+				</div>
+				<a class="item" href="/admin/organizations">{{_ 'Space Admin'}}</a>
+				<a class="item" href="/cloud/users">{{_ 'Cloud Admin'}}</a>
+				<div class="divider"></div>
+				<a class="item" href="https://www.steedos.com/us/help/" target="_blank"><i class="icon large help circle" style="margin:0px"></i></a>
 			</div>
 		</div>
+
 
 
 
@@ -26,7 +35,6 @@
 					<a class="item" href="/logout">{{_ 'Logout'}}</a>
 				</div>
 			</div>
-			<a class="ui item" href="https://www.steedos.com/us/help/" target="_blank"><i class="icon large help circle" style="margin:0px"></i></a>
 		</div>
 		
 	</div>

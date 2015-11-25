@@ -1,0 +1,10 @@
+<template name="cloudMenu">
+
+	<div class="ui vertical secondary inverted menu four wide column" style="padding-right: 40px;">
+		<a class="ui item {{isActiveRoute 'cloudApps'}}" href="{{pathFor 'cloudApps'}}">{{_ "apps"}}</a>
+		<a class="ui item {{isActiveRoute 'cloudUsers'}}" href="{{pathFor 'cloudUsers'}}">{{_ "users"}}</a>
+		<a class="ui item {{isActiveRoute 'cloudSpaces'}}" href="{{pathFor 'cloudSpaces'}}">{{_ "spaces"}}</a>
+
+	</div>
+
+</template>

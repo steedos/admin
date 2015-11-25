@@ -14,4 +14,4 @@ Meteor.publish 'spaces', ->
 
 	console.log '[publish] spaces ' + JSON.stringify(user_space_ids)
 
-	return Steedos.Spaces.find(selector, {fields: {name:1}})
+	return Steedos.Spaces.find(selector)

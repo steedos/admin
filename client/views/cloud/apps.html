@@ -1,21 +1,21 @@
-<template name="adminSpaces">
+<template name="cloudApps">
 
   	<div class="ui centered relaxed stackable grid">
-	    {{> adminMenu}}
+	    {{> cloudMenu}}
 
 		<div class="ui eleven wide column segment">
-			<h1>{{_ "spaces"}}</h1>
+			<h1>{{_ "apps"}}</h1>
 			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
 			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
 			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
-				{{> tabular table=TabularTables.Spaces class="ui celled table dataTable"}}
+				{{> tabular table=TabularTables.Apps class="ui celled table dataTable"}}
 
 		</div>
-		<div class="ui small modal" id="spacesFormPopup">
+		<div class="ui small modal" id="appsFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="Steedos.Spaces" fields="name,owner,admins,balance" doc=selectedRow id="spacesForm" type=formType}}
+				{{> quickForm collection="Steedos.Apps" fields="name,description,url,iconURL" doc=selectedRow id="appsForm" type=formType}}
 			</div>
 		</div>
 	</div>
-</template> 
+</template>

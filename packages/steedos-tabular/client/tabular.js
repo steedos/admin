@@ -69,6 +69,11 @@ var tabularOnRendered = function () {
 
       // Update sort
       template.tabular.sort.set(Util.getMongoSort(data.order, template.tabular.columns));
+
+      // Add clientSelector to filter data on client side
+      if (options.clientSelector)
+        template.tabular.selector = options.clientSelector()
+      
       // Update pubSelector
       var pubSelector = getPubSelector(
         template.tabular.selector,

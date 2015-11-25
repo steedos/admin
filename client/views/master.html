@@ -1,10 +1,10 @@
 <template name="masterLayout">
-
 	{{#unless logged}}
 	    <div class="full-page login">
 	    	<div class="background"></div>
 	    	{{> loginNav}}
 	    	<div class="loginContent">
+				{{> status}}
 	        	{{> Template.dynamic template=main}}
 	    	</div>
 	    	{{> loginFooter}}
@@ -13,9 +13,11 @@
 	    <div class="full-page logged">
 	    	{{> dock}}
 	    	<div class="userContent">
+				{{> status}}
 	        	{{> Template.dynamic template=main}}
 	    	</div>
 	    </div>
 	{{/unless}}
 	
+
 </template>

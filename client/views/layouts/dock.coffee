@@ -31,10 +31,13 @@ Template.dock.onRendered ->
 	
 	$('html').addClass "dockOnTop"
 
-	$('.ui.menu .ui.dropdown').dropdown({on: 'hover'});
+	$('.ui.dropdown').dropdown({on: 'hover'});
 
 
 Template.dock.events
 
 	"click .ui.menu a.item": ->
 		$(this).addClass('active').siblings().removeClass('active')
+
+	"click #switchSpace": ->
+		Session.set("spaceId", this._id)

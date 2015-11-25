@@ -6,26 +6,11 @@ Steedos.Organizations._simpleSchema = new SimpleSchema({
 	space: {
 		type: String,
 		autoform: {
-			type: "select2",
-			options: function() {
-				options = [{
-					label: "",
-					value: ""
-				}]
-				objs = Steedos.Spaces.find({}, 
-						{
-							fields: {name: 1}, 
-							sort: {name:1}
-						})
-				objs.forEach(function(obj){
-					options.push({
-						label: obj.name,
-						value: obj._id
-					})
-				});
-				return options
+			type: "hidden",
+			defaultValue: function(){
+				return Session.get("spaceId");
 			}
-		}
+		},
 	},
 	name: {
 		type: String,
@@ -110,28 +95,25 @@ Steedos.Organizations._table = new Tabular.Table({
 		info: false
 	},
 	columns: [
-		{data: "space_name()"},
 		{data: "fullname"},
-		{data: "sort_no"}
+		{data: "sort_no"},
+		{data: "users"}
 	],
-	extraFields: ["space", "name",'parent','users'],
+	extraFields: ["space", "name",'parent'],
 	// Filter data by permission
 	// selector: function() {
 	// 	return {}
 	// },
+	clientSelector: function() {
+		spaceId = Session.get("spaceId")
+		if (spaceId)
+			return {space: spaceId}
+		return {}
+	},
 });
 
 Steedos.collections.Organizations = Steedos.Organizations
 
-
-if (Meteor.isClient) {
-	Steedos.Organizations.helpers({
-		space_name: function(){
-			space = Steedos.Spaces.findOne({_id: this.space});
-			return space && space.name;
-		}
-	})
-}
 
 if (Meteor.isServer) {
 

@@ -8,4 +8,4 @@ Meteor.publish 'space_users', (spaceId)->
 
 	console.log '[publish] space_users ' + spaceId
 
-	return Steedos.SpaceUsers.find(selector, {fields: {name:1}})
+	return Steedos.SpaceUsers.find(selector)

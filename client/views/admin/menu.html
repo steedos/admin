@@ -1,13 +1,8 @@
 <template name="adminMenu">
 
 	<div class="ui vertical secondary inverted menu four wide column" style="padding-right: 40px;">
-		<a class="ui item {{isActiveRoute 'adminApps'}}" href="{{pathFor 'adminApps'}}">{{_ "apps"}}</a>
-		<a class="ui item {{isActiveRoute 'adminUsers'}}" href="{{pathFor 'adminUsers'}}">{{_ "users"}}</a>
-		<a class="ui item {{isActiveRoute 'adminSpaces'}}" href="{{pathFor 'adminSpaces'}}">{{_ "spaces"}}</a>
-		<a class="ui item {{isActiveRoute 'adminSpaceUsers'}}" href="{{pathFor 'adminSpaceUsers'}}">{{_ "space_users"}}</a>
-
 		<a class="ui item {{isActiveRoute 'adminOrganizations'}}" href="{{pathFor 'adminOrganizations'}}">{{_ "organizations"}}</a>
-
+		<a class="ui item {{isActiveRoute 'adminSpaceUsers'}}" href="{{pathFor 'adminSpaceUsers'}}">{{_ "space_users"}}</a>
 	</div>
 
 </template>

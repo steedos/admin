@@ -15,3 +15,4 @@ Meteor.publish 'userData', ->
 			username: 1
 			utcOffset: 1
 			settings: 1
+			is_cloudadmin: 1

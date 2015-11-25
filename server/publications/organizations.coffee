@@ -8,4 +8,4 @@ Meteor.publish 'organizations', (spaceId)->
 
 	console.log '[publish] organizations ' + spaceId
 
-	return Steedos.Organizations.find(selector, {fields: {name:1}})
+	return Steedos.Organizations.find(selector)

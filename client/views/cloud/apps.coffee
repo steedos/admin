@@ -1,7 +1,7 @@
-FlowRouter.route '/admin/apps/', 
-  name: "adminApps",
+FlowRouter.route '/cloud/apps/', 
+  name: "cloudApps",
   action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminApps"}
+      BlazeLayout.render 'masterLayout', {main: "cloudApps"}
   
 
 AutoForm.hooks
@@ -11,7 +11,7 @@ AutoForm.hooks
 		onError: (formType, error) ->
 			toastr.error(error.message);
 
-Template.adminApps.helpers
+Template.cloudApps.helpers
 
 	selectedRow: ->
 		if Session.get("selectedRowId")
@@ -25,14 +25,14 @@ Template.adminApps.helpers
 			return "insert"
 
 
-Template.adminApps.onCreated ->
+Template.cloudApps.onCreated ->
 
-Template.adminApps.onRendered ->
+Template.cloudApps.onRendered ->
 	Session.set("selectedRowId", null);
 
 
 
-Template.adminApps.events
+Template.cloudApps.events
 	"click #buttonAdd": (e, t) ->
 		$('.dataTable').DataTable().rows().deselect();
 		Session.set("selectedRowId", null)
