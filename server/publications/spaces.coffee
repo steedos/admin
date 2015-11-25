@@ -9,8 +9,7 @@ Meteor.publish 'spaces', ->
 		user_space_ids.push(space_user.space)
 
 	selector = {}
-	if not user.is_cloudadmin
-		selector._id = {$in: user_space_ids}
+	selector._id = {$in: user_space_ids}
 
 	console.log '[publish] spaces ' + JSON.stringify(user_space_ids)
 

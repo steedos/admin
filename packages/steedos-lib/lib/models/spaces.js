@@ -84,12 +84,12 @@ Steedos.Spaces._table = new Tabular.Table({
 		{data: "is_paid"},
 	],
 	extraFields: ["owner", "admins", "balance"],
-	clientSelector: function() {
-		spaceId = Session.get("spaceId")
-		if (spaceId)
-			return {_id: spaceId}
-		return {}
-	},
+	// clientSelector: function() {
+	// 	spaceId = Session.get("spaceId")
+	// 	if (spaceId)
+	// 		return {_id: spaceId}
+	// 	return {}
+	// },
 });
 	
 Steedos.collections.Spaces = Steedos.Spaces
