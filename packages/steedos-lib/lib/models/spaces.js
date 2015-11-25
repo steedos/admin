@@ -26,11 +26,15 @@ db.spaces.attachSchema(new SimpleSchema({
 					})
 				});
 				return options
+			},
+			defaultValue: function(){
+				return Meteor.userId
 			}
 		}
 	},
 	admins: {
 		type: [String],
+		optional: true,
 		autoform: {
 			type: "select2",
 			afFieldInput: {
@@ -127,6 +131,14 @@ if (Meteor.isServer) {
 			if (doc.admins.indexOf(doc.owner) <0)
 				doc.admins.push(doc.owner)
 		}
+
+	});
+
+	db.spaces.after.insert(function(userId, doc){
+		if (doc.admins)
+			_.each(doc.admins, function(admin){
+				db.space_users.add(admin, doc._id, true)
+			})
 	});
 
 	db.spaces.before.update(function(userId, doc, fieldNames, modifier, options){

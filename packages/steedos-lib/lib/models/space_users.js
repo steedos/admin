@@ -88,6 +88,32 @@ db.space_users._table = new Tabular.Table({
 
 if (Meteor.isServer) {
 
+
+	db.space_users.add = function(userId, spaceId, user_accepted){
+		spaceUserObj = db.space_users.findOne({user: userId, space: spaceId})
+		spaceObj = db.spaces.findOne(spaceId);
+		userObj = db.users.findOne(userId);
+		if (!userObj)
+			return;
+		if (!spaceObj)
+			return;
+		if (spaceUserObj)
+			db.space_users.update(spaceUserObj._id, {
+				name: userObj.name,
+				email: userObj.email,
+				space: spaceObj._id,
+				user_accepted: user_accepted
+			})
+		else {
+			db.space_users.insert({
+				name: userObj.name,
+				email: userObj.email,
+				space: spaceObj._id,
+				user_accepted: user_accepted
+			})
+		}
+	}
+
 	db.space_users.before.insert(function(userId, doc){
 		doc.created_by = userId;
 		doc.created = new Date();
