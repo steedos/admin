@@ -8,7 +8,9 @@ var fields = Steedos_data.steedosFieldToAutoField(steedos_form);
 var formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.formula_values", steedos_form.fields);
 
 Template.instanceform.helpers({
-  
+  formId: function (){
+    return 'instanceform';
+  },
   steedos_form: function (){
     return steedos_form;
   },
@@ -29,6 +31,7 @@ Template.instanceform.helpers({
     return steedos_instance.values;
   }
 });
+
 
 Template.instanceform.events({
   // 'click button': function () {

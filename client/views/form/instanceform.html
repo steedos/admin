@@ -8,7 +8,7 @@
             </div>
         </nav>
         <div class="container">
-            {{#autoForm id='instanceform' schema=fields type="method" doc=doc meteormethod='instance'}}
+            {{#autoForm id=formId schema=fields type="method" doc=doc meteormethod='instance'}}
                 <div class="row">
                     {{#each steedos_form.fields}}
                         {{#if equals this.type 'table'}}

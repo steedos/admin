@@ -5,7 +5,7 @@
             {{afFieldLabelText name=this.code}}
         </div>
     <!-- <div class="panel-body"> -->
-        <table class="table table-bordered table-condensed">
+        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}">
             <thead>
                 <tr>
                     <td >序</td>
@@ -13,12 +13,17 @@
                     
                     <td><label class="control-label">{{this.code}}</label></td>
                 {{/each}}  
-                <td></td>
+                <td style="width:70px;">
+                    <span class="panel-controls">
+                        <!-- Button trigger modal -->
+                        <i class="plus icon add-steedos-table-row" data-rowindex="-1"></i>
+                    </span>
+                </td>
                 </tr>
             </thead>
             <tbody id='{{this.code}}tbody' data-formcode="{{this.code}}">
                 {{#each this.tableValues}}
-                <tr class="person-row" data-toggle="modal" >
+                <tr class="person-row" data-toggle="modal" name="{{@index}}row" >
                     <td >{{@index}}</td>
                     {{#each arrayify this}}
                         <td>{{value}}</td>
@@ -26,7 +31,8 @@
                     <td>
                         <span class="panel-controls">
                             <!-- Button trigger modal -->
-                            <i class="write icon subform-row" data-rowindex="{{@index}}"></i>
+                            <i class="remove icon remove-steedos-table-row" data-rowindex="{{@index}}"></i>&nbsp;&nbsp;
+                            <i class="write icon edit-steedos-table-row" data-rowindex="{{@index}}"></i>
                         </span>
                     </td>
                 </tr>
@@ -39,7 +45,7 @@
 
     <div class="{{this.code}} ui modal" name="{{this.code}}.modal" data-rowindex="2" data-formcode="{{this.code}}">
         <i class="close icon"></i>
-        <div class='header'>
+        <div class='header' id="{{this.code}}-modal-header">
             编辑子表
         </div>
         <div class="content">
@@ -53,7 +59,7 @@
         </div>
     </div>
 
-    <div style = 'display:none'>
+    <div style = ''>
         {{> afArrayField name=this.code}}
     </div>
     <!-- Modal 
