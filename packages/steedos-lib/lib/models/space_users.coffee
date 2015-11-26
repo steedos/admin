@@ -51,25 +51,25 @@ db.space_users._simpleSchema = new SimpleSchema
 
 db.space_users.attachSchema(db.space_users._simpleSchema);
 
-db.space_users._table = new Tabular.Table
-	name: "SpaceUsers",
-	collection: db.space_users,
-	lengthChange: false,
-	select: 
-		style: 'single',
-		info: false
-	columns: [
-		{data: "name"},
-		{data: "email"},
-		{data: "organization"},
-		{data: "user_accepted"}
-	],
-	extraFields: ["user", "name", "space", "manager"],
-	clientSelector: ->
-		spaceId = Session.get("spaceId")
-		if (spaceId)
-			return {space: spaceId}
-		return {}
+# db.space_users._table = new Tabular.Table
+# 	name: "SpaceUsers",
+# 	collection: db.space_users,
+# 	lengthChange: false,
+# 	select: 
+# 		style: 'single',
+# 		info: false
+# 	columns: [
+# 		{data: "name"},
+# 		{data: "email"},
+# 		{data: "organization"},
+# 		{data: "user_accepted"}
+# 	],
+# 	extraFields: ["user", "name", "space", "manager"],
+# 	clientSelector: ->
+# 		spaceId = Session.get("spaceId")
+# 		if (spaceId)
+# 			return {space: spaceId}
+# 		return {}
 
 
 if (Meteor.isServer) 

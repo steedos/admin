@@ -61,20 +61,20 @@ db.spaces.attachSchema new SimpleSchema
 				this.unset()
 
 
-db.spaces._table = new Tabular.Table
-	name: "Spaces",
-	collection: db.spaces,
-	lengthChange: false,
-	select: 
-		style: 'single',
-		info: false
-	columns: [
-		{data: "name"},
-		{data: "owner_name()"},
-		{data: "admins_name()"},
-		{data: "is_paid"},
-	],
-	extraFields: ["owner", "admins", "balance"],
+# db.spaces._table = new Tabular.Table
+# 	name: "Spaces",
+# 	collection: db.spaces,
+# 	lengthChange: false,
+# 	select: 
+# 		style: 'single',
+# 		info: false
+# 	columns: [
+# 		{data: "name"},
+# 		{data: "owner_name()"},
+# 		{data: "admins_name()"},
+# 		{data: "is_paid"},
+# 	],
+# 	extraFields: ["owner", "admins", "balance"],
 
 
 if (Meteor.isClient) 

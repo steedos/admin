@@ -94,11 +94,11 @@ if Meteor.isClient
 				return;
 			collection.i18n()
 
-			if (collection._table)
-				_.each collection._table.options.columns, (column) ->
-					if (!column.data)
+		_.each Tabular.tablesByName, (table) ->
+				_.each table.options.columns, (column) ->
+					if (!column.data || column.data == "_id")
 						return
-					column.title = t(collection._table.collection._name + "_" + column.data);
-				collection._table.options.language = datatables_i18n[lang]
+					column.title = t(table.collection._name + "_" + column.data);
+				table.options.language = datatables_i18n[lang]
 				
 		

@@ -30,7 +30,7 @@ Package.onUse(function(api) {
 	api.use('aldeed:autoform');
 	api.use('aldeed:autoform-select2');
 	api.use('ongoworks:security');
-	api.use('steedos:tabular');
+	api.use('aldeed:tabular');
 	api.use('blaze-html-templates');
 	api.use('matb33:collection-hooks');
 

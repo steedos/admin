@@ -77,24 +77,24 @@ db.organizations._simpleSchema = new SimpleSchema
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
-db.organizations._table = new Tabular.Table
-	name: "Organizations",
-	collection: db.organizations,
-	lengthChange: false,
-	select: 
-		style: 'single',
-		info: false
-	columns: [
-		{data: "fullname"},
-		{data: "sort_no"},
-		{data: "users"}
-	],
-	extraFields: ["space", "name",'parent'],
-	clientSelector: ->
-		spaceId = Session.get("spaceId")
-		if (spaceId)
-			return {space: spaceId}
-		return {}
+# db.organizations._table = new Tabular.Table
+# 	name: "Organizations",
+# 	collection: db.organizations,
+# 	lengthChange: false,
+# 	select: 
+# 		style: 'single',
+# 		info: false
+# 	columns: [
+# 		{data: "fullname"},
+# 		{data: "sort_no"},
+# 		{data: "users"}
+# 	],
+# 	extraFields: ["space", "name",'parent'],
+# 	clientSelector: ->
+# 		spaceId = Session.get("spaceId")
+# 		if (spaceId)
+# 			return {space: spaceId}
+# 		return {}
 
 
 

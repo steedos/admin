@@ -6,17 +6,13 @@
 			<span>{{_ 'Steedos Cloud'}}</span>
 			<i class="dropdown icon"></i>
 			<div class="menu">		
-				<div class="item">
-					<i class="dropdown icon"></i>
-					<span>{{_ 'spaces'}}</span>
-					<div class="menu">
-						{{#each spaces}}
-							<div id="switchSpace" class="item">{{name}}</div>
-						{{/each}}
-					</div>
-				</div>
-				<a class="item" href="/admin/organizations">{{_ 'Space Admin'}}</a>
-				<a class="item" href="/cloud/users">{{_ 'Cloud Admin'}}</a>
+				<div class="header">{{_ 'spaces'}}</div>
+				{{#each spaces}}
+					<div id="switchSpace" class="item">{{name}}</div>
+				{{/each}}
+				<div class="divider"></div>
+				<!-- <a class="item" href="/space/organizations">{{_ 'Space Admin'}}</a> -->
+				<a class="item" href="/admin">{{_ 'Admin'}}</a>
 				<div class="divider"></div>
 				<a class="item" href="https://www.steedos.com/us/help/" target="_blank">
 					<i class="icon help circle" style="margin:0px"></i>

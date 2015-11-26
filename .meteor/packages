@@ -55,8 +55,11 @@ aldeed:collection2
 aldeed:autoform-select2
 natestrauser:select2
 
-steedos:tabular
+aldeed:tabular
 ongoworks:security
 gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
+
+alanning:roles
+sach:flow-db-admin

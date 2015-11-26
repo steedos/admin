@@ -64,18 +64,18 @@ db.users._simpleSchema = new SimpleSchema
 		optional: true
 
 
-db.users._table = new Tabular.Table
-	name: "Users",
-	collection: db.users,
-	lengthChange: false,
-	select: 
-		style: 'single',
-		info: false
-	columns: [
-		{data: "name"},
-		{data: "email"},
-		{data: "locale"}
-	],
+# db.users._table = new Tabular.Table
+# 	name: "Users",
+# 	collection: db.users,
+# 	lengthChange: false,
+# 	select: 
+# 		style: 'single',
+# 		info: false
+# 	columns: [
+# 		{data: "name"},
+# 		{data: "email"},
+# 		{data: "locale"}
+# 	],
 
 
 if Meteor.isServer
