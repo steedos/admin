@@ -14,7 +14,6 @@ momentjs:moment
 mrt:moment-timezone
 
 semantic:ui
-steedos:lib
 joshowens:timezone-picker
 #steedos:useraccounts-core
 #steedos:useraccounts-semantic-ui
@@ -60,3 +59,5 @@ ongoworks:security
 gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
+
+steedos:meteor-admin

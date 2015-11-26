@@ -119,7 +119,7 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
-steedos:lib@0.0.1
+steedos:meteor-admin@0.0.1
 steedos:tabular@1.4.2
 tap:i18n@1.7.0
 templating@1.1.5
