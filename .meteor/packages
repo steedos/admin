@@ -15,10 +15,14 @@ mrt:moment-timezone
 
 semantic:ui
 steedos:lib
-steedos:timezone-picker
-steedos:useraccounts-core
-steedos:useraccounts-semantic-ui
-steedos:useraccounts-flow-routing
+joshowens:timezone-picker
+#steedos:useraccounts-core
+#steedos:useraccounts-semantic-ui
+#steedos:useraccounts-flow-routing
+useraccounts:core
+useraccounts:semantic-ui
+useraccounts:flow-routing
+softwarerero:accounts-t9n
 
 zimme:active-route
 standard-minifiers

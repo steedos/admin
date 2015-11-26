@@ -36,3 +36,6 @@
 
 ##### [Semantic UI](http://http://semantic-ui.com/)
 > Semantic is a development framework that helps create beautiful, responsive layouts using human-friendly HTML.
+
+##### [TAP i18n](https://github.com/TAPevents/tap-i18n)
+> tap-i18n is a Meteor package that provides a comprehensive i18n solution for Meteor apps and packages
