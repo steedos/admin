@@ -1,3 +1,4 @@
+@Users = db.users
 @Spaces = db.spaces
 @SpaceUsers = db.space_users
 @Organizations = db.organizations
@@ -6,7 +7,14 @@
 @AdminConfig = 
 	name: "Steedos Admin"
 	skin: "green"
+	userSchema: null,
+	userSchema: db.users._simpleSchema,
 	collections: 
+		Users: 
+			tableColumns: [
+				{name: "name"},
+				{name: "email"},
+			]
 
 		Spaces: 
 			tableColumns: [

@@ -39,6 +39,7 @@ random
 ejson
 spacebars
 check
+fortawesome:fontawesome
 
 arillo:flow-router-helpers
 tap:i18n
