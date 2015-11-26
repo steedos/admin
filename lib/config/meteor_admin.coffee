@@ -9,13 +9,14 @@
 	skin: "green"
 	userSchema: null,
 	userSchema: db.users._simpleSchema,
+	autoForm:
+		omitFields: ['createdAt', 'updatedAt', 'created', 'created_by', 'modified', 'modified_by']
 	collections: 
 		Users: 
 			tableColumns: [
 				{name: "name"},
 				{name: "email"},
 			]
-
 		Spaces: 
 			tableColumns: [
 				{name: "name"},

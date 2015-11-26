@@ -117,8 +117,6 @@ retry@1.0.4
 reywood:publish-composite@1.4.2
 routepolicy@1.0.6
 sach:flow-db-admin@1.1.5
-semantic:ui@2.1.4_5
-semantic:ui-data@2.1.4_5
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
@@ -138,9 +136,9 @@ ui@1.0.8
 underscore@1.0.4
 underscorestring:underscore.string@2.4.0
 url@1.0.5
+useraccounts:bootstrap@1.12.4
 useraccounts:core@1.12.4
 useraccounts:flow-routing@1.12.4
-useraccounts:semantic-ui@1.12.4
 webapp@1.2.3
 webapp-hashing@1.0.5
 zimme:active-route@2.3.2

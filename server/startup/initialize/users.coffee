@@ -1,16 +1,8 @@
 Meteor.startup ->
-	if db.users.find().count() == 0
-		users = [
-			{name:"Administrator",email:"support@steedos.com",roles:['admin']}
-		];
+	if Meteor.roles.find().count() == 0
+		admins = ['support@steedos.com'];
 
-		_.each users, (user) ->
-
-			id = Accounts.createUser
-				email: user.email,
-				password: "123456",
-				name: user.name
-			
-
-			if (user.roles.length > 0) 
-				Roles.addUsersToRoles(id, user.roles, 'default-group');
+		_.each admins, (admin) ->
+			id = db.users.findOne({"email.address": admin})
+			if id
+				Roles.addUsersToRoles(id, 'admin');

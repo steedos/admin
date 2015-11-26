@@ -12,7 +12,7 @@ db.space_users._simpleSchema = new SimpleSchema
 	email:
 		type: String,
 		regEx: SimpleSchema.RegEx.Email,
-		max: 200
+		optional: true,
 	user:
 		type: String,
 		optional: true,

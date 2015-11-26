@@ -1,41 +1,53 @@
 <template name="dock">
+	<header class="main-header">
+        <a href="/" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>{{_ 'Steedos'}}</b></span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>{{_ 'Steedos Cloud'}}</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{displayName}}<span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+					{{#each spaces}}
+						<li id="switchSpace">{{name}}</li>
+					{{/each}}
+		            <li><a href="/account/profile">{{_ 'My Account'}}</a></li>
+		            <li><a href="/logout">{{_ 'Logout'}}</a></li>
+		          </ul>
+		        </li>
+            </ul>
+          </div>
+        </nav>
 
-	<div class="ui fixed inverted borderless menu" id="dock">
-		
-		<div class="ui dropdown item">
-			<span>{{_ 'Steedos Cloud'}}</span>
-			<i class="dropdown icon"></i>
-			<div class="menu">		
-				<div class="header">{{_ 'spaces'}}</div>
-				{{#each spaces}}
-					<div id="switchSpace" class="item">{{name}}</div>
-				{{/each}}
-				<div class="divider"></div>
-				<!-- <a class="item" href="/space/organizations">{{_ 'Space Admin'}}</a> -->
-				<a class="item" href="/admin">{{_ 'Admin'}}</a>
-				<div class="divider"></div>
-				<a class="item" href="https://www.steedos.com/us/help/" target="_blank">
-					<i class="icon help circle" style="margin:0px"></i>
-					{{_ 'Help'}}
-				</a>
-			</div>
-		</div>
+	</header>
+	<!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <div class="sidebar" id="scrollspy">
 
-
-
-
-		<div class="right menu">
-			<div class="ui dropdown item">
-				<img class="ui avatar image" src="{{avatar}}"/>
-				<i class="dropdown icon"></i>
-				<div class="ui menu">
-					<div class="header">{{displayName}}</div>
-					<a class="item" href="/account/profile">{{_ 'My Account'}}</a>
-					<a class="item" href="/logout">{{_ 'Logout'}}</a>
-				</div>
-			</div>
-		</div>
-		
-	</div>
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="nav sidebar-menu">
+            <li class="header">APPS</li>
+        				{{#each apps}}
+        				<li><a href="/apps/{{name}}/">
+        					<i class="fa fa-circle-o"></i>{{_ description}}
+        					</a>
+        				</li>
+        				{{/each}}
+                <li><a href="/admin"><i class="fa fa-circle-o"></i>{{_ "Administation"}}</a></li>
+          </ul>
+        </div>
+        <!-- /.sidebar -->
+    </aside>
 
 </template>

@@ -51,7 +51,7 @@ FlowRouter.route('/account/linked', {
   }
 });
 
-FlowRouter.route('/app-frame/:app_name', {
+FlowRouter.route('/apps/:app_name', {
   name: "appFrame",
   action: function(params, queryParams) {
       BlazeLayout.render('masterLayout', {

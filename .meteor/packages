@@ -13,14 +13,15 @@ underscorestring:underscore.string
 momentjs:moment
 mrt:moment-timezone
 
-semantic:ui
+#semantic:ui
+twbs:bootstrap
 steedos:lib
 joshowens:timezone-picker
 #steedos:useraccounts-core
 #steedos:useraccounts-semantic-ui
 #steedos:useraccounts-flow-routing
 useraccounts:core
-useraccounts:semantic-ui
+useraccounts:bootstrap
 useraccounts:flow-routing
 softwarerero:accounts-t9n
 
@@ -62,5 +63,6 @@ gwendall:simple-schema-i18n
 matb33:collection-hooks
 francocatena:status
 
+mfactory:admin-lte
 alanning:roles
 sach:flow-db-admin

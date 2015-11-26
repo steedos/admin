@@ -1,23 +1,17 @@
 <template name="masterLayout">
 	{{#unless logged}}
-	    <div class="full-page login">
-	    	<div class="background"></div>
-	    	{{> loginNav}}
-	    	<div class="loginContent">
-				{{> status}}
-	        	{{> Template.dynamic template=main}}
-	    	</div>
-	    	{{> loginFooter}}
-	    </div>
+    	{{> loginNav}}
+		{{> status}}
+        {{> Template.dynamic template=main}}
+    	<!-- {{> loginFooter}} -->
 	{{else}}
-	    <div class="full-page logged">
+		{{#AdminLTE skin="green"}}
 	    	{{> dock}}
-	    	<div class="userContent">
-				{{> status}}
-	        	{{> Template.dynamic template=main}}
-	    	</div>
-	    </div>
-	{{/unless}}
-	
 
+			{{> status}}
+			<div class="content-wrapper" style="min-height: 500px;">
+	        	{{> Template.dynamic template=main}}
+	        </div>
+		{{/AdminLTE}}	
+	{{/unless}}
 </template>
