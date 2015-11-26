@@ -18,7 +18,7 @@ db.spaces.attachSchema new SimpleSchema
 				}]
 				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach (obj) ->
-					options.pus
+					options.push
 						label: obj.name,
 						value: obj._id
 
@@ -78,6 +78,7 @@ db.spaces._table = new Tabular.Table
 if (Meteor.isClient) 
 
 	db.spaces.helpers
+
 		owner_name: ->
 			owner = db.users.findOne({_id: this.owner});
 			return owner && owner.name;
