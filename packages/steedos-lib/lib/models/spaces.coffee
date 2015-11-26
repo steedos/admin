@@ -2,85 +2,70 @@ db.spaces = new Meteor.Collection('spaces')
 
 db.spaces.permit(['insert', 'update', 'remove']).apply();
 
-db.spaces.attachSchema(new SimpleSchema({
-	name: {
+db.spaces.attachSchema new SimpleSchema
+	name: 
 		type: String,
-  		unique: true,
+		unique: true,
 		max: 200
-	},	
-	// 第一个管理员就是owner
-	owner: {
+	owner: 
 		type: String,
-		autoform: {
+		autoform:
 			type: "select2",
-			options: function() {
+			options: ->
 				options = [{
 					label: "",
 					value: ""
 				}]
 				objs = db.users.find({}, {name:1, sort: {name:1}})
-				objs.forEach(function(obj){
-					options.push({
+				objs.forEach (obj) ->
+					options.pus
 						label: obj.name,
 						value: obj._id
-					})
-				});
+
 				return options
-			},
-			defaultValue: function(){
+
+			defaultValue: ->
 				return Meteor.userId
-			}
-		}
-	},
-	admins: {
+
+	admins: 
 		type: [String],
 		optional: true,
-		autoform: {
+		autoform: 
 			type: "select2",
-			afFieldInput: {
+			afFieldInput: 
 				multiple: true
-			},
-			options: function() {
+			options: ->
 				options = []
 				objs = db.users.find({}, {name:1, sort: {name:1}})
-				objs.forEach(function(obj){
-					options.push({
+				objs.forEach (obj) ->
+					options.push
 						label: obj.name,
 						value: obj._id
-					})
-				});
 				return options
-			}
-		}
-	},
-	balance: {
+			
+	balance: 
 		type: Number,
 		optional: true,
-	},
-	is_paid: {
+	is_paid: 
 		type: Boolean,
 		label: t("Spaces_isPaid"),
 		optional: true,
-		// 余额>0为已付费用户
-		autoValue: function(){
-			var balance = this.field("balance")
+		# 余额>0为已付费用户
+		autoValue: ->
+			balance = this.field("balance")
 			if (balance.isSet)
 				return balance.value>0
 			else
 				this.unset()
-		}
-	},
 
-}));
 
-db.spaces._table = new Tabular.Table({
+db.spaces._table = new Tabular.Table
 	name: "Spaces",
 	collection: db.spaces,
 	lengthChange: false,
-	select: {
+	select: 
 		style: 'single',
 		info: false
-	},
 	columns: [
 		{data: "name"},
 		{data: "owner_name()"},
@@ -88,76 +73,55 @@ db.spaces._table = new Tabular.Table({
 		{data: "is_paid"},
 	],
 	extraFields: ["owner", "admins", "balance"],
-	// clientSelector: function() {
-	// 	spaceId = Session.get("spaceId")
-	// 	if (spaceId)
-	// 		return {_id: spaceId}
-	// 	return {}
-	// },
-});
-	
 
 
-if (Meteor.isClient) {
-	db.spaces.helpers({
-		owner_name: function(){
+if (Meteor.isClient) 
+
+	db.spaces.helpers
+		owner_name: ->
 			owner = db.users.findOne({_id: this.owner});
 			return owner && owner.name;
-		},
-		admins_name: function(){
+		
+		admins_name: ->
 			if (!this.admins)
 				return ""
 			admins = db.users.find({_id: {$in: this.admins}}, {fields: {name:1}});
 			adminNames = []
-			admins.forEach(function(admin){
+			admins.forEach (admin) ->
 				adminNames.push(admin.name)
-			})
 			return adminNames.toString();
-		}
-	})
-}
+		
 
-if (Meteor.isServer) {
+if (Meteor.isServer) 
 
-	db.spaces.before.insert(function(userId, doc){
+	db.spaces.before.insert (userId, doc) ->
 		doc.created_by = userId;
 		doc.created = new Date();
-
-		// 自动添加 Owner 为管理员
+		# 自动添加 Owner 为管理员
 		if (doc.owner)
-		{
 			if (!doc.admins)
 				doc.admins = [doc.owner]
 			if (doc.admins.indexOf(doc.owner) <0)
 				doc.admins.push(doc.owner)
-		}
 
-	});
 
-	db.spaces.after.insert(function(userId, doc){
+	db.spaces.after.insert (userId, doc) ->
 		if (doc.admins)
-			_.each(doc.admins, function(admin){
+			_.each doc.admins, (admin) ->
 				db.space_users.add(admin, doc._id, true)
-			})
-	});
+			
 
-	db.spaces.before.update(function(userId, doc, fieldNames, modifier, options){
+	db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
-		// 自动添加 Owner 为管理员
+		# 自动添加 Owner 为管理员
 		if (modifier.$set.owner)
-		{
 			if (!modifier.$set.admins)
 				modifier.$set.admins = [modifier.$set.owner]
 			if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
 				modifier.$set.admins.push(modifier.$set.owner)
-		}
 
-	});
-
-	db.spaces.before.remove(function(userId, doc){
+	db.spaces.before.remove (userId, doc) ->
 		db.space_users.remove({space: doc._id});
-	});
-}
