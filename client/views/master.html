@@ -5,13 +5,13 @@
         {{> Template.dynamic template=main}}
     	<!-- {{> loginFooter}} -->
 	{{else}}
-		{{#AdminLTE skin="green"}}
+    	<div class="wrapper">
 	    	{{> dock}}
 
 			{{> status}}
-			<div class="content-wrapper" style="min-height: 500px;">
+			<div class="content-wrapper" style="min-height: 300px;">
 	        	{{> Template.dynamic template=main}}
 	        </div>
-		{{/AdminLTE}}	
+		</div>
 	{{/unless}}
 </template>
