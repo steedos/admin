@@ -50,6 +50,8 @@ db.spaces.attachSchema new SimpleSchema
 		type: Boolean,
 		label: t("Spaces_isPaid"),
 		optional: true,
+		autoform:
+			readonly: true
 		# 余额>0为已付费用户
 		autoValue: ->
 			balance = this.field("balance")

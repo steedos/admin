@@ -5,16 +5,16 @@
 
 		<div class="ui eleven wide column segment">
 			<h1>{{_ "space_users"}}</h1>
-			<button id="buttonAdd" class="ui button">{{_ "Add"}}</button>
-			<button id="buttonEdit" class="ui button">{{_ "Edit"}}</button>
-			<button id="buttonDelete" class="ui button">{{_ "Delete"}}</button>
+			<button id="buttonAdd" class="ui basic button">{{_ "Add"}}</button>
+			<button id="buttonEdit" class="ui basic button">{{_ "Edit"}}</button>
+			<button id="buttonDelete" class="ui basic button">{{_ "Delete"}}</button>
 				{{> tabular table=TabularTables.SpaceUsers class="ui celled table dataTable"}}
 
 		</div>
 		<div class="ui small modal" id="spaceUsersFormPopup">
 	  		<i class="close icon"></i>
 			<div class="content">
-				{{> quickForm collection="db.space_users" fields="space,email,name,organization,manager,user_accepted" doc=selectedRow id="spaceUsersForm" type=formType}}
+				{{> quickForm collection="db.space_users" doc=selectedRow id="spaceUsersForm" type=formType}}
 			</div>
 		</div>
 	</div>

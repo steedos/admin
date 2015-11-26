@@ -44,12 +44,18 @@ db.users._simpleSchema = new SimpleSchema
 	primary_email_verified:
 		type: Boolean
 		optional: true
+		autoform:
+			readonly: true
 	steedos_id: 
 		type: String,
 		optional: true
+		autoform:
+			readonly: true
 	last_logon:
 		type: Date
 		optional: true
+		autoform:
+			readonly: true
 	email_notification:
 		type: Boolean
 		optional: true
@@ -70,7 +76,6 @@ db.users._table = new Tabular.Table
 		{data: "email"},
 		{data: "locale"}
 	],
-
 
 
 if Meteor.isServer

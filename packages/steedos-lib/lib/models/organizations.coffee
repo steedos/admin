@@ -56,15 +56,23 @@ db.organizations._simpleSchema = new SimpleSchema
 	is_company: 
 		type: Boolean,
 		optional: true,
+		autoform: 
+			type: "hidden",
 	parents: 
 		type: [String],
 		optional: true,
+		autoform: 
+			type: "hidden",
 	fullname: 
 		type: String,
 		optional: true,
+		autoform: 
+			type: "hidden",
 	children:
 		type: [String],
 		optional: true,
+		autoform: 
+			type: "hidden",
 
 
 db.organizations.attachSchema db.organizations._simpleSchema;
