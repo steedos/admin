@@ -81,7 +81,7 @@ Form_formula.getFormulaFieldVariable = function(prefix,fields){
         //给公式添加前缀
         formulas[j]["formula"] = Form_formula.prependPrefixForFormula(prefix,formulas[j]["formula"]);
     }
-    
+    console.log("formula_field is \n" + JSON.stringify(formulas));
     console.debug("退出 getFormulaFieldVariable 消耗时间：" + (new Date() * 1 - startTrack) + "ms");
     return formulas;
 };
@@ -135,25 +135,25 @@ Form_formula.mixin = function(dest, src){
     }
     return dest;
 };
-Form_formula.formula_values = null;
 
-Form_formula.run = function(code, formula_fields, autoFormDoc, fields){
+Form_formula.field_values = null;
+
+Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fields){
     var run = false;
+    if (!Form_formula.field_values || true){
+        console.debug("Form_formula.init_formula_values: 重新计算field_values");
+        var startTrack = new Date * 1;
+        Form_formula.field_values = init_formula_values(fields,autoFormDoc);
+        console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
+    }
     for(var i = 0 ; i < formula_fields.length; i++){
         formula_field = formula_fields[i];
         if (formula_field.formula.indexOf("[" + code + "]")){
             run = true;
         }
-
         if(run){
-            if (!Form_formula.formula_values || true){
-                console.debug("Form_formula.init_formula_values: 重新计算formula_values");
-                var startTrack = new Date * 1;
-                Form_formula.formula_values = init_formula_values(fields,autoFormDoc);
-                console.debug("Form_formula.init_formula_values: 退出计算formula_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
-            }
             var fileValue = eval(formula_field.formula.replace(/[\r\n]+/g, '\\n'));
-            $("[name='"+formula_field.code+"']").val(Form_formula.formula_values[formula_field.code]);
+            $("[name='" + field_prefix + formula_field.code + "']").val(Form_formula.field_values[formula_field.code]);
         }
     }
 };

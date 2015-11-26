@@ -14,20 +14,27 @@ Template.steedos_table.helpers({
   },
 
   initRowobj: function(sfield){
+
     var rowObj = {};
     for(var i = 0 ; i < sfield.length ; i++){
       rowObj[sfield[i].code] = '';
     }
     return JSON.stringify(rowObj);
+  },
+
+  initRowFormula: function(sfield){
+    var formulas = Form_formula.getFormulaFieldVariable("Form_formula.field_values", sfield);
+    console.log("steedos_table formulas is \n" + JSON.stringify(formulas));
+    return JSON.stringify(formulas);
   }
 
 });
 
 Template.steedos_table.events({
     'click .add-steedos-table-row': function (event, template) {
-      debugger;
+      //debugger;
 
-      var formcode = this.code;
+      var formcode = template.data.code;
       
       var tableobj = $("[name='"+formcode+"table']")[0];
       
@@ -51,7 +58,7 @@ Template.steedos_table.events({
       $("[name='"+formcode+".modal']")[0].dataset.rowobj = JSON.stringify(rowObj);
       $("#"+formcode+'-modal-header').html('新增');
 
-      $("." + formcode + ".ui.modal")
+      $("." + formcode + ".ui.small.modal")
             .modal({
                 inverted:true,
                 closable:false,
@@ -89,14 +96,14 @@ Template.steedos_table.events({
     },
 
     'click .remove-steedos-table-row': function (event, template) {
-      debugger;
+      //debugger;
       console.debug("进入remove-steedos-table-row");
       event.preventDefault();
       var startTrack = new Date *1;
 
       var row_index = event.target.dataset.rowindex;
 
-      var formcode = event.target.parentNode.parentNode.parentNode.parentNode.dataset.formcode;
+      var formcode = template.data.code;
 
       var formId = "instanceform";
 
@@ -120,7 +127,7 @@ Template.steedos_table.events({
     'click .edit-steedos-table-row': function (event, template) {
         var row_index = event.target.dataset.rowindex;
 
-        var formcode = event.target.parentNode.parentNode.parentNode.parentNode.dataset.formcode;
+        var formcode = template.data.code;
 
         var tableobj = $("[name='"+formcode+"table']")[0];
 
@@ -140,7 +147,7 @@ Template.steedos_table.events({
         $("[name='"+formcode+".modal']")[0].dataset.rowobj = JSON.stringify(rowObj);
         $("#"+formcode+'-modal-header').html('编辑');
         
-        $("." + formcode + ".ui.modal")
+        $("." + formcode + ".ui.small.modal")
             .modal({
                 inverted:true,
                 closable:false,
@@ -172,5 +179,35 @@ Template.steedos_table.events({
             })
             .modal('show')
         ;
+    },
+
+    'change .form-control': function(event, template){
+
+      console.log("steedos_table form-control change");
+
+      var code = event.target.name;
+      var formcode = template.data.code;
+
+      var rowObj = JSON.parse($("[name='"+formcode+".modal']")[0].dataset.rowobj);
+
+      var rowIndx = $("[name='"+formcode+".modal']")[0].dataset.rowindex;
+
+      var tableobj = $("[name='"+formcode+"table']")[0];
+
+      var rowFormula = JSON.parse(tableobj.dataset.rowformula);
+
+      var rowValue = {};
+
+      $("[name='"+(formcode + "."+rowIndx+"." + code.split(".")[2])+"']").val($("[name='" + code + "']").val());
+
+      for(var key in rowObj){
+
+        rowValue[key] = $("[name='" + formcode + ".$." + key + "']").val();
+      }
+
+      console.log("rowValue is \n" + JSON.stringify(rowValue));
+
+      Form_formula.run(code.split(".")[2], formcode + ".$.", rowFormula, rowValue, template.data.sfields);
+
     }
 })

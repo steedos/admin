@@ -5,7 +5,7 @@
             {{afFieldLabelText name=this.code}}
         </div>
     <!-- <div class="panel-body"> -->
-        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}">
+        <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-rowformula="{{initRowFormula this.sfields}}">
             <thead>
                 <tr>
                     <td >序</td>
@@ -30,7 +30,6 @@
                     {{/each}}
                     <td>
                         <span class="panel-controls">
-                            <!-- Button trigger modal -->
                             <i class="remove icon remove-steedos-table-row" data-rowindex="{{@index}}"></i>&nbsp;&nbsp;
                             <i class="write icon edit-steedos-table-row" data-rowindex="{{@index}}"></i>
                         </span>
@@ -43,7 +42,7 @@
     </div>
     {{#if equals this.permission 'editable'}}
 
-    <div class="{{this.code}} ui modal" name="{{this.code}}.modal" data-rowindex="2" data-formcode="{{this.code}}">
+    <div class="{{this.code}} ui small modal" name="{{this.code}}.modal" data-rowindex="2" data-formcode="{{this.code}}">
         <i class="close icon"></i>
         <div class='header' id="{{this.code}}-modal-header">
             编辑子表
@@ -59,7 +58,7 @@
         </div>
     </div>
 
-    <div style = ''>
+    <div style = 'display:none'>
         {{> afArrayField name=this.code}}
     </div>
     <!-- Modal 
