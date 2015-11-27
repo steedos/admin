@@ -19,7 +19,7 @@ db.spaces.attachSchema new SimpleSchema
 				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach (obj) ->
 					options.push
-						label: obj.name,
+						label: obj.displayName(),
 						value: obj._id
 
 				return options
@@ -39,7 +39,7 @@ db.spaces.attachSchema new SimpleSchema
 				objs = db.users.find({}, {name:1, sort: {name:1}})
 				objs.forEach (obj) ->
 					options.push
-						label: obj.name,
+						label: obj.displayName(),
 						value: obj._id
 				return options
 			
@@ -60,21 +60,6 @@ db.spaces.attachSchema new SimpleSchema
 			else
 				this.unset()
 
-
-# db.spaces._table = new Tabular.Table
-# 	name: "Spaces",
-# 	collection: db.spaces,
-# 	lengthChange: false,
-# 	select: 
-# 		style: 'single',
-# 		info: false
-# 	columns: [
-# 		{data: "name"},
-# 		{data: "owner_name()"},
-# 		{data: "admins_name()"},
-# 		{data: "is_paid"},
-# 	],
-# 	extraFields: ["owner", "admins", "balance"],
 
 
 if (Meteor.isClient) 

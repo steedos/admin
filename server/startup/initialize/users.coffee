@@ -3,6 +3,7 @@ Meteor.startup ->
 		admins = ['support@steedos.com'];
 
 		_.each admins, (admin) ->
-			id = db.users.findOne({"email.address": admin})
+			id = db.users.findOne({"emails.address": admin})
 			if id
-				Roles.addUsersToRoles(id, 'admin');
+				console.log '[initialize] set user as admin:' + admin
+				Roles.addUsersToRoles(id, 'admin', Roles.GLOBAL_GROUP);

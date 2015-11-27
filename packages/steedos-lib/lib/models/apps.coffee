@@ -17,16 +17,3 @@ db.apps.attachSchema new SimpleSchema
 		optional: true,
 		max: 1000
 
-# db.apps._table = new Tabular.Table
-# 	name: "Apps",
-# 	collection: db.apps,
-# 	lengthChange: false,
-# 	select: 
-# 		style: 'single',
-# 		info: false
-# 	columns: [
-# 		{data: "name"},
-# 		{data: "description"},
-# 		{data: "url"}
-# 	],
-# 	extraFields: ["iconURL"],

@@ -64,19 +64,15 @@ db.users._simpleSchema = new SimpleSchema
 		optional: true
 
 
-# db.users._table = new Tabular.Table
-# 	name: "Users",
-# 	collection: db.users,
-# 	lengthChange: false,
-# 	select: 
-# 		style: 'single',
-# 		info: false
-# 	columns: [
-# 		{data: "name"},
-# 		{data: "email"},
-# 		{data: "locale"}
-# 	],
-
+if Meteor.isClient
+	
+	db.users.helpers
+		displayName: ->
+			if this.name 
+				return this.name
+			else if this.emails[0]
+				return this.emails[0].address
+		
 
 if Meteor.isServer
 
@@ -102,6 +98,13 @@ if Meteor.isServer
 			doc.emails.push
 				address: doc.email,
 				verified: !!doc.primary_email_verified
+		else if (doc.emails && !doc.email)
+			if doc.emails.length>0
+				doc.email = doc.emails[0].address
+
+		if (doc.profile?.name && !doc.name)
+			doc.name = doc.profile.name
+
 		if (doc.email && !doc.steedos_id)
 			doc.steedos_id = doc.email
 

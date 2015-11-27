@@ -14,8 +14,7 @@
 	collections: 
 		Users: 
 			tableColumns: [
-				{name: "name"},
-				{name: "email"},
+				{name: "displayName()"},
 			]
 		Spaces: 
 			tableColumns: [
