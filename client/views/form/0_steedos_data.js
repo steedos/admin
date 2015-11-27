@@ -11,6 +11,19 @@ Steedos_data.getInstance = function (instancdId){
   console.log("instance is \n" + JSON.stringify(instance));
   return instance;
 };
+
+//return {name:'',organization:{fullname:'',name:''},roles:[]}
+Steedos_data.getFormulaUserObject = function(userId){
+  userObject = {};
+
+  userObject['name'] = 'test';
+  userObject['organization'] = {fullname:'test organization fullname', name:'test organization name'};
+  userObject["roles"] = ['role1','role2','role3'];
+
+  return userObject;
+
+};
+
 Steedos_data.s_autoform = function (schema, type, options, permission){
   autoform = {};
     
@@ -120,19 +133,14 @@ Steedos_data.steedosFieldToAutoField = function (steedosForm){
                                         type:Object,
                                         optional:false
                                       };
-      afFields["steedosSubFormObj-" + stField.code] = {
-                                        type:Object,
-                                        optional:false,
-                                        label:stField.code
-                                      };
 
       var sfieldcodes = new Array();
       for(var si = 0 ; si < stField.sfields.length; si++){
        
         var sstField = stField.sfields[si];
-        sfieldcodes.push(sstField.code);
-        afFields["steedosSubFormObj-" + stField.code + "." + sstField.code] = new Steedos_data.s_schema(sstField.code, sstField.type, sstField.options, sstField.permission, sstField.is_required);
         
+        sfieldcodes.push(sstField.code);
+
         afFields[stField.code + ".$." + sstField.code] = new Steedos_data.s_schema(sstField.code, sstField.type, sstField.options, sstField.permission, sstField.is_required);
         
       }

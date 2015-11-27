@@ -7,15 +7,18 @@ var fields = Steedos_data.steedosFieldToAutoField(steedos_form);
 
 var formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", steedos_form.fields);
 
+var formId = 'instanceform';
+
 Template.instanceform.helpers({
   formId: function (){
-    return 'instanceform';
+    return formId;
   },
   steedos_form: function (){
     return steedos_form;
   },
   innersubformContext:function (obj){
     obj["tableValues"] = steedos_instance.values[obj.code]
+    obj["formId"] = formId;
     return obj;
   },
   instance: function (){
@@ -56,11 +59,12 @@ Template.instanceform.events({
     var code = event.target.name;
     /*
       autoform-inputs 中 markChanged 函数中，对template 的更新延迟了100毫秒，
-      此处为了能拿到删除列后最新的数据，此处等待markChanged执行完成后，再进行计算公式
+      此处为了能拿到删除列后最新的数据，此处等待markChanged执行完成后，再进行计算公式.
+      此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。
     */
     setTimeout(function () {
       Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, steedos_form.fields);
-    },150);
+    },101);
 
   }
 });

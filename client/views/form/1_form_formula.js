@@ -202,6 +202,10 @@ function init_formula_values(fields, autoFormDoc){
             }
         }, this);
     }
+
+    __values["approver"] = Steedos_data.getFormulaUserObject("");
+    __values["applicant"] = Steedos_data.getFormulaUserObject("");
+
     //approver 当前用户
     // var currentUserId = CS.getPath('currentUser.id');
     // __approverValues = this.getUserValues(spaceId, currentUserId, 'approver');
