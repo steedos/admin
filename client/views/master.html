@@ -2,8 +2,9 @@
 	{{#unless logged}}
     	{{> loginNav}}
 		{{> status}}
-        {{> Template.dynamic template=main}}
-    	<!-- {{> loginFooter}} -->
+		<div class="content-wrapper" style="min-height: 300px;">
+        	{{> yield}}
+        </div>
 	{{else}}
     	<div class="wrapper">
 	    	{{> dock}}

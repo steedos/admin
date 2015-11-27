@@ -3,32 +3,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-accounts-password
-accounts-google
-accounts-facebook
-service-configuration
-coffeescript
-
-underscorestring:underscore.string
-momentjs:moment
-mrt:moment-timezone
-
-iron:router
-#kadira:flow-router
-zimme:active-route
-
-twbs:bootstrap
-alanning:roles
-steedos:lib
-joshowens:timezone-picker
-#steedos:useraccounts-core
-#steedos:useraccounts-semantic-ui
-#steedos:useraccounts-flow-routing
-useraccounts:core
-useraccounts:bootstrap
-useraccounts:iron-routing
-softwarerero:accounts-t9n
-
 standard-minifiers
 meteor-base
 mobile-experience
@@ -43,6 +17,30 @@ random
 ejson
 spacebars
 check
+
+accounts-password
+accounts-google
+accounts-facebook
+service-configuration
+coffeescript
+
+underscorestring:underscore.string
+momentjs:moment
+mrt:moment-timezone
+
+
+twbs:bootstrap
+alanning:roles
+steedos:lib
+joshowens:timezone-picker
+#steedos:useraccounts-core
+#steedos:useraccounts-semantic-ui
+#steedos:useraccounts-flow-routing
+useraccounts:core
+useraccounts:bootstrap
+useraccounts:iron-routing
+softwarerero:accounts-t9n
+
 fortawesome:fontawesome
 
 tap:i18n
@@ -63,6 +61,8 @@ gwendall:simple-schema-i18n
 ongoworks:security
 matb33:collection-hooks
 francocatena:status
+
+iron:router
 
 mfactory:admin-lte
 yogiben:admin
