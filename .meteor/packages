@@ -13,8 +13,8 @@ underscorestring:underscore.string
 momentjs:moment
 mrt:moment-timezone
 
-#semantic:ui
 twbs:bootstrap
+alanning:roles
 steedos:lib
 joshowens:timezone-picker
 #steedos:useraccounts-core
@@ -52,17 +52,15 @@ cfs:filesystem
 chrismbeckett:toastr
 nimble:restivus
 percolate:migrations
+aldeed:tabular
 aldeed:autoform
 aldeed:collection2
 aldeed:autoform-select2
-natestrauser:select2
-
-aldeed:tabular
-ongoworks:security
 gwendall:simple-schema-i18n
+
+ongoworks:security
 matb33:collection-hooks
 francocatena:status
 
 mfactory:admin-lte
-alanning:roles
 sach:flow-db-admin
