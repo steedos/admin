@@ -1,0 +1,6 @@
+[submodule "packages/meteor-admin"]
+	path = packages/meteor-admin
+	url = https://github.com/steedos/meteor-admin
+[submodule "packages/meteor-tabular"]
+	path = packages/meteor-tabular
+	url = https://github.com/steedos/meteor-tabular
