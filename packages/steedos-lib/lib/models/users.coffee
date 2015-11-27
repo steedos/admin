@@ -64,6 +64,15 @@ db.users._simpleSchema = new SimpleSchema
 		optional: true
 
 
+db.users.helpers
+	spaces: ->
+		spaces = []
+		if this.space
+			sus = db.space_users.find({user: this._id}, {fields: {_id:1}})
+			sus.forEach (su) ->
+				spaces.push(su._id)
+		return spaces;
+
 if Meteor.isClient
 	
 	db.users.helpers
@@ -76,6 +85,7 @@ if Meteor.isClient
 
 if Meteor.isServer
 
+		
 	db.users.checkEmailValid = (email) ->
 		existed = db.users.find 
 			"emails.address": email

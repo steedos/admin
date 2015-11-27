@@ -1,7 +1,7 @@
-FlowRouter.route '/space/organizations/', 
-  name: "adminOrganizations",
-  action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminOrganizations"}
+# FlowRouter.route '/space/organizations/', 
+#   name: "adminOrganizations",
+#   action: (params, queryParams) ->
+#       BlazeLayout.render 'masterLayout', {main: "adminOrganizations"}
   
 
 

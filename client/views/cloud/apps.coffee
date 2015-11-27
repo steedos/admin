@@ -1,7 +1,7 @@
-FlowRouter.route '/cloud/apps/', 
-  name: "cloudApps",
-  action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "cloudApps"}
+# FlowRouter.route '/cloud/apps/', 
+#   name: "cloudApps",
+#   action: (params, queryParams) ->
+#       BlazeLayout.render 'masterLayout', {main: "cloudApps"}
   
 
 AutoForm.hooks

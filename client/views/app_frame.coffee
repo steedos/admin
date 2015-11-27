@@ -1,6 +1,6 @@
 Template.appFrame.helpers
 	appURL: ->
-		app_name = FlowRouter.getParam('app_name')
+		app_name = this.app_name
 
 		app = Apps.findOne({name: app_name});
 		if app

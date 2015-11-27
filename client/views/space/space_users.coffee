@@ -1,7 +1,7 @@
-FlowRouter.route '/space/users/', 
-  name: "adminSpaceUsers",
-  action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "adminSpaceUsers"}
+# FlowRouter.route '/space/users/', 
+#   name: "adminSpaceUsers",
+#   action: (params, queryParams) ->
+#       BlazeLayout.render 'masterLayout', {main: "adminSpaceUsers"}
   
 
 AutoForm.hooks

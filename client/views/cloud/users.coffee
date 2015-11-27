@@ -1,7 +1,7 @@
-FlowRouter.route '/cloud/users/', 
-  name: "cloudUsers",
-  action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "cloudUsers"}
+# FlowRouter.route '/cloud/users/', 
+#   name: "cloudUsers",
+#   action: (params, queryParams) ->
+#       BlazeLayout.render 'masterLayout', {main: "cloudUsers"}
   
 
 AutoForm.hooks

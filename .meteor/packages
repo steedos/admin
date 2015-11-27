@@ -13,6 +13,10 @@ underscorestring:underscore.string
 momentjs:moment
 mrt:moment-timezone
 
+iron:router
+#kadira:flow-router
+zimme:active-route
+
 twbs:bootstrap
 alanning:roles
 steedos:lib
@@ -22,10 +26,9 @@ joshowens:timezone-picker
 #steedos:useraccounts-flow-routing
 useraccounts:core
 useraccounts:bootstrap
-useraccounts:flow-routing
+useraccounts:iron-routing
 softwarerero:accounts-t9n
 
-zimme:active-route
 standard-minifiers
 meteor-base
 mobile-experience
@@ -42,7 +45,6 @@ spacebars
 check
 fortawesome:fontawesome
 
-arillo:flow-router-helpers
 tap:i18n
 flemay:less-autoprefixer
 raix:handlebar-helpers
@@ -63,4 +65,4 @@ matb33:collection-hooks
 francocatena:status
 
 mfactory:admin-lte
-sach:flow-db-admin
+yogiben:admin

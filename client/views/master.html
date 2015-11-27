@@ -10,8 +10,18 @@
 
 			{{> status}}
 			<div class="content-wrapper" style="min-height: 300px;">
-	        	{{> Template.dynamic template=main}}
+	        	{{> yield}}
 	        </div>
 		</div>
 	{{/unless}}
+</template>
+
+<template name="loginLayout">
+  {{> yield region='nav'}}
+
+  <div id="content">
+    {{> yield}}
+  </div>
+
+  {{> yield region='footer'}}
 </template>

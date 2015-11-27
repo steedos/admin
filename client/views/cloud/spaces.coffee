@@ -1,7 +1,7 @@
-FlowRouter.route '/cloud/spaces/', 
-  name: "cloudSpaces",
-  action: (params, queryParams) ->
-      BlazeLayout.render 'masterLayout', {main: "cloudSpaces"}
+# FlowRouter.route '/cloud/spaces/', 
+#   name: "cloudSpaces",
+#   action: (params, queryParams) ->
+#       BlazeLayout.render 'masterLayout', {main: "cloudSpaces"}
   
 
 AutoForm.hooks

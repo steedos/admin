@@ -6,7 +6,19 @@ db.organizations._simpleSchema = new SimpleSchema
 	space: 
 		type: String,
 		autoform: 
-			type: "hidden",
+			type: "select2",
+			options: ->
+				options = [{
+					label: "",
+					value: ""
+				}]
+				objs = db.spaces.find()
+				objs.forEach (obj) ->
+					options.push({
+						label: obj.name,
+						value: obj._id
+					})
+				return options
 			defaultValue: ->
 				return Session.get("spaceId");
 	name:
@@ -77,6 +89,14 @@ db.organizations._simpleSchema = new SimpleSchema
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
+
+if (Meteor.isClient) 
+
+	db.organizations.helpers
+		space_name: ->
+			space = db.spaces.findOne({_id: this.space});
+			return space?.name
+			
 
 if (Meteor.isServer) 
 
