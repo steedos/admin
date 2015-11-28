@@ -9,19 +9,18 @@ db.spaces.attachSchema new SimpleSchema
 		max: 200
 	owner: 
 		type: String,
+		optional: true,
 		autoform:
 			type: "select2",
 			options: ->
-				options = [{
-					label: "",
-					value: ""
-				}]
-				objs = db.users.find({}, {name:1, sort: {name:1}})
-				objs.forEach (obj) ->
-					options.push
-						label: obj.displayName(),
-						value: obj._id
-
+				options = []
+				spaceId = Session.get("spaceId")
+				if spaceId
+					objs = db.space_users.find({space: spaceId}, {name:1, sort: {name:1}})
+					objs.forEach (obj) ->
+						options.push
+							label: obj.name,
+							value: obj.user
 				return options
 
 			defaultValue: ->
@@ -36,13 +35,15 @@ db.spaces.attachSchema new SimpleSchema
 				multiple: true
 			options: ->
 				options = []
-				objs = db.users.find({}, {name:1, sort: {name:1}})
-				objs.forEach (obj) ->
-					options.push
-						label: obj.displayName(),
-						value: obj._id
+				spaceId = Session.get("spaceId")
+				if spaceId
+					objs = db.space_users.find({space: spaceId}, {name:1, sort: {name:1}})
+					objs.forEach (obj) ->
+						options.push
+							label: obj.name,
+							value: obj.user
 				return options
-			
+
 	balance: 
 		type: Number,
 		optional: true,
@@ -83,14 +84,11 @@ if (Meteor.isClient)
 if (Meteor.isServer) 
 
 	db.spaces.before.insert (userId, doc) ->
-		doc.created_by = userId;
-		doc.created = new Date();
-		# 自动添加 Owner 为管理员
-		if (doc.owner)
-			if (!doc.admins)
-				doc.admins = [doc.owner]
-			if (doc.admins.indexOf(doc.owner) <0)
-				doc.admins.push(doc.owner)
+		doc.created_by = userId
+		doc.created = new Date()
+		
+		doc.owner = userId
+		doc.admins = [userId]
 
 
 	db.spaces.after.insert (userId, doc) ->

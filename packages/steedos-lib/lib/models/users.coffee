@@ -67,10 +67,9 @@ db.users._simpleSchema = new SimpleSchema
 db.users.helpers
 	spaces: ->
 		spaces = []
-		if this.space
-			sus = db.space_users.find({user: this._id}, {fields: {_id:1}})
-			sus.forEach (su) ->
-				spaces.push(su._id)
+		sus = db.space_users.find({user: this._id}, {fields: {space:1}})
+		sus.forEach (su) ->
+			spaces.push(su.space)
 		return spaces;
 
 if Meteor.isClient

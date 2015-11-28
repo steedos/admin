@@ -5,20 +5,9 @@ db.organizations.permit(['insert', 'update', 'remove']).apply();
 db.organizations._simpleSchema = new SimpleSchema
 	space: 
 		type: String,
+		optional: true,
 		autoform: 
-			type: "select2",
-			options: ->
-				options = [{
-					label: "",
-					value: ""
-				}]
-				objs = db.spaces.find()
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.name,
-						value: obj._id
-					})
-				return options
+			type: "hidden",
 			defaultValue: ->
 				return Session.get("spaceId");
 	name:
@@ -53,135 +42,79 @@ db.organizations._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: true,
 		autoform: 
-			type: "select2",
-			afFieldInput: 
-				multiple: true
-			options: ->
-				options = []
-				objs = db.users.find({}, {name:1, sort: {name:1}})
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.displayName(),
-						value: obj._id
-					})
-				return options
+			omit: true
 	is_company: 
 		type: Boolean,
 		optional: true,
 		autoform: 
-			type: "hidden",
+			omit: true
 	parents: 
 		type: [String],
 		optional: true,
 		autoform: 
-			type: "hidden",
+			omit: true
 	fullname: 
 		type: String,
 		optional: true,
 		autoform: 
-			type: "hidden",
+			omit: true
 	children:
 		type: [String],
 		optional: true,
 		autoform: 
-			type: "hidden",
+			omit: true
 
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
 
-if (Meteor.isClient) 
 
-	db.organizations.helpers
-		space_name: ->
-			space = db.spaces.findOne({_id: this.space});
-			return space?.name
-			
+db.organizations.helpers
 
-if (Meteor.isServer) 
+	calculateParents: ->
+		parents = [];
+		if (!this.parent)
+			return parents
+		parentId = this.parent;
+		while (parentId)
+			parents.push(parentId)
+			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
+			if (parentOrg)
+				parentId = parentOrg.parent
+		return parents
 
-	db.organizations.getChildren = (id) ->
+
+	calculateFullname: ->
+		fullname = this.name;
+		if (!this.parent)
+			return fullname;
+		parentId = this.parent;
+		while (parentId)
+			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
+			fullname = parentOrg.name + "/" + fullname;
+			parentId = parentOrg.parent
+		return fullname
+
+
+	calculateChildren: ->
 		children = []
-		childrenObjs = db.organizations.find({parent: id}, {});
+		childrenObjs = db.organizations.find({parent: this._id}, {});
 		childrenObjs.forEach (child) ->
 			children.push(child._id);
 		return children;
 
 
-	db.organizations.getRecursiveChildren = (id) ->
-		children = []
-		childrenObjs = db.organizations.find({parents: id}, {});
-		childrenObjs.forEac (child) ->
-			children.push(child._id);
-		return children;
-
-
-	db.organizations.updateChildren = (id) ->
-		children = db.organizations.getChildren(id);
-		db.organizations.direct.update({
-			_id: id
-		}, {
-			$set: {children: children}
-		})
-		return children;
-
-
-	db.organizations.getFullname = (id) ->
-		org = db.organizations.findOne({_id: id}, {parent: 1, name: 1});
-
-		fullname = org.name;
-
-		if (!org.parent)
-			return fullname;
-
-		parentId = org.parent;
-		while (parentId)
-			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
-			fullname = parentOrg.name + "/" + fullname;
-			parentId = parentOrg.parent
+	space_name: ->
+		space = db.spaces.findOne({_id: this.space});
+		return space?.name
 		
 
-		return fullname
-
-
-	db.organizations.updateFullname = (id) ->
-		fullname = this.getFullname(id)
-		db.organizations.direct.update({
-			_id: id
-		}, {
-			$set: {fullname: fullname}
-		})
-
-
-	db.organizations.getParents = (parent) ->
-		if (!parent)
-			return []
-		parents = [parent];
-
-		parentId = parent;
-		while (parentId)
-			parentOrg = db.organizations.findOne({_id: parentId}, {parent: 1, name: 1});
-			if (parentOrg)
-				parentId = parentOrg.parent
-			else
-				parentId = null
-
-			if (parentId)
-				parents.push(parentId)
-		return parents
-
-
-	db.organizations.before.remove (userId, doc) ->
-		if (doc.children && doc.children.length>0)
-			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
-
+if (Meteor.isServer) 
 
 	db.organizations.before.insert (userId, doc) ->
 		doc.created_by = userId;
 		doc.created = new Date();
-
-		doc.parents = db.organizations.getParents(doc.parent);
-		doc.is_company = !doc.parent;
+		#doc.is_company = !doc.parent;
 
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -195,28 +128,54 @@ if (Meteor.isServer)
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
 				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
 
-			# 更新parents
-			modifier.$set.parents = db.organizations.getParents(modifier.$set.parent);
+
+	db.organizations.before.remove (userId, doc) ->
+		if (doc.children && doc.children.length>0)
+			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
 
 
 	db.organizations.after.insert (userId, doc) ->
+		updateFields = {}
+		obj = db.organizations.findOne(doc._id)
+		
+		updateFields.parents = obj.calculateParents();
+		updateFields.fullname = obj.calculateFullname()
+
+		if !_.isEmpty(updateFields)
+			db.organizations.direct.update(obj._id, {$set: updateFields})
+
 		if (doc.parent)
-			db.organizations.updateChildren(doc.parent);
-		db.organizations.updateFullname(doc._id);
+			parent = db.organizations.findOne(doc.parent)
+			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
-		# 如果更改 parent，更改前后的对象都需要重新生成children
-		if (doc.parent)
-			children = db.organizations.updateChildren(doc.parent);
+		updateFields = {}
+		obj = db.organizations.findOne(doc._id)
+		if obj.parent
+			updateFields.parents = obj.calculateParents();
 
 		if (modifier.$set.parent)
-			children = db.organizations.updateChildren(modifier.$set.parent);
+			newParent = db.organizations.findOne(doc.parent)
+			db.organizations.direct.update(newParent._id, {$set: {children: newParent.calculateChildren()}});
+			# 如果更改 parent，更改前后的对象都需要重新生成children
+			if (doc.parent)
+				oldParent = db.organizations.findOne(doc.oldParent)
+				db.organizations.direct.update(oldParent._id, {$set: {children: oldParent.calculateChildren()}});
 
 		# 如果更改 parent 或 name, 需要更新 自己和孩子们的 fullname	
 		if (modifier.$set.parent || modifier.$set.name)
-			db.organizations.updateFullname(doc._id);
-			children = db.organizations.getRecursiveChildren(doc._id);
-			_.each children, (childId) ->
-				db.organizations.updateFullname(childId);
+			updateFields.fullname = obj.calculateFullname()
+			children = db.organizations.find({parents: doc._id});
+			children.forEach (child) ->
+				db.organizations.direct.update(child._id, {$set: {fullname: child.calculateFullname()}})
+
+		if !_.isEmpty(updateFields)
+			db.organizations.direct.update(obj._id, {$set: updateFields})
 		
+
+	db.organizations.after.remove (userId, doc) ->
+		if (doc.parent)
+			parent = db.organizations.findOne(doc.parent)
+			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
+

@@ -29,7 +29,10 @@ momentjs:moment
 mrt:moment-timezone
 
 
+fortawesome:fontawesome
 twbs:bootstrap
+fezvrasta:bootstrap-material-design
+
 alanning:roles
 steedos:lib
 joshowens:timezone-picker
@@ -41,7 +44,6 @@ useraccounts:bootstrap
 useraccounts:iron-routing
 softwarerero:accounts-t9n
 
-fortawesome:fontawesome
 
 tap:i18n
 flemay:less-autoprefixer
@@ -66,3 +68,5 @@ iron:router
 
 mfactory:admin-lte
 yogiben:admin
+aldeed:template-extension
+#gandev:server-eval

@@ -18,7 +18,7 @@ Meteor.publish 'spaces', ->
 			newSpace = db.spaces.findOne newDoc.space
 			if newSpace
 				self.added "spaces", newDoc.space, newSpace;
-			if oldDoc.space
+			if oldDoc.space != newDoc.space
 				self.removed "spaces", oldDoc.space;
 		removed: (oldDoc) ->
 			if oldDoc.space

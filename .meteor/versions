@@ -55,6 +55,7 @@ ejson@1.0.7
 email@1.0.8
 facebook@1.2.2
 fastclick@1.0.7
+fezvrasta:bootstrap-material-design@0.3.0
 flemay:less-autoprefixer@1.2.0
 fortawesome:fontawesome@4.4.0_1
 francocatena:status@1.5.0

@@ -5,22 +5,15 @@ db.space_users.permit(['insert', 'update', 'remove']).apply();
 db.space_users._simpleSchema = new SimpleSchema
 	space: 
 		type: String,
+		optional: true,
 		autoform: 
-			type: "select2",
-			options: ->
-				options = [{
-					label: "",
-					value: ""
-				}]
-				objs = db.spaces.find()
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.name,
-						value: obj._id
-					})
-				return options
+			type: "hidden",
 			defaultValue: ->
 				return Session.get("spaceId");
+	name: 
+		type: String,
+		max: 50,
+		optional: true,
 	email:
 		type: String,
 		regEx: SimpleSchema.RegEx.Email,
@@ -28,10 +21,8 @@ db.space_users._simpleSchema = new SimpleSchema
 	user:
 		type: String,
 		optional: true,
-	name: 
-		type: String,
-		max: 50,
-		optional: true,
+		autoform:
+			omit: true
 	organization: 
 		type: String,
 		optional: true,
@@ -53,11 +44,11 @@ db.space_users._simpleSchema = new SimpleSchema
 						value: obj._id
 					})
 				return options
-	user_accepted: 
-		type: Boolean,
-		optional: true,
 	manager: 
 		type: String,
+		optional: true,
+	user_accepted: 
+		type: Boolean,
 		optional: true,
 
 
@@ -100,9 +91,16 @@ if (Meteor.isServer)
 		doc.created_by = userId;
 		doc.created = new Date();
 
+		if (!doc.space)
+			throw new Meteor.Error(400, t("user_spaces_error.space_is_required"));
+
 		userObj = db.users.findOne({"emails.address": doc.email});
 		if (userObj)
 			doc.user = userObj._id
+			doc.name = userObj.name
+
+		if (!doc.user)
+			throw new Meteor.Error(400, t("user_spaces_error.user_is_required"));
 
 
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
