@@ -5,9 +5,3 @@ UI.registerHelper 'admin_fields', ->
 	else
 		return collection.newFormFields
 
-
-Template.AdminDashboardView.helpers
-	
-	selector: ->
-		return {space: Session.get("spaceId")}
-

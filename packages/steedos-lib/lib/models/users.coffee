@@ -44,24 +44,26 @@ db.users._simpleSchema = new SimpleSchema
 	primary_email_verified:
 		type: Boolean
 		optional: true
-		autoform:
-			readonly: true
+		autoform: 
+			omit: true
 	steedos_id: 
 		type: String,
 		optional: true
-		autoform:
-			readonly: true
+		autoform: 
+			omit: true
 	last_logon:
 		type: Date
 		optional: true
-		autoform:
-			readonly: true
+		autoform: 
+			omit: true
 	email_notification:
 		type: Boolean
 		optional: true
 	is_cloudadmin:
 		type: Boolean
 		optional: true
+		autoform: 
+			omit: true
 
 
 db.users.helpers

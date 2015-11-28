@@ -160,7 +160,7 @@ if (Meteor.isServer)
 			db.organizations.direct.update(newParent._id, {$set: {children: newParent.calculateChildren()}});
 			# 如果更改 parent，更改前后的对象都需要重新生成children
 			if (doc.parent)
-				oldParent = db.organizations.findOne(doc.oldParent)
+				oldParent = db.organizations.findOne(doc.parent)
 				db.organizations.direct.update(oldParent._id, {$set: {children: oldParent.calculateChildren()}});
 
 		# 如果更改 parent 或 name, 需要更新 自己和孩子们的 fullname	

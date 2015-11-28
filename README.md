@@ -39,3 +39,6 @@
 
 ##### [TAP i18n](https://github.com/TAPevents/tap-i18n)
 > tap-i18n is a Meteor package that provides a comprehensive i18n solution for Meteor apps and packages
+
+##### [bootstrap-material-design](https://github.com/FezVrasta/bootstrap-material-design)
+> This Bootstrap theme is an easy way to use the new Material Design guidelines by Google in your Bootstrap 3 based application.
