@@ -17,6 +17,7 @@ random
 ejson
 spacebars
 check
+reactive-var
 
 accounts-password
 accounts-google
@@ -33,7 +34,8 @@ fortawesome:fontawesome
 twbs:bootstrap
 fezvrasta:bootstrap-material-design
 #steedos:adminlte
-mfactory:admin-lte
+#mfactory:admin-lte
+yp2:admin-lte
 
 alanning:roles
 steedos:lib

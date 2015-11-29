@@ -88,7 +88,6 @@ meteor-base@1.0.1
 meteorhacks:meteorx@1.0.2
 meteorhacks:unblock@1.1.0
 meteorspark:util@0.2.0
-mfactory:admin-lte@0.0.2
 minifiers@1.1.7
 minimongo@1.0.10
 mobile-experience@1.0.1
@@ -145,4 +144,5 @@ useraccounts:iron-routing@1.12.4
 webapp@1.2.3
 webapp-hashing@1.0.5
 yogiben:admin@1.2.3
+yp2:admin-lte@2.3.1
 zimme:active-route@2.3.2

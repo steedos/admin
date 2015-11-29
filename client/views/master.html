@@ -2,20 +2,18 @@
 	{{#unless logged}}
     	{{> loginNav}}
 		{{> status}}
-		<div class="content-wrapper" style="min-height: 300px;">
+		<div class="content-wrapper" style="min-height: {{minHeight}}">
         	{{> yield}}
         </div>
 	{{else}}
-    	{{# AdminLTE }}
     	<div class="wrapper">
 	    	{{> dock}}
 
 			{{> status}}
-			<div class="content-wrapper" style="min-height: 300px;">
+			<div class="content-wrapper" style="min-height: {{minHeight}}">
 	        	{{> yield}}
 	        </div>
-		</div>
-    	{{/ AdminLTE }}
+    	</div>
 	{{/unless}}
 </template>
 
