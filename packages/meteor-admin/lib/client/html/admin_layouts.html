@@ -2,11 +2,10 @@
   {{#if AdminConfig}}
   {{#if isInRole 'admin'}}
   <div class="admin-layout">
-    <!-- {{# AdminLTE skin=admin_skin }} -->
-    <div class="wrapper">
+    {{# AdminLTE skin=admin_skin }}
       {{> AdminHeader }}
       {{> AdminSidebar }}
-      <div class="content-wrapper" style="min-height: 500px">
+      <div class="content-wrapper" style="min-height: {{minHeight}}">
         <section class="content-header">
           <h1>
             {{$.Session.get 'admin_title'}}
@@ -33,8 +32,8 @@
           {{> yield }}
         </section>
       </div>
-    </div>
-    <!-- {{/ AdminLTE }} -->
+
+    {{/ AdminLTE }}
   </div>
   {{> AdminDeleteModal }}
   {{else}}

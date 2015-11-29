@@ -33,9 +33,7 @@ mrt:moment-timezone
 fortawesome:fontawesome
 twbs:bootstrap
 fezvrasta:bootstrap-material-design
-#steedos:adminlte
-#mfactory:admin-lte
-yp2:admin-lte
+steedos:admin-lte
 
 alanning:roles
 steedos:lib

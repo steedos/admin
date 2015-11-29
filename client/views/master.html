@@ -6,14 +6,14 @@
         	{{> yield}}
         </div>
 	{{else}}
-    	<div class="wrapper">
+    	{{# AdminLTE skin="green" }}
 	    	{{> dock}}
 
 			{{> status}}
 			<div class="content-wrapper" style="min-height: {{minHeight}}">
 	        	{{> yield}}
 	        </div>
-    	</div>
+    	{{/ AdminLTE}}
 	{{/unless}}
 </template>
 

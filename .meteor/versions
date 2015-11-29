@@ -128,6 +128,7 @@ spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
 standard-minifiers@1.0.2
+steedos:admin-lte@0.0.2
 steedos:lib@0.0.1
 tap:i18n@1.7.0
 templating@1.1.5
@@ -144,5 +145,4 @@ useraccounts:iron-routing@1.12.4
 webapp@1.2.3
 webapp-hashing@1.0.5
 yogiben:admin@1.2.3
-yp2:admin-lte@2.3.1
 zimme:active-route@2.3.2
