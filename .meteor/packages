@@ -32,6 +32,8 @@ mrt:moment-timezone
 fortawesome:fontawesome
 twbs:bootstrap
 fezvrasta:bootstrap-material-design
+#steedos:adminlte
+mfactory:admin-lte
 
 alanning:roles
 steedos:lib
@@ -66,7 +68,6 @@ francocatena:status
 
 iron:router
 
-mfactory:admin-lte
 yogiben:admin
 aldeed:template-extension
 #gandev:server-eval

@@ -3,6 +3,24 @@ Template.AdminHeader.helpers
 	spaces: ->
 		return db.spaces.find().fetch()
 
+	displayName: ->
+	
+		if Meteor.user()
+			if Meteor.user().name
+				return Meteor.user().name
+			else if Meteor.user().email
+				return Meteor.user().email
+			else
+				return Meteor.user()._id
+		else
+			return "Nobody"
+
+	spaceName: ->
+		if (Session.get("spaceName"))
+			return Session.get("spaceName")
+		return t("Steedos Cloud")
+
+
 Template.AdminHeader.events
 
 	"click #switchSpace": ->

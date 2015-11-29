@@ -1,11 +1,20 @@
 <template name="dock">
-	<header class="main-header">
-        <a href="/" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>{{_ 'Steedos'}}</b></span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>{{_ 'Steedos Cloud'}}</b></span>
-        </a>
+	<header class="steedos main-header">
+    <div class="logo">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <span>{{spaceName}}<i class="caret"></i>
+            </span>
+          </a>
+          <ul class="dropdown-menu">
+            {{#each spaces}}
+              <li id="switchSpace"><a href="#">{{name}}</a></li>
+            {{/each}}
+          </ul>
+        </li>
+      </ul>
+    </div>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
@@ -18,9 +27,6 @@
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{displayName}}<span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
-					{{#each spaces}}
-						<li id="switchSpace">{{name}}</li>
-					{{/each}}
 		            <li><a href="/account/profile">{{_ 'My Account'}}</a></li>
 		            <li><a href="/logout">{{_ 'Logout'}}</a></li>
 		          </ul>

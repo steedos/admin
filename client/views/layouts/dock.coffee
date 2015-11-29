@@ -26,6 +26,11 @@ Template.dock.helpers
 	spaces: ->
 		return db.spaces.find();
 
+	spaceName: ->
+		if (Session.get("spaceName"))
+			return Session.get("spaceName")
+		return t("Steedos Cloud")
+
 
 Template.dock.onRendered ->
 	
@@ -41,3 +46,4 @@ Template.dock.events
 
 	"click #switchSpace": ->
 		Session.set("spaceId", this._id)
+		Session.set("spaceName", this.name)
