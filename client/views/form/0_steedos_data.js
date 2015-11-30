@@ -85,6 +85,7 @@ Steedos_data.s_autoform = function (schema, type, options, permission){
     }
 
     autoform.options = afoptions;
+    //autoform.defaultValue = '飞机票';
   }
   return autoform;
 };
@@ -93,7 +94,7 @@ Steedos_data.s_schema = function (label, fieldType, options, permission, is_requ
   schema = {};
    
   schema.label = label;
-  //schema.defaultValue = '1111';
+  //schema.defaultValue = '飞机票';
   schema.optional = !is_required;
 
   if(fieldType == 'email'){

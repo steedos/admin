@@ -4,7 +4,6 @@
         <div class="panel-heading">
             {{afFieldLabelText name=this.code}}
         </div>
-    <!-- <div class="panel-body"> -->
         <table class="table table-bordered table-condensed" name="{{this.code}}table" data-validrows="{{initValidrows this.tableValues}}" data-rowobj = "{{initRowobj this.sfields}}" data-formid="{{this.formId}}" data-rowformula="{{initRowFormula this.sfields}}">
             <thead>
                 <tr>
@@ -16,7 +15,7 @@
                 <td style="width:70px;">
                     <span class="panel-controls">
                         <!-- Button trigger modal -->
-                        <i class="plus icon add-steedos-table-row" data-rowindex="-1"></i>
+                        <span class="glyphicon glyphicon-plus add-steedos-table-row" data-rowindex="-1" data-toggle="modal" data-title="新增" data-method="add"></span>
                     </span>
                 </td>
                 </tr>
@@ -30,55 +29,39 @@
                     {{/each}}
                     <td>
                         <span class="panel-controls">
-                            <i class="remove icon remove-steedos-table-row" data-rowindex="{{@index}}"></i>&nbsp;&nbsp;
-                            <i class="write icon edit-steedos-table-row" data-rowindex="{{@index}}"></i>
+                            <span class="glyphicon glyphicon-remove remove-steedos-table-row" data-rowindex="{{@index}}"></span>
+                            <span class="glyphicon glyphicon-pencil edit-steedos-table-row" data-rowindex="{{@index}}" data-title="修改" data-method="edit"></span>
                         </span>
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
-        </table> 
-    <!-- </div> -->
+        </table>
     </div>
     {{#if equals this.permission 'editable'}}
 
-    <div class="{{this.code}} ui small modal" name="{{this.code}}.modal" data-rowindex="0" data-formcode="{{this.code}}">
-        <i class="close icon"></i>
-        <div class='header' id="{{this.code}}-modal-header">
-            编辑子表
-        </div>
-        <div class="content">
-            <div class="description">
+    <div class="modal fade" id="{{this.code}}modal" name="{{this.code}}.modal" data-rowindex="-1" data-formcode="{{this.code}}">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="{{this.code}}-modal-header">编辑</h4>
+              </div>
+              <div class="modal-body">
                 {{> afObjectField name=(append this.code '.$' )}}
+              </div>
+              <div class="modal-footer">
+                
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+                <button type="button" id="steedos-table-ok-button" class="btn btn-primary" data-dismiss="modal">好</button>
+              </div>
             </div>
-        </div>
-        <div class="actions">
-            <div class="ui black deny button" >取消</div>
-            <div class="ui positive right labeled icon button" >好</div>
         </div>
     </div>
 
     <div style = 'display:none'>
         {{> afArrayField name=this.code}}
     </div>
-    <!-- Modal 
-    <div class="modal fade" id="{{this.code}}modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="exampleModalLabel">编辑子表</h4>
-          </div>
-          <div class="modal-body">
-            {{> afArrayField name=this.code}}
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="au-sb-ok" class="btn btn-default" data-dismiss="modal">好</button>
-            <button type="reset" class="btn btn-default">reset form</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
     {{/if}}
 </template>

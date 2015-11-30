@@ -63,6 +63,7 @@ Template.instanceform.events({
       此处给定等待101毫秒,只是为了将函数添加到 Timer线程中，并且排在markChanged函数之后。
     */
     setTimeout(function () {
+      console.log(JSON.stringify(AutoForm.getFormValues("instanceform").insertDoc));
       Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, steedos_form.fields);
     },101);
 

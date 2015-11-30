@@ -33,180 +33,132 @@ Template.steedos_table.helpers({
 Template.steedos_table.events({
     'click .add-steedos-table-row': function (event, template) {
 
-      var formcode = template.data.code;
+      var tableCode = template.data.code;
       
-      var tableobj = $("[name='"+formcode+"table']")[0];
-      
-      var formId = tableobj.dataset.formid;
+      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
 
-      var rowObj = JSON.parse(tableobj.dataset.rowobj);
+      var formId = steedosTable.formid;
+
+      var rowObj = JSON.parse(steedosTable.rowobj);
+
+      //获取新增行的index;
+      var row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
 
       for(var key in rowObj){
-        $("[name='"+(formcode + ".$." + key)+"']").val(rowObj[key]);
+        Steedos_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key]);
       }
-
-      var row_index = AutoForm.arrayTracker.info[formId][formcode].array.length;
       
-      AutoForm.arrayTracker.addOneToField(formId, formcode, AutoForm.getFormSchema(formId),0,5000);
-      
-      tableobj.dataset.validrows = Steedos_table_Helpers.addValidrows(tableobj.dataset.validrows, row_index);
+      AutoForm.arrayTracker.addOneToField(formId, tableCode, AutoForm.getFormSchema(formId),0,5000);
 
-      console.log("row_index is " + row_index + "   " + JSON.stringify(rowObj));
+      Steedos_table_Helpers.updateTable(tableCode, {"validrows" : Steedos_table_Helpers.addValidrows(steedosTable.validrows, row_index)});
 
-      $("[name='"+formcode+".modal']")[0].dataset.rowindex = row_index;
+      Steedos_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
 
-      $("#"+formcode+'-modal-header').html('新增');
-
-      $("." + formcode + ".ui.small.modal")
-            .modal({
-                inverted:true,
-                closable:false,
-                onDeny : function() {
-                  alert('not yet');
-                  return false;
-                },
-                onApprove: function() {
-                  var row_index = this.dataset.rowindex;
-                  var formcode = this.dataset.formcode;
-                  var rowobj = JSON.parse($("[name='"+formcode+"table']")[0].dataset.rowobj);
-
-                  var row_html = "<tr class='person-row' data-toggle='modal' name='" + row_index + "row'>"; 
-
-                  row_html = row_html + "<td>" + row_index + "</td>";
-
-                  for(var key in rowobj){
-                    $("[name='"+(formcode + "."+row_index+"." + key)+"']").val($("[name='"+(formcode + ".$." + key)+"']").val());
-                    row_html = row_html + "<td>" + $("[name='"+(formcode + ".$." + key)+"']").val() + "</td>";
-                  }
-
-                  row_html = row_html + 
-                  "<td><span class='panel-controls'>"+ 
-                      "<i class='remove icon remove-steedos-table-row' data-rowindex='" + row_index + "'></i>" +
-                      "&nbsp;&nbsp;<i class='write icon edit-steedos-table-row' data-rowindex='" + row_index + "'></i>" +
-                  "</span></td>" ;
-                  row_html = row_html + "</tr>"
-
-                  $("#"+formcode+'tbody').html($("#"+formcode+'tbody').html() + row_html);
-                }
-            })
-            .modal('show')
-        ;
-
+      Steedos_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
     'click .remove-steedos-table-row': function (event, template) {
-      //debugger;
-      console.debug("进入remove-steedos-table-row");
-      
-      var startTrack = new Date *1;
+
+      var tableCode = template.data.code;
+
+      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
 
       var row_index = event.target.dataset.rowindex;
 
-      var formcode = template.data.code;
+      var formId = steedosTable.formid;
 
-      var tableobj = $("[name='"+formcode+"table']")[0];
-
-      var formId = tableobj.dataset.formid;
-
-      AutoForm.arrayTracker.removeFromFieldAtIndex(formId, formcode, row_index, AutoForm.getFormSchema(formId),0,5000);
+      AutoForm.arrayTracker.removeFromFieldAtIndex(formId, tableCode, row_index, AutoForm.getFormSchema(formId),0,5000);
 
       //隐藏删除行
       $("[name='"+row_index+"row']").css("display","none");
       
-      tableobj.dataset.validrows = Steedos_table_Helpers.removeValidrows(tableobj.dataset.validrows, row_index);
+      //steedosTable.dataset.validrows = Steedos_table_Helpers.removeValidrows(steedosTable.dataset.validrows, row_index);
 
-      console.log(tableobj.dataset.validrows);
-
-      console.debug("退出 remove-steedos-table-row");
-      console.debug("消耗时间：" + (new Date() * 1 - startTrack) + "ms");
-
+      Steedos_table_Helpers.updateTable(tableCode, {"validrows" : Steedos_table_Helpers.removeValidrows(steedosTable.validrows, row_index)});
     },
 
     'click .edit-steedos-table-row': function (event, template) {
+
         var row_index = event.target.dataset.rowindex;
 
-        var formcode = template.data.code;
+        var tableCode = template.data.code;
 
-        var tableobj = $("[name='"+formcode+"table']")[0];
+        var steedosTable = Steedos_table_Helpers.getTable(tableCode);
 
-        var formId = tableobj.dataset.formid;
+        var formId = steedosTable.formid;
 
-        var rowObj = JSON.parse(tableobj.dataset.rowobj);
+        var rowObj = JSON.parse(steedosTable.rowobj);
 
-        var value_index = Steedos_table_Helpers.getValidrowIndex(tableobj.dataset.validrows, row_index);
+        var value_index = Steedos_table_Helpers.getValidrowIndex(steedosTable.validrows, row_index);
 
-        var rowValue = AutoForm.getFieldValue(formcode, formId)[value_index];
+        var rowValue = AutoForm.getFieldValue(tableCode, formId)[value_index];
 
         console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
 
         for(var key in rowObj){
-          $("[name='"+(formcode + ".$." + key)+"']").val(rowValue[key]);
+          Steedos_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowValue[key]);
         }
 
-        $("[name='"+formcode+".modal']")[0].dataset.rowindex = row_index;
+        Steedos_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
 
-        $("#"+formcode+'-modal-header').html('编辑');
-        
-        $("." + formcode + ".ui.small.modal")
-            .modal({
-                inverted:true,
-                closable:false,
-                onDeny : function() {
-                  alert('not yet');
-                  return false;
-                },
-                onApprove: function() {
-                  var row_index = this.dataset.rowindex;
-                  var formcode = this.dataset.formcode;
-                  var rowobj = JSON.parse($("[name='"+formcode+"table']")[0].dataset.rowobj);
-
-                  
-                  var row_html = "<td>" + row_index + "</td>";
-
-                  for(var key in rowobj){
-                    $("[name='"+(formcode + "."+row_index+"." + key)+"']").val($("[name='"+(formcode + ".$." + key)+"']").val());
-                    row_html = row_html + "<td>" + $("[name='"+(formcode + ".$." + key)+"']").val() + "</td>";
-                  }
-
-                  row_html = row_html + 
-                  "<td><span class='panel-controls'>"+ 
-                      "<i class='remove icon remove-steedos-table-row' data-rowindex='" + row_index + "'></i>" +
-                      "&nbsp;&nbsp;<i class='write icon edit-steedos-table-row' data-rowindex='" + row_index + "'></i>" +
-                  "</span></td>" ;
-                  $("[name='"+row_index+"row']").html(row_html);
-                }
-            })
-            .modal('show')
-        ;
+        Steedos_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
     'change .form-control': function(event, template){
 
       console.log("steedos_table form-control change");
 
-      var code = event.target.name;
-      var formcode = template.data.code;
+      var fieldCode = event.target.name;
 
-      var rowObj = JSON.parse($("[name='"+formcode+"table']")[0].dataset.rowobj);
+      var tableCode = template.data.code;
 
-      var rowIndx = $("[name='"+formcode+".modal']")[0].dataset.rowindex;
+      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
 
-      var tableobj = $("[name='"+formcode+"table']")[0];
+      var steedosTableModal = Steedos_table_Helpers.getTableModal(tableCode);
 
-      var rowFormula = JSON.parse(tableobj.dataset.rowformula);
+      var rowObj = JSON.parse(steedosTable.rowobj);
+
+      var rowIndx = steedosTableModal.rowindex;
+
+      var rowFormula = JSON.parse(steedosTable.rowformula);
 
       var rowValue = {};
 
-      $("[name='"+(formcode + "."+rowIndx+"." + code.split(".")[2])+"']").val($("[name='" + code + "']").val());
+      if (rowIndx < 0) 
+        return ;
 
+      Steedos_table_Helpers.update_autoFormArrayItem(rowIndx, tableCode, rowObj);
+      
       for(var key in rowObj){
-
-        rowValue[key] = $("[name='" + formcode + ".$." + key + "']").val();
+        rowValue[key] = Steedos_table_Helpers.getTableModalValue(tableCode + ".$." + key);
       }
 
-      console.log("rowValue is \n" + JSON.stringify(rowValue));
+      console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
 
-      Form_formula.run(code.split(".")[2], formcode + ".$.", rowFormula, rowValue, template.data.sfields);
+      Form_formula.run(fieldCode.split(".")[2], tableCode + ".$.", rowFormula, rowValue, template.data.sfields);
 
+    },
+
+    'click #steedos-table-ok-button': function(event, template){
+      
+      var tableCode = template.data.code;
+
+      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+
+      var steedosTableModal = Steedos_table_Helpers.getTableModal(tableCode);
+
+      var row_index = steedosTableModal.rowindex;
+      
+      var rowobj = JSON.parse(steedosTable.rowobj);
+
+      var call_method = steedosTableModal.method;
+
+      if(call_method == "add"){
+        Steedos_table_Helpers.add_row(row_index, tableCode, rowobj);
+      }
+
+      if(call_method == "edit"){
+        Steedos_table_Helpers.update_row(row_index, tableCode, rowobj);
+      }
     }
 })
