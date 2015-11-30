@@ -131,3 +131,11 @@ if Meteor.isServer
 		if userId
 			modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
+
+
+	db.users.after.update (userId, doc, fieldNames, modifier, options) ->
+		modifier.$set = modifier.$set || {};
+		if modifier.$set.name
+			db.space_users.direct.update({user: doc._id}, {$set: {name: modifier.$set.name}}, {multi: true})
+		if modifier.$set.email
+			db.space_users.direct.update({user: doc._id}, {$set: {email: modifier.$set.email}}, {multi: true})
