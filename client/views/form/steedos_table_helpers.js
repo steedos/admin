@@ -86,7 +86,6 @@ Steedos_table_Helpers.removeValidrows = function (validrows_str, row_index){
     if (validrows_str !="")
         validrows = validrows_str.split(",");
     var id = validrows.indexOf(row_index);
-    debugger;
     if (id > -1)
         validrows.splice(id,1);
     return validrows.toString();
