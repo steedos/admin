@@ -16,16 +16,11 @@ Template.masterLayout.onCreated ->
 	$(window).resize ->
 		self.minHeight.set($(window).height());
 
-	$('body').addClass('fixed');
-
 
 Template.masterLayout.onRendered ->
 	self = this;
 	self.minHeight.set($(window).height());
 
-
-Template.masterLayout.onDestroyed ->
-	$('body').removeClass('fixed');
 
 
 Template.masterLayout.helpers 
