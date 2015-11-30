@@ -116,6 +116,9 @@ if Meteor.isServer
 		if (doc.profile?.name && !doc.name)
 			doc.name = doc.profile.name
 
+		if (doc.email && !doc.name)
+			doc.name = doc.email.split('@')[0]
+
 		if (doc.email && !doc.steedos_id)
 			doc.steedos_id = doc.email
 
