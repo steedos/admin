@@ -1,2 +1,3 @@
 Meteor.startup ->
-	$.material.init()
+	if $.material
+		$.material.init()

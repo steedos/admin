@@ -31,7 +31,10 @@
 					else 
 						return {}
 				if Meteor.isClient
-					return {_id: Session.get("spaceId")}
+					if (Session.get("spaceId"))
+						return {_id: Session.get("spaceId")}
+					else 
+						return {}
 
 		SpaceUsers: 
 			icon: "users"
@@ -50,7 +53,10 @@
 					else 
 						return {}
 				if Meteor.isClient
-					return {space: Session.get("spaceId")}
+					if (Session.get("spaceId"))
+						return {_id: Session.get("spaceId")}
+					else 
+						return {}
 
 		Organizations: 
 			icon: "sitemap"
@@ -68,7 +74,10 @@
 					else 
 						return {}
 				if Meteor.isClient
-					return {space: Session.get("spaceId")}
+					if (Session.get("spaceId"))
+						return {_id: Session.get("spaceId")}
+					else 
+						return {}
 					
 		Apps: 
 			icon: "star-o"

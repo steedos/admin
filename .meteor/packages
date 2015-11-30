@@ -32,7 +32,7 @@ mrt:moment-timezone
 
 fortawesome:fontawesome
 twbs:bootstrap
-fezvrasta:bootstrap-material-design
+#fezvrasta:bootstrap-material-design
 steedos:admin-lte
 
 alanning:roles

@@ -1,5 +1,7 @@
 Template.AdminDashboardNew.onRendered ->
-	$.material.init()
+	if $.material
+		$.material.init()
 
 Template.AdminDashboardEdit.onRendered ->
-	$.material.init()
+	if $.material
+		$.material.init()
