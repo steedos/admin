@@ -3,8 +3,6 @@ var steedos_form = Steedos_data.getForm("af67fdsa8f78ds7f89s7fs6f7sfsdf");
 
 var steedos_instance = Steedos_data.getInstance("bf67fdsa8f78ds7f89s7fs6f7sfsdf");
 
-var fields = Steedos_data.steedosFieldToAutoField(steedos_form);
-
 var formula_fields = Form_formula.getFormulaFieldVariable("Form_formula.field_values", steedos_form.fields);
 
 var formId = 'instanceform';
@@ -28,7 +26,7 @@ Template.instanceform.helpers({
     return Instanceform_Helpers.equals(a,b);
   },
   fields: function (){
-    return new SimpleSchema(fields);
+    return new SimpleSchema(Steedos_data_format.getAutoformSchema(steedos_form));
   },
   doc: function (){
     return steedos_instance.values;
@@ -37,17 +35,13 @@ Template.instanceform.helpers({
 
 
 Template.instanceform.events({
-  // 'click button': function () {
-  //   // increment the counter when button is clicked
-  //   Session.set('counter', Session.get('counter') + 1);
-  // }
+  
   'click #submit': function(){
 
   },
 
   'change .form-control': function(event){
     console.log("instanceform form-control change");
-    //debugger;
     var code = event.target.name;
     Form_formula.run(code, "", formula_fields, AutoForm.getFormValues("instanceform").insertDoc, steedos_form.fields);
   
