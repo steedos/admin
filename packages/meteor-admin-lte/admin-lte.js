@@ -26,11 +26,11 @@ Template.AdminLTE.onCreated(function () {
 
 });
 
-Template.AdminLTE.onDestroyed(function () {
-  this.removeClasses();
-  this.style.remove();
-  this.skin.remove();
-});
+// Template.AdminLTE.onDestroyed(function () {
+//   // this.removeClasses();
+//   // this.style.remove();
+//   // this.skin.remove();
+// });
 
 Template.AdminLTE.helpers({
   isReady: function () {

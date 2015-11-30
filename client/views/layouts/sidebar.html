@@ -1,0 +1,24 @@
+<template name="sidebar">
+	<!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <div class="sidebar" id="scrollspy">
+
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="nav sidebar-menu">
+            <li><a href="/launchpad/">
+                <i class="fa fa-circle-o"></i>{{_ "Launchpad"}}
+                </a>
+            </li>
+            <li class="header">APPS</li>
+            {{#each apps}}
+            <li><a href="/apps/{{name}}/">
+            	<i class="fa fa-{{icon}}"></i>{{_ description}}
+            	</a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+</template>

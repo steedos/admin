@@ -25,6 +25,9 @@ Template.AdminHeader.events
 
 	"click #switchSpace": ->
 		Session.set("spaceId", this._id)
+		Session.set("spaceName", this.name)
+		Router.go "/admin"
+
 
 
 Meteor.startup ->

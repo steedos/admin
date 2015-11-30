@@ -8,9 +8,10 @@
 	{{else}}
     	{{# AdminLTE skin="green" }}
 	    	{{> dock}}
+	    	{{> sidebar}}
 
-			{{> status}}
 			<div class="content-wrapper" style="min-height: {{minHeight}}">
+				{{> status}}
 	        	{{> yield}}
 	        </div>
     	{{/ AdminLTE}}

@@ -14,9 +14,13 @@ Router.route '/launchpad', ->
 	this.render('launchpad');
 
 Router.route '/apps/:app_name', ->
-	this.render 'appFrame', 
-		data: 
-			app_name: this.params.app_name
+	app = db.apps.findOne({name: this.params.app_name})
+	if app
+		if app.isSystem
+			Router.go(app.appURL)
+		this.render 'appFrame', 
+			data: 
+				appURL: app.appURL
 
 
 
