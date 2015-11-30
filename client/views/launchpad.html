@@ -1,38 +1,6 @@
 <template name="launchpad">
-<!--
-  <style>
-  .apps .column {
-    text-align:center;
-  }
-  .apps .column a{
-    color: white;
-  }
-  </style>
 
-  <div style="height: 3em"></div>
-
-  <div class="ui container">
-
-    <div class="apps ui five column doubling center grid animated fadeIn zoomIn">
-
-      {{#each userApps}}
-      <div class="column">
-          <a href="{{url}}" target="app-{{name}}">
-            <img class="ui centered image" src="/apps/{{name}}/AppIcon76x76.png"/>
-            <span class="ui row">{{_ description}}</span>
-          </a>
-      </div>
-      {{/each}}
-      
-    </div>
-
-
-  </div>
--->
-
-
-  <!-- Content Wrapper. Contains page content -->
-    <!-- Content Header (Page header) -->
+<!-- 
     <section class="content-header">
       <h1>
         {{_ "Launchpad"}}
@@ -42,9 +10,42 @@
         <li><a href="/"><i class="fa fa-dashboard"></i>{{_ "Home"}}</a></li>
         <li class="active">{{_ "Launchpad"}}</li>
       </ol>
-    </section>
+    </section> -->
 
-    <section class="launchpad content">
+    <section class="content">
+
+      <h2 class="col-lg-3 col-xs-12">
+        {{_ "My Apps"}}
+        <small></small>
+      </h2>
+
+      {{#each userApps}}
+        <div class="col-lg-3 col-xs-6">
+          <div class="small-box bg-blue">
+            <div class="inner">
+              <h3>{{name}}</h3>
+
+              <p></p>
+            </div>
+            {{#if iconImage}}
+              <div style="background-image:url('{{iconImage}}')" class="iconImage"></div>
+            {{else}}
+              <div class="icon">
+                  <i class="fa fa-{{icon}}"></i>
+              </div>
+            {{/if}}
+            <a href="/apps/{{_id}}" class="small-box-footer">
+              Launch <i class="fa fa-arrow-circle-right"></i>
+            </a>
+          </div>
+        </div>
+      {{/each}}
+
+
+      <h2 class="col-lg-3 col-xs-12">
+        {{_ "Space Apps"}}
+        <small></small>
+      </h2>
 
       {{#each userApps}}
         <div class="col-lg-3 col-xs-6">
@@ -69,5 +70,4 @@
       {{/each}}
 
     </section>
-
 </template>

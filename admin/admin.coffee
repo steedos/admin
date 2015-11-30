@@ -54,7 +54,7 @@
 						return {}
 				if Meteor.isClient
 					if (Session.get("spaceId"))
-						return {_id: Session.get("spaceId")}
+						return {space: Session.get("spaceId")}
 					else 
 						return {}
 
@@ -75,7 +75,7 @@
 						return {}
 				if Meteor.isClient
 					if (Session.get("spaceId"))
-						return {_id: Session.get("spaceId")}
+						return {space: Session.get("spaceId")}
 					else 
 						return {}
 					
