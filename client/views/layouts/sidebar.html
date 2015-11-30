@@ -7,13 +7,17 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="nav sidebar-menu">
             <li><a href="/launchpad/">
-                <i class="fa fa-circle-o"></i>{{_ "Launchpad"}}
+                <i class="fa fa-dashboard"></i>{{_ "Dashboard"}}
                 </a>
             </li>
             <li class="header">APPS</li>
             {{#each apps}}
-            <li><a href="/apps/{{name}}/">
-            	<i class="fa fa-{{icon}}"></i>{{_ description}}
+            <li><a href="/apps/{{_id}}/">
+            	<i class="fa fa-{{icon}}"></i>
+                <span>{{name}}</span>
+                {{#if badge}}
+                    <small class="label pull-right bg-red">{{badge}}</small>
+                {{/if}}
             	</a>
             </li>
             {{/each}}

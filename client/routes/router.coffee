@@ -13,17 +13,16 @@ Router.route '/logout', ->
 Router.route '/launchpad', ->
 	this.render('launchpad');
 
-Router.route '/apps/:app_name', ->
-	app = db.apps.findOne({name: this.params.app_name})
+
+Router.route '/apps/:app_id', ->
+	app = db.apps.findOne({_id: this.params.app_id})
 	if app
-		if app.isSystem
+		if app.internal
 			Router.go(app.appURL)
 		this.render 'appFrame', 
 			data: 
 				appURL: app.appURL
-
-
-
+				
 
 Router.route '/account/profile', ->
 	this.render('profile');

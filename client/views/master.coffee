@@ -22,9 +22,6 @@ Template.masterLayout.onCreated ->
 Template.masterLayout.onRendered ->
 	self = this;
 	self.minHeight.set($(window).height());
-	if (self.view.isRendered) 
-		MeteorAdminLTE.AdminLTE.options.sidebarSlimScroll=false
-		MeteorAdminLTE.run()
 
 
 Template.masterLayout.onDestroyed ->

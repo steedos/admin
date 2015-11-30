@@ -7,7 +7,7 @@
 
 @AdminConfig = 
 	name: "Steedos Admin"
-	skin: "green"
+	skin: "blue"
 	userSchema: null,
 	userSchema: db.users._simpleSchema,
 	autoForm:
