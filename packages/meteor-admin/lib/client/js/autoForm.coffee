@@ -21,7 +21,8 @@ AutoForm.hooks
 				if e
 					hook.done(e)
 				else
-					adminCallback 'onInsert', [Session.get 'admin_collection_name', insertDoc, updateDoc, currentDoc], (collection) ->
+					insertDoc._id = r
+					adminCallback 'onInsert', [(Session.get 'admin_collection_name'), insertDoc, updateDoc, currentDoc], (collection) ->
 						hook.done null, collection
 			return false
 		onSuccess: (formType, collection)->
@@ -35,7 +36,7 @@ AutoForm.hooks
 				if e
 					hook.done(e)
 				else
-					adminCallback 'onUpdate', [Session.get 'admin_collection_name', insertDoc, updateDoc, currentDoc], (collection) ->
+					adminCallback 'onUpdate', [(Session.get 'admin_collection_name'), insertDoc, updateDoc, currentDoc], (collection) ->
 						hook.done null, collection
 			return false
 		onSuccess: (formType, collection)->
