@@ -29,7 +29,7 @@ Template.dock.helpers
 	spaceName: ->
 		if (Session.get("spaceName"))
 			return Session.get("spaceName")
-		return t("Steedos Cloud")
+		return t("Select Space")
 
 
 Template.dock.onRendered ->
