@@ -45,4 +45,11 @@
 			newFormFields: "space,name,parent"
 			selector: Steedos.organizations._selector
 
+	callbacks:
+		onInsert: (name, insertDoc, updateDoc, currentDoc) ->
+			if Meteor.isClient
+				if name == "spaces"
+					Session.set("spaceId", insertDoc._id)
+					Session.set("spaceName", insertDoc.name)
+
 	
