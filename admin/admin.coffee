@@ -2,7 +2,6 @@
 @spaces = Steedos.spaces
 @space_users = Steedos.space_users
 @organizations = Steedos.organizations
-@apps = Steedos.apps
 
 
 @AdminConfig = 
