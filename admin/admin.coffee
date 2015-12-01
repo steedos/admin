@@ -43,13 +43,7 @@
 				{name: "fullname"},
 			]
 			extraFields: ["space", "name"]
-			newFormFields: "space,name,parent,sort_no"
+			newFormFields: "space,name,parent"
 			selector: Steedos.organizations._selector
-					
-		apps: 
-			icon: "star-o"
-			tableColumns:  [
-				{name: "name"},
-				{name: "description"},
-			]
+
 	
