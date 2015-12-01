@@ -2,6 +2,10 @@
 
 Steedos Admin is an admin dashboard for meteor apps, support multiple teams on the same instance, just like Slack
 
+This project is still in beta state. you can preview the core models here.
+
+https://github.com/steedos/admin/tree/master/packages/steedos-lib/lib/models
+
 ## Features
 - BYOS (bring your own server)
 - Based on Meteor and Semantic UI
