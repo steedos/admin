@@ -24,7 +24,7 @@ Template.dock.helpers
 				return "/avatar/" + Meteor.user().emails[0].address
 
 	spaces: ->
-		return db.spaces.find();
+		return Steedos.spaces.find();
 
 	spaceName: ->
 		if (Session.get("spaceName"))

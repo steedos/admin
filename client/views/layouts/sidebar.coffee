@@ -1,6 +1,6 @@
 Template.sidebar.helpers
 	apps: ->
-		return db.apps.find();
+		return Steedos.apps.find();
 
 	displayName: ->
 

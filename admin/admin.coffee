@@ -1,20 +1,20 @@
-@Users = db.users
-@Spaces = db.spaces
-@SpaceUsers = db.space_users
-@Organizations = db.organizations
-@Apps = db.apps
+@Users = Steedos.users
+@spaces = Steedos.spaces
+@space_users = Steedos.space_users
+@organizations = Steedos.organizations
+@apps = Steedos.apps
 
 
 @AdminConfig = 
 	name: "Steedos Admin"
 	skin: "blue"
 	userSchema: null,
-	userSchema: db.users._simpleSchema,
+	userSchema: Steedos.users._simpleSchema,
 	autoForm:
 		omitFields: ['createdAt', 'updatedAt', 'created', 'created_by', 'modified', 'modified_by']
 	collections: 
 
-		Spaces: 
+		spaces: 
 			icon: "globe"
 			tableColumns: [
 				{name: "name"},
@@ -23,9 +23,9 @@
 			]
 			extraFields: ["owner"]
 			newFormFields: "name"
-			selector: db.spaces._selector
+			selector: Steedos.spaces._selector
 
-		SpaceUsers: 
+		space_users: 
 			icon: "users"
 			tableColumns: [
 				{name: "space_name()"},
@@ -34,9 +34,9 @@
 			]
 			extraFields: ["space", "user"]
 			newFormFields: "space,email"
-			selector: db.space_users._selector
+			selector: Steedos.space_users._selector
 
-		Organizations: 
+		organizations: 
 			icon: "sitemap"
 			tableColumns: [
 				{name: "space_name()"},
@@ -44,9 +44,9 @@
 			]
 			extraFields: ["space", "name"]
 			newFormFields: "space,name,parent,sort_no"
-			selector: db.organizations._selector
+			selector: Steedos.organizations._selector
 					
-		Apps: 
+		apps: 
 			icon: "star-o"
 			tableColumns:  [
 				{name: "name"},

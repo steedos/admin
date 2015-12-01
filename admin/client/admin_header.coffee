@@ -1,8 +1,5 @@
 Template.AdminHeader.helpers
 
-	spaces: ->
-		return db.spaces.find().fetch()
-
 	displayName: ->
 	
 		if Meteor.user()
@@ -14,6 +11,12 @@ Template.AdminHeader.helpers
 				return Meteor.user()._id
 		else
 			return "Nobody"
+
+	spacesCount: ->
+		return Steedos.spaces.find().count()
+
+	spaces: ->
+		return Steedos.spaces.find().fetch()
 
 	spaceName: ->
 		if (Session.get("spaceName"))
