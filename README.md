@@ -1,6 +1,6 @@
-# Steedos - Enterprise Cloud Platform
+# Steedos Admin
 
-[Steedos](https://www.steedos.com/) is a enterpise cloud platform that helps you and your team connect and get work done from anywhere on any device.
+Steedos Admin is an admin dashboard for meteor apps, support multiple teams on the same instance, just like Slack
 
 ## Features
 - BYOS (bring your own server)
@@ -33,9 +33,6 @@
 
 ##### [Meteor Collection Helpers](https://github.com/dburles/meteor-collection-helpers)
 > Meteor package that allows you to define helpers on your collections
-
-##### [Semantic UI](http://http://semantic-ui.com/)
-> Semantic is a development framework that helps create beautiful, responsive layouts using human-friendly HTML.
 
 ##### [TAP i18n](https://github.com/TAPevents/tap-i18n)
 > tap-i18n is a Meteor package that provides a comprehensive i18n solution for Meteor apps and packages
