@@ -5,30 +5,23 @@ var getSpaceUserSelect2Options = function (spaceId){
 
   // todo Steedos_data.getSpaceUsers(spaceId);
   // 数据格式转换
-  var p_rev = [
-    {
-      optgroup: "研发部",
-      options: [
-        {label: "包周涛(baozhoutao@hotoa.com)", value: "baozhoutao@hotoa.com"},
-        {label: "孙浩林(sunhaolin@hotoa.com)", value: "sunhaolin@hotoa.com"},
-        {label: "小强(xiaoqiang@hotoa.com)", value: "xiaoqiang@hotoa.com"}
-      ]
-    },
-    {
-      optgroup: "客服部",
-      options: [
-        {label: "黄怡(huangyi@hotoa.com)", value: "huangyi@hotoa.com"},
-        {label: "刘恋(liulian@hotoa.com)", value: "liulian@hotoa.com"},
-        {label: "小李(xiaoli@hotoa.com)", value: "xiaoli@hotoa.com"}
-      ]
-    }
-  ];
-  var rev = new Array();
-  for(var i = 0 ; i < 100 ; i++){
-    rev = rev.concat(p_rev);
-  }
+  
+  var spaceUsers = Steedos_data.getSpaceUsers(spaceId);
+  
+  var options = new Array();
 
-  return rev ;
+  spaceUsers.forEach(
+    function(user){
+        options.push({
+            optgroup : user.organization.fullname,
+            options: [
+                {label : user.name + "(" + user.steedos_id + ")", value : user.id}
+            ]
+        });
+    }
+  );
+
+  return options ;
 
 };
 
@@ -44,6 +37,8 @@ var s_autoform = function (schema, field){
   options = field.options;
 
   permission = field.permission;
+
+  is_multiselect = field.is_multiselect;
 
   if (field["formula"])
     permission = "readonly";
@@ -78,7 +73,12 @@ var s_autoform = function (schema, field){
           autoform.type = 'boolean-checkbox';
           break;
       case 'select' : 
-          schema.type = String;
+          if (is_multiselect){
+            schema.type = [String];
+            autoform.multiple = true;
+          }else{
+            schema.type = String;
+          }
           autoform.readonly = (permission == 'readonly');
           autoform.type = (permission == 'readonly') ? 'text' : 'select2';
           break;
@@ -93,10 +93,14 @@ var s_autoform = function (schema, field){
           autoform.type = 'select-checkbox-inline';
           break;
       case 'user' : 
-          schema.type = String;
+          if (is_multiselect){
+            schema.type = [String];
+            autoform.multiple = true; 
+          }else{
+            schema.type = String; // 如果是单选，不能设置multiple 参数
+          }
           autoform.type = "select2";
           autoform.options = getSpaceUserSelect2Options("5656fdsafsfsdfsa6f5as899fds8f");
-          autoform.multiple = true;
           break;
       default:
           schema.type = String;

@@ -144,6 +144,7 @@ Form_formula.run = function(code, field_prefix, formula_fields, autoFormDoc, fie
         console.debug("Form_formula.init_formula_values: 重新计算field_values");
         var startTrack = new Date * 1;
         Form_formula.field_values = init_formula_values(fields,autoFormDoc);
+        console.log("Form_formula.field_values is \n" + JSON.stringify(Form_formula.field_values));
         console.debug("Form_formula.init_formula_values: 退出计算field_values 消耗时间：" + (new Date * 1 - startTrack) + "ms");
     }
     for(var i = 0 ; i < formula_fields.length; i++){
@@ -195,6 +196,10 @@ function init_formula_values(fields, autoFormDoc){
                         });
                         __values = Form_formula.mixin(__values, __tableValues);
                     }
+                } else if (type == 'user'){
+
+                    __values[field.code] = Steedos_data.getUser(autoFormDoc[field.code]);
+
                 } else {
                     //此处传spaceId给选人控件的旧数据计算roles和organization
                     __values[field.code] = autoFormDoc[field.code];
