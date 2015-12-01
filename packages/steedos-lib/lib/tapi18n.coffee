@@ -65,40 +65,28 @@ datatables_i18n =
 	
 
 
+
 if Meteor.isClient
 
-	Meteor.Collection.prototype.i18n = () ->
 
-		self = this;
-
-		if (self._c2 && self._c2._simpleSchema)
-			_schema = self._c2._simpleSchema._schema;
-		else
-			_schema = self._simpleSchema._schema
-
-		if (!_schema)
-			return	
-
-		_.each(_schema, (value, key) ->
+	SimpleSchema.prototype.i18n = (prefix) ->
+		self = this
+		_.each(self._schema, (value, key) ->
 			if (!value) 
 				return
-			_schema[key].label = t(self._name + "_" + key)
+			if !self._schema[key].label
+				self._schema[key].label = ()->
+					return t(prefix + "_" + key)
 		)
 
 	Tracker.autorun ->
 		lang = Session.get("TAPi18n::loaded_lang")
-		_.each db, (collection) ->
-			if not collection
-				return;
-			if not (collection instanceof Meteor.Collection)
-				return;
-			collection.i18n()
 
 		_.each Tabular.tablesByName, (table) ->
 				_.each table.options.columns, (column) ->
 					if (!column.data || column.data == "_id")
 						return
-					column.title = t(table.collection._name + "_" + column.data);
+					column.title = t("db." + table.collection._name + "_" + column.data);
 				table.options.language = datatables_i18n[lang]
 				
 		

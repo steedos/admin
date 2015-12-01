@@ -5,35 +5,45 @@
 	"Edit": "Edit",
 	"Delete": "Delete",
 	
-	"users": "Users",
-	"users_name": "Name",
-	"users_username": "Username",
-	"users_email": "Email",
-	"users_company": "Company",
-	"users_mobile": "Moblie",
-	"users_locale": "Language",
-	"users_timezone": "Timezone",
-	
-	"apps": "Apps",
-	"apps_name": "Name",
-	"apps_description": "Description",
-	"apps_url": "URL",
-	"apps_iconURL": "IconURL",
+	"db": {	
+		"users": "Users",
+		"users_name": "Name",
+		"users_username": "Username",
+		"users_email": "Email",
+		"users_company": "Company",
+		"users_mobile": "Moblie",
+		"users_locale": "Language",
+		"users_timezone": "Timezone",
+		
+		"apps": "Apps",
+		"apps_name": "Name",
+		"apps_description": "Description",
+		"apps_url": "URL",
+		"apps_iconURL": "IconURL",
 
-	"spaces": "Spaces",
-	"spaces_name": "Name",
-	"spaces_admins": "Admins",
-	"spaces_owner": "Owner",
-	"spaces_balance": "Balance",
-	"spaces_is_paid": "Is Paid",
-	"spaces_owner_name()": "Owner",
-	"spaces_admins_name()": "Admins",
+		"spaces": "Spaces",
+		"spaces_name": "Name",
+		"spaces_admins": "Admins",
+		"spaces_owner": "Owner",
+		"spaces_balance": "Balance",
+		"spaces_is_paid": "Is Paid",
+		"spaces_owner_name()": "Owner",
+		"spaces_admins_name()": "Admins",
 
-	"organizations": "Organizations",
-	"organizations_fullname": "Fullname",
-	"organizations_users": "Users",
-	"organizations_name": "Name",
-	"organizations_parent": "Parent",
-	"organizations_space_name()": "Space"
+		"organizations": "Organizations",
+		"organizations_fullname": "Fullname",
+		"organizations_users": "Users",
+		"organizations_name": "Name",
+		"organizations_parent": "Parent",
+		"organizations_space_name()": "Space",
+
+
+		"space_users": "Space Users",
+		"space_users_space_name()": "Space Name",
+		"space_users_name": "Name",
+		"space_users_email": "Email",
+		"space_users_organization": "Organization",
+		"space_users_manager": "Manager"
+	}
 
 }

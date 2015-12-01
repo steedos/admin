@@ -4,4 +4,3 @@ UI.registerHelper 'admin_fields', ->
 		return collection.editFormFields
 	else
 		return collection.newFormFields
-

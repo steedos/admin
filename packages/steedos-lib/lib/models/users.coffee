@@ -65,6 +65,8 @@ db.users._simpleSchema = new SimpleSchema
 		autoform: 
 			omit: true
 
+if Meteor.isClient
+	db.users._simpleSchema.i18n("db.users")
 
 db.users.helpers
 	spaces: ->

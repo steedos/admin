@@ -5,7 +5,6 @@ db.organizations.permit(['insert', 'update', 'remove']).apply();
 db.organizations._simpleSchema = new SimpleSchema
 	space: 
 		type: String,
-		optional: true,
 		autoform: 
 			type: "hidden",
 			defaultValue: ->
@@ -37,7 +36,8 @@ db.organizations._simpleSchema = new SimpleSchema
 	sort_no: 
 		type: Number,
 		optional: true,
-		defaultValue: 100
+		autoform: 
+			omit: true
 	users: 
 		type: [String],
 		optional: true,
@@ -64,8 +64,24 @@ db.organizations._simpleSchema = new SimpleSchema
 		autoform: 
 			omit: true
 
+if Meteor.isClient
+	db.organizations._simpleSchema.i18n("db.organizations")
 
 db.organizations.attachSchema db.organizations._simpleSchema;
+
+
+db.organizations._selector = (userId) ->
+	if Meteor.isServer
+		user = db.users.findOne({_id: userId})
+		if user
+			return {space: {$in: user.spaces()}}
+		else 
+			return {}
+	if Meteor.isClient
+		if (Session.get("spaceId"))
+			return {space: Session.get("spaceId")}
+		else 
+			return {}
 
 
 
@@ -179,3 +195,24 @@ if (Meteor.isServer)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
+
+
+
+
+
+	Meteor.publish 'organizations', (spaceId)->
+		
+		unless this.userId
+			return this.ready()
+		
+		user = db.users.findOne(this.userId);
+
+		selector = {}
+		if spaceId
+			selector.space = spaceId
+		else 
+			selector.space = {$in: user.spaces()}
+
+		console.log '[publish] organizations ' + spaceId
+
+		return db.organizations.find(selector)

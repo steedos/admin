@@ -1,25 +1,11 @@
 <template name="SteedosAdminHeader">
 	<header class="steedos main-header">
 		<div class="logo">
-      		<div class="logo-lg">
-			<ul class="nav navbar-nav">
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<span>{{spaceName}}&nbsp;&nbsp;<i class="caret"></i>
-						</span>
-					</a>
-					<ul class="dropdown-menu">
-						{{#each spaces}}
-							<li id="switchSpace"><a href="#">{{name}}</a></li>
-						{{/each}}
-						<li id="addSpace"><a href="/admin/Spaces/new">{{_ "Add Space"}}</a></li>
-					</ul>
-				</li>
-			</ul>
-			</div>
-			<div class="logo-mini">
+      		<span class="logo-lg">{{_ "Steedos Admin"}}
+			</span>
+			<span class="logo-mini">
 				<i class="fa fa-cloud"></i>
-			</div>
+			</span>
 		</div>
 		<nav class="navbar navbar-static-top" role="navigation">
 			<!-- Sidebar toggle button-->
@@ -39,22 +25,19 @@
 						{{/if}}
 
 					</li>
-<!-- 					<li class="dropdown">
+					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<span>{{displayName}}<i class="caret"></i></span>
+							<span>{{spaceName}}&nbsp;&nbsp;<i class="caret"></i>
+							</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li class="">
-							<a href="{{pathFor 'adminDashboardUsersEdit' _id=currentUser._id}}">
-								Your profile
-								</a>
-							</li>
-							<li class="">
-								<a href="#" class="btn-sign-out">Sign out
-								</a>
-							</li>
+							{{#each spaces}}
+								<li id="switchSpace"><a href="#">{{name}}</a></li>
+							{{/each}}
+							<!-- <li id="addSpace"><a href="/admin/Spaces/new">{{_ "Add Space"}}</a></li> -->
 						</ul>
-					</li> -->
+					</li>
+
 				</ul>
 			</div>
 		</nav>

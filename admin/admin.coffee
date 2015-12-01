@@ -23,18 +23,7 @@
 			]
 			extraFields: ["owner"]
 			newFormFields: "name"
-			selector: (userId) ->
-				if Meteor.isServer
-					user = db.users.findOne({_id: userId})
-					if user
-						return {_id: {$in: user.spaces()}}
-					else 
-						return {}
-				if Meteor.isClient
-					if (Session.get("spaceId"))
-						return {_id: Session.get("spaceId")}
-					else 
-						return {}
+			selector: db.spaces._selector
 
 		SpaceUsers: 
 			icon: "users"
@@ -45,18 +34,7 @@
 			]
 			extraFields: ["space", "user"]
 			newFormFields: "space,email"
-			selector: (userId) ->
-				if Meteor.isServer
-					user = db.users.findOne({_id: userId})
-					if user
-						return {space: {$in: user.spaces()}}
-					else 
-						return {}
-				if Meteor.isClient
-					if (Session.get("spaceId"))
-						return {space: Session.get("spaceId")}
-					else 
-						return {}
+			selector: db.space_users._selector
 
 		Organizations: 
 			icon: "sitemap"
@@ -66,18 +44,7 @@
 			]
 			extraFields: ["space", "name"]
 			newFormFields: "space,name,parent,sort_no"
-			selector: (userId) ->
-				if Meteor.isServer
-					user = db.users.findOne({_id: userId})
-					if user
-						return {space: {$in: user.spaces()}}
-					else 
-						return {}
-				if Meteor.isClient
-					if (Session.get("spaceId"))
-						return {space: Session.get("spaceId")}
-					else 
-						return {}
+			selector: db.organizations._selector
 					
 		Apps: 
 			icon: "star-o"

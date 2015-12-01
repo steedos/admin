@@ -17,10 +17,11 @@ Template.dock.helpers
 	
 
 	avatar: ->
-		if (Meteor.user().avatar)
-			return Meteor.user().avatar
-		else
-			return "/avatar/" + Meteor.user().emails[0].address
+		if Meteor.user()
+			if Meteor.user().avatar
+				return Meteor.user().avatar
+			else
+				return "/avatar/" + Meteor.user().emails[0].address
 
 	spaces: ->
 		return db.spaces.find();

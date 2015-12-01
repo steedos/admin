@@ -14,13 +14,15 @@ db.spaces.attachSchema new SimpleSchema
 			type: "select2",
 			options: ->
 				options = []
-				spaceId = Session.get("spaceId")
-				if spaceId
-					objs = db.space_users.find({space: spaceId}, {name:1, sort: {name:1}})
-					objs.forEach (obj) ->
-						options.push
-							label: obj.name,
-							value: obj.user
+				selector = {}
+				if Session.get("spaceId")
+					selector = {space: Session.get("spaceId")}
+
+				objs = db.space_users.find(selector, {name:1, sort: {name:1}})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj.user
 				return options
 
 			defaultValue: ->
@@ -35,13 +37,15 @@ db.spaces.attachSchema new SimpleSchema
 				multiple: true
 			options: ->
 				options = []
-				spaceId = Session.get("spaceId")
-				if spaceId
-					objs = db.space_users.find({space: spaceId}, {name:1, sort: {name:1}})
-					objs.forEach (obj) ->
-						options.push
-							label: obj.name,
-							value: obj.user
+				selector = {}
+				if Session.get("spaceId")
+					selector = {space: Session.get("spaceId")}
+
+				objs = db.space_users.find(selector, {name:1, sort: {name:1}})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj.user
 				return options
 
 	balance: 
@@ -62,23 +66,54 @@ db.spaces.attachSchema new SimpleSchema
 				this.unset()
 
 
+if Meteor.isClient
+	db.spaces.simpleSchema().i18n("db.spaces")
 
-if (Meteor.isClient) 
+db.spaces._selector = (userId) ->
+	if Meteor.isServer
+		user = db.users.findOne({_id: userId})
+		if user
+			return {_id: {$in: user.spaces()}}
+		else 
+			return {}
+	if Meteor.isClient
+		return {}
 
-	db.spaces.helpers
 
-		owner_name: ->
-			owner = db.users.findOne({_id: this.owner});
-			return owner && owner.name;
-		
-		admins_name: ->
-			if (!this.admins)
-				return ""
-			admins = db.users.find({_id: {$in: this.admins}}, {fields: {name:1}});
-			adminNames = []
-			admins.forEach (admin) ->
-				adminNames.push(admin.name)
-			return adminNames.toString();
+db.spaces.helpers
+
+	owner_name: ->
+		owner = db.users.findOne({_id: this.owner});
+		return owner && owner.name;
+	
+	admins_name: ->
+		if (!this.admins)
+			return ""
+		admins = db.users.find({_id: {$in: this.admins}}, {fields: {name:1}});
+		adminNames = []
+		admins.forEach (admin) ->
+			adminNames.push(admin.name)
+		return adminNames.toString();
+
+	add_user: (userId, user_accepted) ->
+		spaceUserObj = db.space_users.findOne({user: userId, space: this._id})
+		userObj = db.users.findOne(userId);
+		if (!userObj)
+			return;
+		if (spaceUserObj)
+			db.space_users.direct.update spaceUserObj._id, 
+				name: userObj.name,
+				email: userObj.email,
+				space: this._id,
+				user: userObj._id,
+				user_accepted: user_accepted
+		else 
+			db.space_users.insert
+				name: userObj.name,
+				email: userObj.email,
+				space: this._id,
+				user: userObj._id,
+				user_accepted: user_accepted
 		
 
 if (Meteor.isServer) 
@@ -93,8 +128,9 @@ if (Meteor.isServer)
 
 	db.spaces.after.insert (userId, doc) ->
 		if (doc.admins)
+			space = db.spaces.findOne(doc._id)
 			_.each doc.admins, (admin) ->
-				db.space_users.add(admin, doc._id, true)
+				space.add_user(admin, true)
 			
 
 	db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -110,4 +146,50 @@ if (Meteor.isServer)
 				modifier.$set.admins.push(modifier.$set.owner)
 
 	db.spaces.before.remove (userId, doc) ->
-		db.space_users.remove({space: doc._id});
+		db.space_users.direct.remove({space: doc._id});
+
+	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
+		# Update space users record to trigger publish spaces record changes to client.
+		space_user = db.space_users.findOne({space: doc._id})
+		db.space_users.direct.update(space_user._id, {$set: {modified: new Date()}})
+
+
+
+
+
+	# publish users spaces
+	# we only publish spaces current user joined.
+	Meteor.publish 'spaces', ->
+		unless this.userId
+			return this.ready()
+
+		console.log '[publish] user spaces'
+
+		self = this;
+
+		handle = db.space_users.find({user: this.userId}).observe 
+			added: (doc) ->
+				if doc.space
+					console.log "[publish] user space added " + doc.space
+					space = db.spaces.findOne doc.space
+					if space
+						self.added "spaces", doc.space, space;
+			changed: (newDoc, oldDoc) ->
+				console.log "[publish] user space changed " + newDoc.space
+				newSpace = db.spaces.findOne newDoc.space
+				if newSpace
+					self.changed "spaces", newDoc.space, newSpace;
+				if oldDoc.space != newDoc.space
+					console.log "[publish] user space removed " + newDoc.space
+					self.removed "spaces", oldDoc.space;
+			removed: (oldDoc) ->
+				if oldDoc.space
+					console.log "[publish] user space removed " + oldDoc.space
+					self.removed "spaces", oldDoc.space;
+			
+		
+		self.ready();
+
+		self.onStop ->
+			handle.stop();
+

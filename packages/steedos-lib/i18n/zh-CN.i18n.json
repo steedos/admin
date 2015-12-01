@@ -5,35 +5,45 @@
 	"Edit": "编辑",
 	"Delete": "删除",
 	
-	"users": "用户",
-	"users_name": "姓名",
-	"users_username": "用户名",
-	"users_email": "邮件",
-	"users_company": "公司",
-	"users_mobile": "电话",
-	"users_locale": "语言",
-	"users_timezone": "时区",
-	
-	"apps": "应用",
-	"apps_name": "名称",
-	"apps_description": "描述",
-	"apps_url": "链接",
-	"apps_iconURL": "图标链接",
-	
-	"spaces": "工作区",
-	"spaces_name": "名称",
-	"spaces_admins": "管理员",
-	"spaces_balance": "账户余额",
-	"spaces_owner": "所有者",
-	"spaces_is_paid": "已付费",
-	"spaces_owner_name()": "所有者",
-	"spaces_admins_name()": "管理员",
+	"db": {
+		"users": "用户",
+		"users_name": "姓名",
+		"users_username": "用户名",
+		"users_email": "邮件",
+		"users_company": "公司",
+		"users_mobile": "电话",
+		"users_locale": "语言",
+		"users_timezone": "时区",
+		
+		"apps": "应用",
+		"apps_name": "名称",
+		"apps_description": "描述",
+		"apps_url": "链接",
+		"apps_iconURL": "图标链接",
+		
+		"spaces": "工作区",
+		"spaces_name": "名称",
+		"spaces_admins": "管理员",
+		"spaces_balance": "账户余额",
+		"spaces_owner": "所有者",
+		"spaces_is_paid": "已付费",
+		"spaces_owner_name()": "所有者",
+		"spaces_admins_name()": "管理员",
 
-	"organizations": "部门",
-	"organizations_fullname": "部门全名",
-	"organizations_users": "用户",
-	"organizations_name": "部门名称",
-	"organizations_parent": "上级部门",
-	"organizations_space_name()": "工作区"
+		"organizations": "部门",
+		"organizations_fullname": "部门全名",
+		"organizations_users": "用户",
+		"organizations_name": "部门名称",
+		"organizations_parent": "上级部门",
+		"organizations_space_name()": "工作区",
+
+
+		"space_users": "工作区用户",
+		"space_users_space_name()": "工作区",
+		"space_users_name": "名称",
+		"space_users_email": "邮件",
+		"space_users_organization": "所属部门",
+		"space_users_manager": "上级主管"
+	}
 
 }

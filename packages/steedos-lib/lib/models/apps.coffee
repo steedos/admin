@@ -53,6 +53,10 @@ db.apps.attachSchema new SimpleSchema
 		autoform:
 			omit: true
 
+
+if Meteor.isClient
+	db.apps.simpleSchema().i18n("db.apps")
+
 db.apps.defaultApps = [
 	{ _id: "workflow", type: "system", name: "Workflow", icon: "check-square-o", iconImage: "/images/apps/workflow/AppIcon76x76.png", appURL: "https://www.steedos.com/applications/workflow/" },
 	{ _id: "chat", type: "system", name: "Chat", icon: "comments-o", iconImage: "/images/apps/chat/AppIcon76x76.png", appURL: "https://chat.steedos.com/" },

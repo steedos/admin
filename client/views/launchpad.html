@@ -1,26 +1,19 @@
 <template name="launchpad">
 
-<!-- 
     <section class="content-header">
       <h1>
         {{_ "Launchpad"}}
         <small></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-dashboard"></i>{{_ "Home"}}</a></li>
-        <li class="active">{{_ "Launchpad"}}</li>
+<!--         <li><a href="/"><i class="fa fa-dashboard"></i>{{_ "Home"}}</a></li>
+        <li class="active">{{_ "Launchpad"}}</li> -->
       </ol>
-    </section> -->
+    </section> 
 
     <section class="content">
 
     <div class="row">
-
-      <h2 class="col-lg-3 col-xs-12">
-        {{_ "My Apps"}}
-        <small></small>
-      </h2>
-
       {{#each userApps}}
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-blue">
@@ -43,36 +36,6 @@
         </div>
       {{/each}}
 
-    </div>
-
-    <div class="row">
-
-      <h2 class="col-lg-3 col-xs-12">
-        {{_ "Space Apps"}}
-        <small></small>
-      </h2>
-
-      {{#each userApps}}
-        <div class="col-lg-3 col-xs-6">
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{name}}</h3>
-
-              <p></p>
-            </div>
-            {{#if iconImage}}
-              <div style="background-image:url('{{iconImage}}')" class="iconImage"></div>
-            {{else}}
-              <div class="icon">
-                  <i class="fa fa-{{icon}}"></i>
-              </div>
-            {{/if}}
-            <a href="/apps/{{_id}}" class="small-box-footer">
-              Launch <i class="fa fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-      {{/each}}
     </div>
 
     </section>
