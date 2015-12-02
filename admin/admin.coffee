@@ -49,7 +49,6 @@
 		onInsert: (name, insertDoc, updateDoc, currentDoc) ->
 			if Meteor.isClient
 				if name == "spaces"
-					Session.set("spaceId", insertDoc._id)
-					Session.set("spaceName", insertDoc.name)
-
+					Meteor.call "setSpaceId", insertDoc._id, ->
+						Session.set("spaceId", insertDoc._id)
 	

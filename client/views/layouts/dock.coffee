@@ -49,4 +49,5 @@ Template.dock.events
 		$(this).addClass('active').siblings().removeClass('active')
 
 	"click #switchSpace": ->
-		Session.set("spaceId", this._id)
+		Meteor.call "setSpaceId", self._id, ->
+			Session.set("spaceId", self._id)
