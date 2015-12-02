@@ -71,10 +71,10 @@ if Meteor.isClient
 
 db.spaces._selector = (userId) ->
 	if Meteor.isServer
-		user = db.users.findOne({_id: userId})
-		if user
-			return {_id: {$in: user.spaces()}}
-		else 
+		spaceId = Session.get("spaceId")
+		if spaceId
+			return {space: spaceId}
+		else
 			return {}
 	if Meteor.isClient
 		return {}
@@ -187,9 +187,9 @@ if Meteor.isServer
 				newSpace = db.spaces.findOne newDoc.space
 				if newSpace
 					self.changed "spaces", newDoc.space, newSpace;
-				if oldDoc.space != newDoc.space
-					console.log "[publish] user space removed " + newDoc.space
-					self.removed "spaces", oldDoc.space;
+				# if oldDoc.space != newDoc.space
+				# 	console.log "[publish] user space removed " + newDoc.space
+				# 	self.removed "spaces", oldDoc.space;
 			removed: (oldDoc) ->
 				if oldDoc.space
 					console.log "[publish] user space removed " + oldDoc.space
@@ -201,3 +201,12 @@ if Meteor.isServer
 		self.onStop ->
 			handle.stop();
 
+
+	Meteor.methods
+		setSpaceId: (spaceId) ->
+			Session.set "spaceId", spaceId
+			return Session.get "spaceId"
+		getSpaceId: ()->
+			return Session.get "spaceId"
+
+	
