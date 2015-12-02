@@ -69,12 +69,12 @@ db.spaces.attachSchema new SimpleSchema
 if Meteor.isClient
 	db.spaces.simpleSchema().i18n("db.spaces")
 
-db.spaces._selector = (userId) ->
+db.spaces._selector = (userId, connection) ->
 	if Meteor.isServer
-		user = db.users.findOne({_id: userId})
-		if user
-			return {_id: {$in: user.spaces()}}
-		else 
+		spaceId = connection["spaceId"]
+		if spaceId
+			return {_id: spaceId}
+		else
 			return {}
 	if Meteor.isClient
 		return {}
@@ -187,9 +187,9 @@ if Meteor.isServer
 				newSpace = db.spaces.findOne newDoc.space
 				if newSpace
 					self.changed "spaces", newDoc.space, newSpace;
-				if oldDoc.space != newDoc.space
-					console.log "[publish] user space removed " + newDoc.space
-					self.removed "spaces", oldDoc.space;
+				# if oldDoc.space != newDoc.space
+				# 	console.log "[publish] user space removed " + newDoc.space
+				# 	self.removed "spaces", oldDoc.space;
 			removed: (oldDoc) ->
 				if oldDoc.space
 					console.log "[publish] user space removed " + oldDoc.space
@@ -201,3 +201,12 @@ if Meteor.isServer
 		self.onStop ->
 			handle.stop();
 
+
+	Meteor.methods
+		setSpaceId: (spaceId) ->
+			this.connection["spaceId"] = spaceId
+			return this.connection["spaceId"]
+		getSpaceId: ()->
+			return this.connection["spaceId"]
+
+	

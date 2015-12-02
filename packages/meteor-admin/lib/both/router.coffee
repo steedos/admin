@@ -4,7 +4,7 @@
 		[
 			Meteor.subscribe 'adminUsers'
 			Meteor.subscribe 'adminUser'
-			Meteor.subscribe 'adminCollectionsCount'
+			Meteor.subscribe 'adminCollectionsCount', Session.get("spaceId")
 		]
 	onBeforeAction: ->
 		Session.set 'adminSuccess', null
