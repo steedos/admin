@@ -116,7 +116,15 @@ db.spaces.helpers
 				user_accepted: user_accepted
 		
 
-if (Meteor.isServer) 
+if Meteor.isClient
+
+	spaceWatch = db.spaces.find({})
+	spaceWatch.observeChanges
+		removed: (_id)->
+			if Session.get("spaceId") == _id
+				Session.set("spaceId", null)
+
+if Meteor.isServer
 
 	db.spaces.before.insert (userId, doc) ->
 		doc.created_by = userId

@@ -19,8 +19,9 @@ Template.AdminHeader.helpers
 		return Steedos.spaces.find().fetch()
 
 	spaceName: ->
-		if (Session.get("spaceName"))
-			return Session.get("spaceName")
+		if Session.get("spaceId")
+			space = db.spaces.findOne(Session.get("spaceId"))
+			return space.name
 		return t("Select Space")
 
 
@@ -28,7 +29,6 @@ Template.AdminHeader.events
 
 	"click #switchSpace": ->
 		Session.set("spaceId", this._id)
-		Session.set("spaceName", this.name)
 		Router.go "/admin"
 
 
