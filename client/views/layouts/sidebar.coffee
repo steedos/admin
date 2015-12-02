@@ -1,6 +1,4 @@
 Template.sidebar.helpers
-	apps: ->
-		return Steedos.apps.find();
 
 	displayName: ->
 
@@ -14,7 +12,6 @@ Template.sidebar.helpers
 		else
 			return "Nobody"
 	
-
 	avatar: ->
 		if Meteor.user()
 			if Meteor.user().avatar

@@ -15,21 +15,11 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="nav sidebar-menu">
             <li class="header">APPS</li>
-            <li><a href="/launchpad/">
+            <li><a href="/admin/">
                 <i class="fa fa-dashboard"></i>
-                <span>{{_ "Launchpad"}}</span>
+                <span>{{_ "Admin"}}</span>
                 </a>
             </li>
-            {{#each apps}}
-            <li><a href="/apps/{{_id}}/">
-            	<i class="fa fa-{{icon}}"></i>
-                <span>{{name}}</span>
-                {{#if badge}}
-                    <small class="label pull-right bg-red">{{badge}}</small>
-                {{/if}}
-            	</a>
-            </li>
-            {{/each}}
           </ul>
         </div>
         <!-- /.sidebar -->
