@@ -23,6 +23,9 @@ Template.dock.helpers
 			else
 				return "/avatar/" + Meteor.user().emails[0].address
 
+	spacesCount: ->
+		return Steedos.spaces.find().count()
+		
 	spaces: ->
 		return Steedos.spaces.find();
 

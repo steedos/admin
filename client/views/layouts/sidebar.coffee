@@ -16,5 +16,8 @@ Template.sidebar.helpers
 	
 
 	avatar: ->
-		if (Meteor.user())
-			return Meteor.user().avatar
+		if Meteor.user()
+			if Meteor.user().avatar
+				return Meteor.user().avatar
+			else
+				return "/avatar/" + Meteor.user().emails[0].address
