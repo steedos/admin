@@ -79,7 +79,7 @@ Meteor.publish("tabular_getInfo", function(tableName, selector, sort, skip, limi
 
   // Allow the user to modify the selector before we use it
   if (typeof table.changeSelector === 'function') {
-    selector = table.changeSelector(selector, self.userId);
+    selector = table.changeSelector(selector, self.userId, self.connection);
   }
 
   // Apply the server side selector specified in the tabular
@@ -87,7 +87,7 @@ Meteor.publish("tabular_getInfo", function(tableName, selector, sort, skip, limi
   // them using $and, allowing both selectors to have
   // the same keys.
   if (typeof table.selector === 'function') {
-    var tableSelector = table.selector(self.userId);
+    var tableSelector = table.selector(self.userId, self.connection);
     if (_.isEmpty(selector)) {
       selector = tableSelector;
     } else {

@@ -69,11 +69,11 @@ db.spaces.attachSchema new SimpleSchema
 if Meteor.isClient
 	db.spaces.simpleSchema().i18n("db.spaces")
 
-db.spaces._selector = (userId) ->
+db.spaces._selector = (userId, connection) ->
 	if Meteor.isServer
-		spaceId = Session.get("spaceId")
+		spaceId = connection["spaceId"]
 		if spaceId
-			return {space: spaceId}
+			return {_id: spaceId}
 		else
 			return {}
 	if Meteor.isClient
@@ -204,9 +204,9 @@ if Meteor.isServer
 
 	Meteor.methods
 		setSpaceId: (spaceId) ->
-			Session.set "spaceId", spaceId
-			return Session.get "spaceId"
+			this.connection["spaceId"] = spaceId
+			return this.connection["spaceId"]
 		getSpaceId: ()->
-			return Session.get "spaceId"
+			return this.connection["spaceId"]
 
 	

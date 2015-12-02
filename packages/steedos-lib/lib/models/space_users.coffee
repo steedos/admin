@@ -95,24 +95,24 @@ if Meteor.isClient
 db.space_users.attachSchema(db.space_users._simpleSchema);
 
 
-db.space_users._selector = (userId) ->
+db.space_users._selector = (userId, connection) ->
 	if Meteor.isServer
 		# user = db.users.findOne({_id: userId})
 		# if user
 		# 	return {space: {$in: user.spaces()}}
 		# else 
 		# 	return {}
-		debugger;
-		spaceId = Session.get("spaceId")
+		spaceId = connection["spaceId"]
+		console.log "[selector] filter space_users " + spaceId
 		if spaceId
 			return {space: spaceId}
 		else
 			return {space: "-1"}
-	if Meteor.isClient
-		if (Session.get("spaceId"))
-			return {space: Session.get("spaceId")}
-		else 
-			return {}
+	#if Meteor.isClient
+		#if (Session.get("spaceId"))
+		#	return {space: Session.get("spaceId")}
+		#else 
+		#	return {}
 
 
 if (Meteor.isClient) 
