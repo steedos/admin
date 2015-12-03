@@ -5,60 +5,39 @@
         {{_ "Profile"}}
         <small></small>
       </h1>
-      <ol class="breadcrumb">
+<!--       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i>{{_ "Home"}}</a></li>
         <li class="active">{{_ "Profile"}}</li>
-      </ol>
+      </ol> -->
     </section> 
 
     <section class="content">
 
-      <div class="row">
+      <div class="box box-default">
+        <div class="box-body">
+          {{> quickForm collection="db.users" doc=user id="updateProfile" schema=schema type="update" fields="name,email,username,locale,timezone"}}
 
-        <div class="col-lg-3 col-xs-12">
+
+          <hr/>
+          <h4>{{_ "Change Password"}}</h4>
           
-          <div class="field">
-            <label>{{_ 'Full Name'}}</label>
-            <input type="text" name="name" id="name" value="{{user.name}}" >
+          <div class="form-group">
+            <label class="control-label">{{_ 'Old Password'}}</label>
+            <input type="text" name="oldPassword" required="" id="oldPassword" class="form-control">
           </div>
-
-          <div class="required field">
-            <label>{{_ 'Email'}}</label>
-            <input type="email" name="email" id="email" value="{{user.email}}">
+          <div class="form-group">
+            <label class="control-label">{{_ 'New Password'}}</label>
+            <input type="text" name="password" required="" id="password" class="form-control">
           </div>
-
-          <div class="field">
-            <label>{{_ 'Company'}}</label>
-            <input type="text" name="Company" id="company" value="{{user.company}}">
+          <div class="form-group">
+            <label class="control-label">{{_ 'Confirm Password'}}</label>
+            <input type="text" name="confirmPassword" required="" id="confirmPassword" class="form-control">
           </div>
-
-          <div class="field">
-            <label>{{_ 'Mobile'}}</label>
-            <input type="text" name="mobile" id="mobile" value="{{user.mobile}}">
-          </div>
-
-          <div class="field">
-            <label for="language">{{_ "Language"}}</label>
-            <select id="language" class="ui fluid dropdown required">
-              {{#each languages}}
-              <option value="{{key}}" selected="{{userLanguage key}}" dir="auto">{{name}}</option>
-              {{/each}}
-            </select>
-          </div>
-          <div class="field">
-            <label>{{_ 'Timezone'}}</label>
-            {{> timezonePicker class="ui fluid dropdown" selected=timezone}}
-          </div>
-          <div class="field">
-            <label>{{_ 'Gravatar'}}</label>
-            <img src="{{getGravatarURL user 100}}" width="100" height="100" class="profile"/>
-          </div>
-
-          <button class="ui primary button" id="saveProfile"  type="button"><i class="icon save"></i>{{_ 'Update Profile'}}</button>
+          <button type="submit" class="btn btn-primary btn-sm change-password">{{_ 'Change Password'}}</button>
 
         </div>
-
       </div>
+
 
     </section>
 
