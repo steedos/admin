@@ -4,7 +4,8 @@
 	"Add": "添加",
 	"Edit": "编辑",
 	"Delete": "删除",
-	
+	"Spaces_isPaid": "已付费",
+
 	"db": {
 		"users": "用户",
 		"users_name": "姓名",
@@ -14,6 +15,9 @@
 		"users_mobile": "电话",
 		"users_locale": "语言",
 		"users_timezone": "时区",
+		"users_emails": "邮件",
+		"users_createdAt": "创建日期",
+		"users_email_notification": "接受邮件通知",
 		
 		"apps": "应用",
 		"apps_name": "名称",
@@ -29,6 +33,7 @@
 		"spaces_is_paid": "已付费",
 		"spaces_owner_name()": "所有者",
 		"spaces_admins_name()": "管理员",
+		"Spaces_isPaid" :"已付费",
 
 		"organizations": "部门",
 		"organizations_fullname": "部门全名",
@@ -43,7 +48,10 @@
 		"space_users_name": "名称",
 		"space_users_email": "邮件",
 		"space_users_organization": "所属部门",
+		"space_users_user_accepted": "已激活",
 		"space_users_manager": "上级主管"
+
+
 	}
 
 }

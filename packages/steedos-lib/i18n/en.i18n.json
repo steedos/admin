@@ -4,7 +4,8 @@
 	"Add": "Add",
 	"Edit": "Edit",
 	"Delete": "Delete",
-	
+	"Spaces_isPaid": "Is Paid",
+
 	"db": {	
 		"users": "Users",
 		"users_name": "Name",
@@ -14,6 +15,9 @@
 		"users_mobile": "Moblie",
 		"users_locale": "Language",
 		"users_timezone": "Timezone",
+		"users_emails": "Emails",
+		"users_createdAt": "Created At",
+		"users_email_notification": "Email Notification",
 		
 		"apps": "Apps",
 		"apps_name": "Name",
@@ -29,6 +33,7 @@
 		"spaces_is_paid": "Is Paid",
 		"spaces_owner_name()": "Owner",
 		"spaces_admins_name()": "Admins",
+		"Spaces_isPaid" :"Is Paid",
 
 		"organizations": "Organizations",
 		"organizations_fullname": "Fullname",
@@ -43,6 +48,7 @@
 		"space_users_name": "Name",
 		"space_users_email": "Email",
 		"space_users_organization": "Organization",
+		"space_users_user_accepted": "User Accepted",
 		"space_users_manager": "Manager"
 	}
 
