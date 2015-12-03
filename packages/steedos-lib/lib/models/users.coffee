@@ -143,6 +143,7 @@ if Meteor.isServer
 			db.space_users.direct.update({user: doc._id}, {$set: {email: modifier.$set.email}}, {multi: true})
 
 
+	Steedos.api.addCollection db.users
 
 	Meteor.publish 'userData', ->
 		unless this.userId

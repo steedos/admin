@@ -156,7 +156,8 @@ if (Meteor.isServer)
 			throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_space"));
 		if (modifier.$set.user)
 			throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_user"));
-		
+	
+	Steedos.api.addCollection db.space_users	
 
 	Meteor.publish 'space_users', (spaceId)->
 		unless this.userId

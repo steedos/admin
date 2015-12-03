@@ -197,7 +197,7 @@ if (Meteor.isServer)
 
 
 
-
+	Steedos.api.addCollection db.organizations
 
 
 	Meteor.publish 'organizations', (spaceId)->
