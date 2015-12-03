@@ -19,6 +19,15 @@
 
 
           <hr/>
+          <h4>{{_ "Avatar"}}</h4>
+          <div class="form-group">
+            <img src="{{getGravatarURL user 100}}" width="100" height="100" class="avatar-preview"/>
+            <div class="btn btn-primary btn-sm change-avatar">{{_ 'Change Avatar'}}
+              <input type="file" class="avatar-file" accept="image/*">
+            </div>
+          </div>
+          
+          <hr/>
           <h4>{{_ "Change Password"}}</h4>
           
           <div class="form-group">

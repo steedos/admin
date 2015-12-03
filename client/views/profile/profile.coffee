@@ -9,6 +9,13 @@ Template.profile.helpers
 	userId: ->
 		return Meteor.userId()
 
+	getGravatarURL: (user, size) ->
+		if (Meteor.user())
+			if Meteor.user().avatar
+				return "/api/files/avatars/" + Meteor.user().avatar
+			else
+				return "/avatar/" + Meteor.user().emails[0].address
+
 
 Template.profile.onRendered ->
 
@@ -55,9 +62,18 @@ Template.profile.onCreated ->
 					return callback()
 		else
 			toastr.error t('Confirm_Password_Not_Match')
-			
+
 		
 Template.profile.events
 
 	'click .change-password': (e, t) ->
 		t.changePassword()
+
+	'change .avatar-file': (event, template) ->
+		files = event.target.files;
+		_.each files, (file) ->
+			db.avatars.insert file,  (err, fileObj) ->
+				# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+				Meteor.call "saveUserProfile", 
+					avatar: fileObj._id
+			

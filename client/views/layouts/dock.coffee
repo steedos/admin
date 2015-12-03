@@ -14,7 +14,7 @@ Template.dock.helpers
 	avatar: ->
 		if Meteor.user()
 			if Meteor.user().avatar
-				return Meteor.user().avatar
+				return "/api/files/avatars/" + Meteor.user().avatar
 			else
 				return "/avatar/" + Meteor.user().emails[0].address
 
