@@ -163,6 +163,7 @@ if Meteor.isServer
 
 
 
+	Steedos.api.addCollection db.spaces
 
 
 	# publish users spaces

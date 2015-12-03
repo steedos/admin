@@ -1,35 +1,21 @@
 Template.profile.helpers
+
+	schema: ->
+		return db.users._simpleSchema;
+
 	user: ->
-		return Meteor.user()
+		return db.users.findOne(Meteor.userId())
 
-	languages: ->
-		languages = TAPi18n.getLanguages()
-		result = []
-		for key, language of languages
-			result.push _.extend(language, { key: key })
-		return _.sortBy(result, 'key')
-
-	timezone: ->
-		if Meteor.user()?.timezone?
-			return Meteor.user().timezone
-		else
-			return TimezonePicker.detectedZone()
-
-	userLanguage: (key) ->
-		if Session.get("language")
-			return Session.get("language") is key
-		else
-			return defaultUserLanguage() is key
-
-	setChecked: (value, currentValue) ->
-	    if(value == currentValue) 
-	       return "checked"
-	    else 
-	       return ""
+	userId: ->
+		return Meteor.userId()
 
 	getGravatarURL: (user, size) ->
 		if (Meteor.user())
-			return Meteor.user().avatar
+			if Meteor.user().avatar
+				return "/api/files/avatars/" + Meteor.user().avatar
+			else
+				return "/avatar/" + Meteor.user().emails[0].address
+
 
 Template.profile.onRendered ->
 
@@ -37,51 +23,57 @@ Template.profile.onRendered ->
 
 Template.profile.onCreated ->
 
-
-	@saveProfile = ->
-		instance = @
-		reload = false
-		data = { profile: {} }
-
-		selectedLanguage = $('#language').val()
-
-		data.locale = selectedLanguage
-		if Session.get("language") isnt selectedLanguage
-			Session.set("language", selectedLanguage)
-			reload = true
-
-		# if _.trim $('#username').val()
-		# 	data.username = _.trim $('#username').val()
-
-		if _.trim $('#name').val()
-			data.name = _.trim $('#name').val()
-
-		if _.trim $('#company').val()
-			data.company = _.trim $('#company').val()
-
-		if _.trim $('#mobile').val()
-			data.mobile = _.trim $('#mobile').val()
-
-		if _.trim $('#email').val()
-			data.email = _.trim $('#email').val()
-
-		if $('select[name=pickedTimezone]').val()
-			data.timezone = $('select[name=pickedTimezone]').val()
-
-		Meteor.call 'saveUserProfile', data, (error, results) ->
-			if results
+	AutoForm.hooks
+		updateProfile:
+			onSuccess: (formType, result) ->
 				toastr.success t('Profile_saved_successfully')
-				if reload
+				if this.updateDoc.$set.locale != this.currentDoc.locale
+					toastr.success t('Language_changed_reloading')
 					setTimeout ->
 						Meteor._reload.reload()
 					, 1000
 
-			if error
-				toastr.error error.reason
+			onError: (formType, error) ->
+				toastr.error error
+			
 
+	@clearForm = ->
+		@find('#oldPassword').value = ''
+		@find('#password').value = ''
+		@find('#confirmPassword').value = ''
 
+	@changePassword = (callback) ->
+		instance = @
+
+		oldPassword = $('#oldPassword').val()
+		password = $('#password').val()
+		confirmPassword = $('#confirmPassword').val()
+
+		if !oldPassword or !password or !confirmPassword
+			toastr.warning t('Old_and_new_password_required')
+
+		else if password == confirmPassword
+			Accounts.changePassword oldPassword, password, (error) ->
+				if error
+					toastr.error t('Incorrect_Password')
+				else
+					toastr.success t('Password_changed_successfully')
+					instance.clearForm();
+					return callback()
+		else
+			toastr.error t('Confirm_Password_Not_Match')
 
 		
 Template.profile.events
-	'click #saveProfile': (e, t) ->
-		t.saveProfile()
+
+	'click .change-password': (e, t) ->
+		t.changePassword()
+
+	'change .avatar-file': (event, template) ->
+		files = event.target.files;
+		_.each files, (file) ->
+			db.avatars.insert file,  (err, fileObj) ->
+				# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
+				Meteor.call "saveUserProfile", 
+					avatar: fileObj._id
+			
