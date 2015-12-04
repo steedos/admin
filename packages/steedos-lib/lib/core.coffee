@@ -17,8 +17,3 @@ if Meteor.isClient
 		return {value: name, label: "(GMT " + label + ") " + name, offset: offset};
 	Steedos._timezones = _.sortBy(Steedos._timezones, 'offset');
 
-
-if Meteor.isServer
-	Steedos.api = new Restivus
-		useDefaultAuth: true
-		prettyJson: true

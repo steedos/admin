@@ -52,6 +52,11 @@ Package.onUse(function(api) {
 	api.addFiles('lib/models/space_users.coffee');
 	api.addFiles('lib/models/organizations.coffee');
 
+	api.addFiles('lib/api/core.coffee', ['server']);
+	api.addFiles('lib/api/users.coffee', ['server']);
+	api.addFiles('lib/api/spaces.coffee', ['server']);
+	api.addFiles('lib/api/space_users.coffee', ['server']);
+	api.addFiles('lib/api/organizations.coffee', ['server']);
 
 	// EXPORT
 	api.export('Steedos');

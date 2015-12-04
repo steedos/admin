@@ -180,8 +180,6 @@ if Meteor.isServer
 				Roles.addUsersToRoles(admin, 'admin', doc._id)
 
 
-	Steedos.api.addCollection db.spaces
-
 
 	# publish users spaces
 	# we only publish spaces current user joined.
