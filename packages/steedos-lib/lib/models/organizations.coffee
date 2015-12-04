@@ -138,6 +138,18 @@ if (Meteor.isServer)
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
+		if (modifier.$set.space)
+			throw new Meteor.Error(400, t("organizations_error.space_readonly"));
+
+		if (modifier.$set.parents)
+			throw new Meteor.Error(400, t("organizations_error.parents_readonly"));
+
+		if (modifier.$set.children)
+			throw new Meteor.Error(400, t("organizations_error.children_readonly"));
+
+		if (modifier.$set.fullname)
+			throw new Meteor.Error(400, t("organizations_error.fullname_readonly"));
+
 		if (modifier.$set.parent)
 			# parent 不能等于自己或者children
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
