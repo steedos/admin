@@ -97,22 +97,12 @@ db.space_users.attachSchema(db.space_users._simpleSchema);
 
 db.space_users._selector = (userId, connection) ->
 	if Meteor.isServer
-		# user = db.users.findOne({_id: userId})
-		# if user
-		# 	return {space: {$in: user.spaces()}}
-		# else 
-		# 	return {}
 		spaceId = connection["spaceId"]
 		console.log "[selector] filter space_users " + spaceId
 		if spaceId
 			return {space: spaceId}
 		else
 			return {space: "-1"}
-	#if Meteor.isClient
-		#if (Session.get("spaceId"))
-		#	return {space: Session.get("spaceId")}
-		#else 
-		#	return {}
 
 
 if (Meteor.isClient) 
@@ -150,12 +140,15 @@ if (Meteor.isServer)
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
-		if (modifier.$set.email)
-			throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_email"));
-		if (modifier.$set.space)
-			throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_space"));
-		if (modifier.$set.user)
-			throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_user"));
+		if modifier.$set.email
+			if modifier.$set.email != doc.email
+				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_email"));
+		if modifier.$set.space
+			if modifier.$set.space != doc.space
+				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_space"));
+		if modifier.$set.user
+			if modifier.$set.user != doc.user
+				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_user"));
 	
 	Steedos.api.addCollection db.space_users	
 

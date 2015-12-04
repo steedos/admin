@@ -75,9 +75,7 @@ db.spaces._selector = (userId, connection) ->
 		if spaceId
 			return {_id: spaceId}
 		else
-			return {}
-	if Meteor.isClient
-		return {}
+			return {_id: -1}
 
 
 db.spaces.helpers
@@ -95,20 +93,21 @@ db.spaces.helpers
 			adminNames.push(admin.name)
 		return adminNames.toString();
 
-	add_user: (userId, user_accepted) ->
-		spaceUserObj = db.space_users.findOne({user: userId, space: this._id})
-		userObj = db.users.findOne(userId);
+	join_space: (userId, user_accepted) ->
+		spaceUserObj = db.space_users.direct.findOne({user: userId, space: this._id})
+		userObj = db.users.direct.findOne(userId);
 		if (!userObj)
 			return;
 		if (spaceUserObj)
 			db.space_users.direct.update spaceUserObj._id, 
-				name: userObj.name,
-				email: userObj.email,
-				space: this._id,
-				user: userObj._id,
-				user_accepted: user_accepted
+				$set:
+					name: userObj.name,
+					email: userObj.email,
+					space: this._id,
+					user: userObj._id,
+					user_accepted: user_accepted
 		else 
-			db.space_users.insert
+			db.space_users.direct.insert
 				name: userObj.name,
 				email: userObj.email,
 				space: this._id,
@@ -122,7 +121,12 @@ if Meteor.isClient
 	spaceWatch.observeChanges
 		removed: (_id)->
 			if Session.get("spaceId") == _id
-				Session.set("spaceId", null)
+				spaceId = null
+				nextSpace = db.spaces.findOne()
+				if nextSpace
+					spaceId  = nextSpace._id
+				Meteor.call "setSpaceId", spaceId, ->
+					Session.set("spaceId", spaceId)
 
 if Meteor.isServer
 
@@ -138,7 +142,7 @@ if Meteor.isServer
 		if (doc.admins)
 			space = db.spaces.findOne(doc._id)
 			_.each doc.admins, (admin) ->
-				space.add_user(admin, true)
+				space.join_space(admin, true)
 			
 
 	db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -146,21 +150,34 @@ if Meteor.isServer
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
-		# 自动添加 Owner 为管理员
+		# Add owner as admins
 		if (modifier.$set.owner)
 			if (!modifier.$set.admins)
-				modifier.$set.admins = [modifier.$set.owner]
+				modifier.$set.admins = doc.admins
+				if modifier.$unset
+					delete modifier.$set.admins
 			if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
 				modifier.$set.admins.push(modifier.$set.owner)
+
 
 	db.spaces.before.remove (userId, doc) ->
 		db.space_users.direct.remove({space: doc._id});
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
-		# Update space users record to trigger publish spaces record changes to client.
-		space_user = db.space_users.findOne({space: doc._id})
-		db.space_users.direct.update(space_user._id, {$set: {modified: new Date()}})
+		self = this
+		modifier.$set = modifier.$set || {};
 
+		# Update space owner record to trigger publish spaces record changes to client.
+		space_user = db.space_users.findOne({user: this.previous.owner})
+		db.space_users.direct.update(space_user._id, {$set: {user: this.previous.owner}})
+
+		if (modifier.$set.admins)
+			_.each this.previous.admins, (admin) ->
+				Roles.removeUsersFromRoles(admin, 'admin', doc._id)
+
+			_.each modifier.$set.admins, (admin) ->
+				self.transform().join_space(admin, true)
+				Roles.addUsersToRoles(admin, 'admin', doc._id)
 
 
 	Steedos.api.addCollection db.spaces
@@ -175,33 +192,45 @@ if Meteor.isServer
 		console.log '[publish] user spaces'
 
 		self = this;
+		user = db.users.findOne(this.userId);
+		userSpaces = user.spaces()
 
-		handle = db.space_users.find({user: this.userId}).observe 
+		handle2 = null
+
+		# only return user joined spaces, and observes when user join or leave a space
+		handle = db.space_users.find({user: this.userId}).observe
 			added: (doc) ->
 				if doc.space
-					console.log "[publish] user space added " + doc.space
-					space = db.spaces.findOne doc.space
-					if space
-						self.added "spaces", doc.space, space;
-			changed: (newDoc, oldDoc) ->
-				console.log "[publish] user space changed " + newDoc.space
-				newSpace = db.spaces.findOne newDoc.space
-				if newSpace
-					self.changed "spaces", newDoc.space, newSpace;
-				# if oldDoc.space != newDoc.space
-				# 	console.log "[publish] user space removed " + newDoc.space
-				# 	self.removed "spaces", oldDoc.space;
+					if userSpaces.indexOf(doc.space) < 0
+						userSpaces.push(doc.space)
+						observeSpaces()
 			removed: (oldDoc) ->
 				if oldDoc.space
-					console.log "[publish] user space removed " + oldDoc.space
-					self.removed "spaces", oldDoc.space;
-			
-		
+					self.removed "spaces", oldDoc.space
+					userSpaces = _.without(userSpaces, oldDoc.space)
+
+		observeSpaces = ->
+			if handle2
+				handle2.stop();
+			handle2 = db.spaces.find({_id: {$in: userSpaces}}).observe
+				added: (doc) ->
+					self.added "spaces", doc._id, doc;
+					userSpaces.push(doc._id)
+				changed: (newDoc, oldDoc) ->
+					self.changed "spaces", newDoc._id, newDoc;
+				removed: (oldDoc) ->
+					self.removed "spaces", oldDoc._id
+					userSpaces = _.without(userSpaces, oldDoc._id)
+
+		observeSpaces();
+
 		self.ready();
 
 		self.onStop ->
 			handle.stop();
-
+			if handle2
+				handle2.stop();
+		
 
 	Meteor.methods
 		setSpaceId: (spaceId) ->

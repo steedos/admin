@@ -33,6 +33,7 @@
 			]
 			extraFields: ["space", "user"]
 			newFormFields: "space,email"
+			editFormFields: "space,name,organization,manager,user_accepted"
 			selector: Steedos.space_users._selector
 
 		organizations: 

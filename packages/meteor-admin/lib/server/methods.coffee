@@ -83,7 +83,7 @@ Meteor.methods
 					Roles.addUsersToRoles this.userId, ['admin'], Roles.GLOBAL_GROUP
 			else if this.userId == Meteor.users.findOne({},{sort:{createdAt:1}})._id
 				console.log 'Making first user admin: ' + email
-				Roles.addUsersToRoles this.userId, ['admin']
+				Roles.addUsersToRoles this.userId, ['admin'], Roles.GLOBAL_GROUP
 
 	adminAddUserToRole: (_id,role)->
 		check arguments, [Match.Any]
