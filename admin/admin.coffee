@@ -44,6 +44,7 @@
 			]
 			extraFields: ["space", "name"]
 			newFormFields: "space,name,parent"
+			editFormFields: "name,parent"
 			selector: Steedos.organizations._selector
 
 	callbacks:

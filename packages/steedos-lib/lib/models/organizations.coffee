@@ -5,6 +5,7 @@ db.organizations.permit(['insert', 'update', 'remove']).apply();
 db.organizations._simpleSchema = new SimpleSchema
 	space: 
 		type: String,
+		optional: true,
 		autoform: 
 			type: "hidden",
 			defaultValue: ->
