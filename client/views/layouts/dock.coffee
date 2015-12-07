@@ -18,7 +18,7 @@ Template.dock.helpers
 			else
 				return "/avatar/" + Meteor.user().emails[0].address
 
-	spacesCount: ->
+	spaceCount: ->
 		return Steedos.spaces.find().count()
 		
 	spaces: ->
@@ -44,5 +44,6 @@ Template.dock.events
 		$(this).addClass('active').siblings().removeClass('active')
 
 	"click #switchSpace": ->
+		self = this
 		Meteor.call "setSpaceId", self._id, ->
 			Session.set("spaceId", self._id)
