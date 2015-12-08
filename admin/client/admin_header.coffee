@@ -1,4 +1,4 @@
-Template.AdminHeader.helpers
+Template.SpaceAdminHeader.helpers
 
 	displayName: ->
 	
@@ -25,7 +25,7 @@ Template.AdminHeader.helpers
 		return t("Select Space")
 
 
-Template.AdminHeader.events
+Template.SpaceAdminHeader.events
 
 	"click #switchSpace": ->
 		self = this
@@ -33,10 +33,4 @@ Template.AdminHeader.events
 			Session.set("spaceId", self._id)
 
 		Router.go "/admin"
-
-
-
-Meteor.startup ->
-	Template.SteedosAdminHeader.replaces("AdminHeader");
-
 

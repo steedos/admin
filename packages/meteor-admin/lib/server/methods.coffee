@@ -1,7 +1,7 @@
 Meteor.methods
 	adminInsertDoc: (doc,collection)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['admin'], this.connection.spaceId
 			this.unblock()
 			result = adminCollectionObject(collection).insert doc
 				
@@ -9,14 +9,14 @@ Meteor.methods
 
 	adminUpdateDoc: (modifier,collection,_id)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['admin'], this.connection.spaceId
 			this.unblock()
 			result = adminCollectionObject(collection).update {_id:_id},modifier
 			return result
 
 	adminRemoveDoc: (collection,_id)->
 		check arguments, [Match.Any]
-		if Roles.userIsInRole this.userId, ['admin']
+		if Roles.userIsInRole this.userId, ['admin'], this.connection.spaceId
 			if collection == 'Users'
 				Meteor.users.remove {_id:_id}
 			else
