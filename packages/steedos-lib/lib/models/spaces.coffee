@@ -122,6 +122,11 @@ if Meteor.isClient
 
 	spaceWatch = db.spaces.find({})
 	spaceWatch.observeChanges
+		added: (_id, fields) ->
+			if !Session.get("spaceId")
+				Meteor.call "setSpaceId", _id, ->
+					Session.set("spaceId", _id)
+				
 		removed: (_id)->
 			if Session.get("spaceId") == _id
 				spaceId = null
