@@ -15,6 +15,8 @@
 
 		spaces: 
 			icon: "globe"
+			label: ->
+				return t("db.spaces")
 			tableColumns: [
 				{name: "name"},
 				{name: "owner_name()"},
@@ -26,6 +28,8 @@
 
 		space_users: 
 			icon: "users"
+			label: ->
+				return t("db.space_users")
 			tableColumns: [
 				{name: "space_name()"},
 				{name: "name"},
@@ -38,6 +42,8 @@
 
 		organizations: 
 			icon: "sitemap"
+			label: ->
+				return t("db.organizations")
 			tableColumns: [
 				{name: "space_name()"},
 				{name: "fullname"},

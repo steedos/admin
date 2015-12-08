@@ -31,6 +31,8 @@ Package.on_use(function(api){
 
   api.use(['less@1.0.0 || 2.5.0','session','jquery','templating'],'client')
 
+  api.use('tap:i18n', ['client', 'server']);
+
   api.use(['email'],'server')
 
   api.add_files([
@@ -38,7 +40,9 @@ Package.on_use(function(api){
     'lib/both/router.coffee',
     'lib/both/utils.coffee',
     'lib/both/startup.coffee',
-    'lib/both/collections.coffee'
+    'lib/both/collections.coffee',
+    'i18n/zh-CN.i18n.json',
+    'i18n/en.i18n.json'
     ], both);
 
   api.add_files([

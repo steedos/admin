@@ -32,7 +32,7 @@ Router.route "adminDashboard",
 	action: ->
 		@render()
 	onAfterAction: ->
-		Session.set 'admin_title', 'Dashboard'
+		Session.set 'admin_title', TAPi18n.__('Dashboard')
 		Session.set 'admin_subtitle', ''
 		Session.set 'admin_collection_name', ''
 		Session.set 'admin_collection_page', ''

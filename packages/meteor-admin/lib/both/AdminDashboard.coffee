@@ -20,6 +20,8 @@ AdminDashboard =
 			'Users'
 		else if collection? and typeof AdminConfig.collections[collection].label == 'string'
 			AdminConfig.collections[collection].label
+		else if collection? and typeof AdminConfig.collections[collection].label == 'function'
+			AdminConfig.collections[collection].label()
 		else Session.get 'admin_collection_name'
 
 	addSidebarItem: (title, url, options) ->
