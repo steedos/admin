@@ -1,12 +1,3 @@
-Template.masterLayout.helpers
-	logged: ->
-		if Meteor.userId()?
-			$('html').addClass("noscroll").removeClass("scroll")
-			return true
-		else
-			$('html').addClass("scroll").removeClass("noscroll")
-			return false
-
 Template.masterLayout.onCreated ->
 	self = this;
 
@@ -18,6 +9,10 @@ Template.masterLayout.onCreated ->
 
 
 Template.masterLayout.onRendered ->
+
+	if !Meteor.userId()
+		Router.go "/sign-in"
+
 	self = this;
 	self.minHeight.set($(window).height());
 

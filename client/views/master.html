@@ -1,21 +1,13 @@
 <template name="masterLayout">
-	{{#unless logged}}
-    	{{> loginNav}}
-		{{> status}}
-		<div class="content-wrapper" style="min-height: {{minHeight}}">
-        	{{> yield}}
-        </div>
-	{{else}}
-    	{{# AdminLTE skin="green" }}
-	    	{{> dock}}
-	    	{{> sidebar}}
+	{{# AdminLTE skin="green" }}
+		{{> dock}}
+		{{> sidebar}}
 
-        
-			<div class="content-wrapper" style="min-height: {{minHeight}}">
-				{{> status}}
-	        	{{> yield}}
-	        </div>
-    	{{/ AdminLTE}}
-	{{/unless}}
+
+		<div class="content-wrapper" style="min-height: {{minHeight}}">
+			{{> status}}
+	    	{{> yield}}
+	    </div>
+	{{/ AdminLTE}}
 </template>
 

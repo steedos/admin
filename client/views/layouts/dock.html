@@ -19,12 +19,12 @@
               {{#if spaceCount}}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <span>{{spaceName}}&nbsp;&nbsp;<i class="caret"></i>
+                  <span><i class="fa fa-globe"></i>&nbsp;{{spaceName}}&nbsp;&nbsp;<i class="caret"></i>
                   </span>
                 </a>
                 <ul class="dropdown-menu">
                   {{#each spaces}}
-                    <li id="switchSpace"><a href="#">{{name}}</a></li>
+                    <li id="switchSpace"><a href="#"><i class="fa fa-globe"></i>&nbsp;{{name}}</a></li>
                   {{/each}}
                 </ul>
               </li>

@@ -12,6 +12,8 @@ Template.SpaceAdminLayout.onCreated ->
 
 Template.SpaceAdminLayout.onRendered ->
 	this.minHeight.set($(window).height());
+	if !Meteor.userId()
+		Router.go "/sign-in"
 
 
 Template.SpaceAdminLayout.onDestroyed ->
