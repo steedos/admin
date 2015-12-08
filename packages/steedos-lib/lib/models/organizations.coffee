@@ -71,18 +71,14 @@ if Meteor.isClient
 db.organizations.attachSchema db.organizations._simpleSchema;
 
 
-db.organizations._selector = (userId) ->
+db.organizations._selector = (userId, connection) ->
 	if Meteor.isServer
-		user = db.users.findOne({_id: userId})
-		if user
-			return {space: {$in: user.spaces()}}
-		else 
-			return {}
-	if Meteor.isClient
-		if (Session.get("spaceId"))
-			return {space: Session.get("spaceId")}
-		else 
-			return {}
+		spaceId = connection["spaceId"]
+		console.log "[selector] filter space_users " + spaceId
+		if spaceId
+			return {space: spaceId}
+		else
+			return {space: "-1"}
 
 
 
@@ -132,7 +128,8 @@ if (Meteor.isServer)
 		doc.created_by = userId;
 		doc.created = new Date();
 		#doc.is_company = !doc.parent;
-
+		if (!doc.space)
+			throw new Meteor.Error(400, t("organizations_error.space_required"));
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};

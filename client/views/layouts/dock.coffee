@@ -27,7 +27,8 @@ Template.dock.helpers
 	spaceName: ->
 		if Session.get("spaceId")
 			space = db.spaces.findOne(Session.get("spaceId"))
-			return space.name
+			if space
+				return space.name
 		return t("Select Space")
 
 
