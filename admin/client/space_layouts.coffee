@@ -1,5 +1,3 @@
-
-
 Template.SpaceAdminLayout.onCreated ->
 	self = this;
 
@@ -23,3 +21,6 @@ Template.SpaceAdminLayout.onDestroyed ->
 Template.SpaceAdminLayout.helpers 
 	minHeight: ->
 		return Template.instance().minHeight.get() + 'px'
+
+	isSpaceAdmin: ->
+		return Roles.userIsInRole(Meteor.userId(), "admin", Session.get("spaceId"))
