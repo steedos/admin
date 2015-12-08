@@ -109,6 +109,7 @@ adminCreateRouteNewOptions = (collection, collectionName) ->
 			Session.set 'admin_subtitle', 'Create new'
 			Session.set 'admin_collection_page', 'new'
 			Session.set 'admin_collection_name', collectionName
+			Session.set 'admin_doc', null
 			collection.routes?.new?.onAfterAction
 		data: ->
 			admin_collection: adminCollectionObject collectionName
