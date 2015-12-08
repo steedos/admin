@@ -51,11 +51,14 @@ db.spaces.attachSchema new SimpleSchema
 	balance: 
 		type: Number,
 		optional: true,
+		autoform:
+			omit: true
 	is_paid: 
 		type: Boolean,
 		label: t("Spaces_isPaid"),
 		optional: true,
 		autoform:
+			omit: true
 			readonly: true
 		# 余额>0为已付费用户
 		autoValue: ->
