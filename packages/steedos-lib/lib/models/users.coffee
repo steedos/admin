@@ -1,6 +1,6 @@
 db.users = Meteor.users;
 
-db.users.permit(['insert', 'update', 'remove']).apply();
+db.users.permit(['insert', 'update', 'remove']).never().apply();
 
 db.users._simpleSchema = new SimpleSchema
 	name: 

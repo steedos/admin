@@ -1,6 +1,6 @@
 db.organizations = new Meteor.Collection('organizations')
 
-db.organizations.permit(['insert', 'update', 'remove']).apply();
+db.organizations.permit(['insert', 'update', 'remove']).never().apply();
 
 db.organizations._simpleSchema = new SimpleSchema
 	space: 

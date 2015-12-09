@@ -1,6 +1,6 @@
 db.space_users = new Meteor.Collection('space_users')
 
-db.space_users.permit(['insert', 'update', 'remove']).apply();
+db.space_users.permit(['insert', 'update', 'remove']).never().apply();
 
 db.space_users._simpleSchema = new SimpleSchema
 	space: 
@@ -29,17 +29,17 @@ db.space_users._simpleSchema = new SimpleSchema
 			type: "select2",
 			options: ->
 				options = [{
-					label: "",
+					label: " - ",
 					value: ""
 				}]
 				objs = db.organizations.find({}, 
 					{
-						sort: {name:1}
+						sort: {fullname:1}
 					}
 				)
 				objs.forEach (obj) ->
 					options.push({
-						label: obj.name,
+						label: obj.fullname,
 						value: obj._id
 					})
 				return options
@@ -50,10 +50,10 @@ db.space_users._simpleSchema = new SimpleSchema
 		autoform:
 			type: "select2"
 			options: ->
-				options = [
-						value: null
-						label: ""
-				]
+				options = [{
+					label: " - ",
+					value: ""
+				}]
 				selector = {}
 				if Session.get("spaceId")
 					selector = {space: Session.get("spaceId")}
