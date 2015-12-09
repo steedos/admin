@@ -1,6 +1,5 @@
 db.spaces = new Meteor.Collection('spaces')
 
-db.spaces.permit(['insert', 'update', 'remove']).never().apply();
 
 db.spaces.attachSchema new SimpleSchema
 	name: 

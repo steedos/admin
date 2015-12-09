@@ -1,7 +1,5 @@
 db.space_users = new Meteor.Collection('space_users')
 
-db.space_users.permit(['insert', 'update', 'remove']).never().apply();
-
 db.space_users._simpleSchema = new SimpleSchema
 	space: 
 		type: String,

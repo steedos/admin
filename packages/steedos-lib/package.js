@@ -25,7 +25,6 @@ Package.onUse(function(api) {
 	api.use('aldeed:tabular');
 	api.use('aldeed:autoform');
 	api.use('aldeed:autoform-select2');
-	api.use('ongoworks:security');
 	api.use('matb33:collection-hooks');
 
 
