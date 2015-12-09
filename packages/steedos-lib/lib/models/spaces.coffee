@@ -169,14 +169,11 @@ if Meteor.isServer
 
 	db.spaces.before.remove (userId, doc) ->
 		db.space_users.direct.remove({space: doc._id});
+		db.orgnanizations.direct.remove({space: doc._id});
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
 		self = this
 		modifier.$set = modifier.$set || {};
-
-		# Update space owner record to trigger publish spaces record changes to client.
-		space_user = db.space_users.findOne({user: this.previous.owner})
-		db.space_users.direct.update(space_user._id, {$set: {user: this.previous.owner}})
 
 		if (modifier.$set.admins)
 			_.each this.previous.admins, (admin) ->

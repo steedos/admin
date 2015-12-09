@@ -1,15 +1,25 @@
 db.users = Meteor.users;
 
+db.users.allow
+	# Allow user update own profile
+	update: (userId, doc, fields, modifier) ->
+		if userId == doc._id
+			return true
 
 db.users._simpleSchema = new SimpleSchema
 	name: 
 		type: String,
 	username: 
 		type: String,
+		unique: true,
 		optional: true
-	email: 
+	steedos_id: 
 		type: String,
-		regEx: SimpleSchema.RegEx.Email,
+		optional: true
+		unique: true,
+		autoform: 
+			type: "text"
+			readonly: true
 	company: 
 		type: String,
 		optional: true,
@@ -24,6 +34,7 @@ db.users._simpleSchema = new SimpleSchema
 			"zh-cn"
 		],
 		autoform: 
+			type: "select2",
 			options: [{
 				label: "Chinese",
 				value: "zh-cn"
@@ -36,17 +47,17 @@ db.users._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true,
 		autoform:
+			type: "select2",
 			options: ->
 				if Meteor.isClient
 					return Steedos._timezones
 
-	primary_email_verified:
+	email_notification:
 		type: Boolean
 		optional: true
-		autoform: 
-			omit: true
-	steedos_id: 
-		type: String,
+
+	primary_email_verified:
+		type: Boolean
 		optional: true
 		autoform: 
 			omit: true
@@ -55,9 +66,6 @@ db.users._simpleSchema = new SimpleSchema
 		optional: true
 		autoform: 
 			omit: true
-	email_notification:
-		type: Boolean
-		optional: true
 	is_cloudadmin:
 		type: Boolean
 		optional: true
@@ -75,15 +83,14 @@ db.users.helpers
 			spaces.push(su.space)
 		return spaces;
 
-if Meteor.isClient
-	
-	db.users.helpers
-		displayName: ->
-			if this.name 
-				return this.name
-			else if this.emails[0]
-				return this.emails[0].address
-		
+	displayName: ->
+		if this.name 
+			return this.name
+		else if this.username
+			return this.username
+		else if this.emails[0]
+			return this.emails[0].address
+
 
 if Meteor.isServer
 
@@ -101,27 +108,23 @@ if Meteor.isServer
 			throw new Meteor.Error(400, t("users_error.username_exists"));
 
 	db.users.before.insert (userId, doc) ->
+
 		if userId
 			doc.created_by = userId;
-		doc.created = new Date();
+			doc.created = new Date();
 
-		if (doc.email && !doc.emails)
-			doc.emails = []
-			doc.emails.push
-				address: doc.email,
-				verified: !!doc.primary_email_verified
-		else if (doc.emails && !doc.email)
+		if (doc.emails && !doc.steedos_id)
 			if doc.emails.length>0
-				doc.email = doc.emails[0].address
+				doc.steedos_id = doc.emails[0].address
 
 		if (doc.profile?.name && !doc.name)
 			doc.name = doc.profile.name
 
-		if (doc.email && !doc.name)
-			doc.name = doc.email.split('@')[0]
+		if (doc.steedos_id && !doc.name)
+			doc.name = doc.steedos_id.split('@')[0]
 
-		if (doc.email && !doc.steedos_id)
-			doc.steedos_id = doc.email
+		if (doc.steedos_id && !doc.username)
+			doc.username = this.steedos_id.replace("@","_").replace(".","_")
 
 		_.each doc.emails, (obj)->
 			db.users.checkEmailValid(obj.address);
@@ -129,18 +132,20 @@ if Meteor.isServer
 
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
+
+		if doc.steedos_id && modifier.$set.steedos_id
+			if modifier.$set.steedos_id != doc.steedos_id
+				throw new Meteor.Error(400, t("users_error.steedos_id_readonly"));
+
 		if userId
 			modifier.$set.modified_by = userId;
-		modifier.$set.modified = new Date();
+			modifier.$set.modified = new Date();
 
 
 	db.users.after.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 		if modifier.$set.name
 			db.space_users.direct.update({user: doc._id}, {$set: {name: modifier.$set.name}}, {multi: true})
-		if modifier.$set.email
-			db.space_users.direct.update({user: doc._id}, {$set: {email: modifier.$set.email}}, {multi: true})
-
 
 
 	Meteor.publish 'userData', ->
@@ -151,8 +156,8 @@ if Meteor.isServer
 
 		db.users.find this.userId,
 			fields:
+				steedos_id: 1
 				name: 1
-				email: 1
 				company: 1
 				mobile: 1
 				avatar: 1

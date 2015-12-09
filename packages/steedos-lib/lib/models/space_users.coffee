@@ -140,13 +140,13 @@ if (Meteor.isServer)
 
 		if modifier.$set.email
 			if modifier.$set.email != doc.email
-				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_email"));
+				throw new Meteor.Error(400, t("user_spaces_error.email_readonly"));
 		if modifier.$set.space
 			if modifier.$set.space != doc.space
-				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_space"));
+				throw new Meteor.Error(400, t("user_spaces_error.space_readonly"));
 		if modifier.$set.user
 			if modifier.$set.user != doc.user
-				throw new Meteor.Error(400, t("user_spaces_error.can_not_modify_user"));
+				throw new Meteor.Error(400, t("user_spaces_error.user_readonly"));
 	
 
 	Meteor.publish 'space_users', (spaceId)->

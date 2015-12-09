@@ -8,6 +8,7 @@
 
 	"db": {	
 		"users": "Users",
+		"users_steedos_id": "Steedos ID",
 		"users_name": "Name",
 		"users_username": "Username",
 		"users_email": "Email",

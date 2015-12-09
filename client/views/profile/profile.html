@@ -20,7 +20,7 @@
             <div class="tab-content">
               <div class="tab-pane active" id="profile">
 
-                {{> quickForm collection="db.users" doc=user id="updateProfile" schema=schema type="update" fields="name,email,username,locale,timezone"}}
+                {{> quickForm collection="db.users" doc=user id="updateProfile" schema=schema type="update" fields="steedos_id,name,username,locale,timezone,company,mobile,email_notification"}}
 
               </div>
               <div class="tab-pane" id="avatar">
