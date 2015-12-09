@@ -1,3 +1,13 @@
 {
-	"Dashboard": "仪表盘"
+	"Dashboard": "管理",
+	"New": "新建",
+	"Edit": "编辑",
+	"Confirm delete": "确认删除",
+	"Close": "关闭",
+	"Delete": "删除",
+	"Add one": "新增一个",
+	"See all": "查看所有",
+	"Are you sure you want to delete this?": "您确认要删除此条目吗？此操作不能恢复！",
+	"There are no visible items in this collection": "没有数据。",
+	"You need to be an space admin to view this page": "您必须是工作区管理员才能访问此页面。"
 }

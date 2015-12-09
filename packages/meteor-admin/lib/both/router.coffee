@@ -1,5 +1,5 @@
 @AdminController = RouteController.extend
-	layoutTemplate: 'SpaceAdminLayout'
+	layoutTemplate: 'AdminLayout'
 	waitOn: ->
 		[
 			Meteor.subscribe 'adminUsers'
