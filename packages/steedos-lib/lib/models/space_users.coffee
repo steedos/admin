@@ -119,13 +119,13 @@ if (Meteor.isServer)
 		doc.created = new Date();
 
 		if !doc.space
-			throw new Meteor.Error(400, t("space_users_error.space_is_required"));
+			throw new Meteor.Error(400, t("space_users_error.space_required"));
 
 		# check space exists
 		space = db.spaces.find(doc.space)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
-		if space.admins.indexOf(userId) < 0
+		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 			
 		if !doc.user && doc.email
@@ -135,10 +135,10 @@ if (Meteor.isServer)
 				doc.name = userObj.name
 
 		if !doc.user
-			throw new Meteor.Error(400, t("space_users_error.user_is_required"));
+			throw new Meteor.Error(400, t("space_users_error.user_required"));
 
 		if !doc.name
-			throw new Meteor.Error(400, t("space_users_error.name_is_required"));
+			throw new Meteor.Error(400, t("space_users_error.name_required"));
 
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
@@ -148,7 +148,7 @@ if (Meteor.isServer)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
 		# only space admin can update space_users
-		if space.admins.indexOf(userId) < 0
+		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 
 		modifier.$set.modified_by = userId;

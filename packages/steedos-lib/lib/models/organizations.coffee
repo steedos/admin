@@ -129,7 +129,7 @@ if (Meteor.isServer)
 		#doc.is_company = !doc.parent;
 		if (!doc.space)
 			throw new Meteor.Error(400, t("organizations_error.space_required"));
-			
+
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
@@ -221,8 +221,9 @@ if (Meteor.isServer)
 		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
 
+		# can not delete organization with children
 		if (doc.children && doc.children.length>0)
-			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
+			throw new Meteor.Error(400, t("organizations_error.organization_has_children"));
 
 	db.organizations.after.remove (userId, doc) ->
 		if (doc.parent)
