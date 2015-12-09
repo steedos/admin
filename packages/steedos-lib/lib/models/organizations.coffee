@@ -129,34 +129,14 @@ if (Meteor.isServer)
 		#doc.is_company = !doc.parent;
 		if (!doc.space)
 			throw new Meteor.Error(400, t("organizations_error.space_required"));
-
-	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
-		modifier.$set = modifier.$set || {};
-		modifier.$set.modified_by = userId;
-		modifier.$set.modified = new Date();
-
-		if (modifier.$set.space)
-			throw new Meteor.Error(400, t("organizations_error.space_readonly"));
-
-		if (modifier.$set.parents)
-			throw new Meteor.Error(400, t("organizations_error.parents_readonly"));
-
-		if (modifier.$set.children)
-			throw new Meteor.Error(400, t("organizations_error.children_readonly"));
-
-		if (modifier.$set.fullname)
-			throw new Meteor.Error(400, t("organizations_error.fullname_readonly"));
-
-		if (modifier.$set.parent)
-			# parent 不能等于自己或者children
-			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
-			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
-				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
-
-
-	db.organizations.before.remove (userId, doc) ->
-		if (doc.children && doc.children.length>0)
-			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
+			
+		# check space exists
+		space = db.spaces.findOne(doc.space)
+		if !space
+			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
+		# only space admin can update space_users
+		if space.admins.indexOf(userId) < 0
+			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
 
 
 	db.organizations.after.insert (userId, doc) ->
@@ -172,6 +152,39 @@ if (Meteor.isServer)
 		if (doc.parent)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
+
+
+	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
+		modifier.$set = modifier.$set || {};
+
+		# check space exists
+		space = db.spaces.findOne(doc.space)
+		if !space
+			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
+		# only space admin can update space_users
+		if space.admins.indexOf(userId) < 0
+			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
+
+		if (modifier.$set.space)
+			throw new Meteor.Error(400, t("organizations_error.space_readonly"));
+
+		if (modifier.$set.parents)
+			throw new Meteor.Error(400, t("organizations_error.parents_readonly"));
+
+		if (modifier.$set.children)
+			throw new Meteor.Error(400, t("organizations_error.children_readonly"));
+
+		if (modifier.$set.fullname)
+			throw new Meteor.Error(400, t("organizations_error.fullname_readonly"));
+
+		modifier.$set.modified_by = userId;
+		modifier.$set.modified = new Date();
+
+		if (modifier.$set.parent)
+			# parent 不能等于自己或者children
+			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
+			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
+				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
 
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
@@ -198,6 +211,18 @@ if (Meteor.isServer)
 		if !_.isEmpty(updateFields)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
 		
+	
+	db.organizations.before.remove (userId, doc) ->
+		# check space exists
+		space = db.spaces.findOne(doc.space)
+		if !space
+			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
+		# only space admin can remove space_users
+		if space.admins.indexOf(userId) < 0
+			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
+
+		if (doc.children && doc.children.length>0)
+			throw new Meteor.Error(400, t("organizations_error.delete_with_children"));
 
 	db.organizations.after.remove (userId, doc) ->
 		if (doc.parent)

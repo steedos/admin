@@ -154,11 +154,17 @@ if Meteor.isServer
 
 	db.spaces.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
+
+		if not Roles.userIsInRole userId, "admin"
+			# only space owner can modify space
+			if doc.owner != userId
+				throw new Meteor.Error(400, t("users_error.space_owner_only"));
+
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
 		# Add owner as admins
-		if (modifier.$set.owner)
+		if modifier.$set.owner
 			if (!modifier.$set.admins)
 				modifier.$set.admins = doc.admins
 				if modifier.$unset
@@ -168,8 +174,14 @@ if Meteor.isServer
 
 
 	db.spaces.before.remove (userId, doc) ->
+		if not Roles.userIsInRole userId, "admin"
+			# only space owner can remove space
+			if doc.owner != userId
+				throw new Meteor.Error(400, t("users_error.space_owner_only"));
+
 		db.space_users.direct.remove({space: doc._id});
 		db.orgnanizations.direct.remove({space: doc._id});
+
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
 		self = this

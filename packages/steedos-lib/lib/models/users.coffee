@@ -133,6 +133,10 @@ if Meteor.isServer
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 
+		if doc._id != userId
+			if not Roles.userIsInRole userId, "admin"
+				throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
+
 		if doc.steedos_id && modifier.$set.steedos_id
 			if modifier.$set.steedos_id != doc.steedos_id
 				throw new Meteor.Error(400, t("users_error.steedos_id_readonly"));
@@ -147,6 +151,10 @@ if Meteor.isServer
 		if modifier.$set.name
 			db.space_users.direct.update({user: doc._id}, {$set: {name: modifier.$set.name}}, {multi: true})
 
+
+	db.users.before.remove (userId, doc) ->
+		if not Roles.userIsInRole userId, "admin"
+			throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
 
 	Meteor.publish 'userData', ->
 		unless this.userId
