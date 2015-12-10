@@ -42,6 +42,7 @@
 		"organizations_name": "Name",
 		"organizations_parent": "Parent",
 		"organizations_space_name()": "Space",
+		"organizations_users_count()": "Users Count",
 
 
 		"space_users": "Space Users",
@@ -50,7 +51,8 @@
 		"space_users_email": "Email",
 		"space_users_organization": "Organization",
 		"space_users_user_accepted": "User Accepted",
-		"space_users_manager": "Manager"
+		"space_users_manager": "Manager",
+		"space_users_organization_name()": "Organization"
 	}
 
 }

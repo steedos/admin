@@ -42,7 +42,21 @@ db.organizations._simpleSchema = new SimpleSchema
 		type: [String],
 		optional: true,
 		autoform: 
-			omit: true
+			type: "select2",
+			afFieldInput: 
+				multiple: true
+			options: ->
+				options = []
+				selector = {}
+				if Session.get("spaceId")
+					selector = {space: Session.get("spaceId")}
+
+				objs = db.space_users.find(selector, {name:1, sort: {name:1}})
+				objs.forEach (obj) ->
+					options.push
+						label: obj.name,
+						value: obj.user
+				return options
 	is_company: 
 		type: Boolean,
 		optional: true,
@@ -69,17 +83,26 @@ if Meteor.isClient
 
 db.organizations.attachSchema db.organizations._simpleSchema;
 
-
-db.organizations._selector = (userId, connection) ->
-	if Meteor.isServer
-		spaceId = connection["spaceId"]
-		console.log "[selector] filter space_users " + spaceId
-		if spaceId
-			return {space: spaceId}
-		else
-			return {space: "-1"}
-
-
+db.organizations.adminConfig =
+	icon: "sitemap"
+	label: ->
+		return t("db.organizations")
+	tableColumns: [
+		{name: "fullname"},
+		{name: "users_count()"},
+		{name: "space_name()"},
+	]
+	extraFields: ["space", "name", "users"]
+	newFormFields: "space,name,parent,users"
+	editFormFields: "name,parent,users"
+	selector: (userId, connection) ->
+		if Meteor.isServer
+			spaceId = connection["spaceId"]
+			console.log "[selector] filter space_users " + spaceId
+			if spaceId
+				return {space: spaceId}
+			else
+				return {space: "-1"}
 
 db.organizations.helpers
 
@@ -110,15 +133,27 @@ db.organizations.helpers
 
 	calculateChildren: ->
 		children = []
-		childrenObjs = db.organizations.find({parent: this._id}, {});
+		childrenObjs = db.organizations.find({parent: this._id}, {fields: {_id:1}});
 		childrenObjs.forEach (child) ->
 			children.push(child._id);
 		return children;
 
+	calculateUsers: ->
+		users = []
+		spaceUsers = db.space_users.find({organization: this._id}, {fields: {user:1}});
+		spaceUsers.forEach (user) ->
+			users.push(user.user);
+		return users;
 
 	space_name: ->
 		space = db.spaces.findOne({_id: this.space});
 		return space?.name
+
+	users_count: ->
+		if this.users
+			return this.users.length
+		else 
+			return 0
 		
 
 if (Meteor.isServer) 
@@ -152,6 +187,10 @@ if (Meteor.isServer)
 		if (doc.parent)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
+
+		if doc.users
+			_.each doc.users, (userId) ->
+				db.space_users.direct.update({user: userId}, {$set: {organization: doc._id}})
 
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -211,7 +250,10 @@ if (Meteor.isServer)
 		if !_.isEmpty(updateFields)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
 		
-	
+		if modifier.$set.users
+			_.each modifier.$set.users, (userId) ->
+				db.space_users.direct.update({user: userId}, {$set: {organization: doc._id}})
+
 	db.organizations.before.remove (userId, doc) ->
 		# check space exists
 		space = db.spaces.findOne(doc.space)
@@ -230,7 +272,9 @@ if (Meteor.isServer)
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
-
+		if doc.users
+			_.each doc.users, (userId) ->
+				db.space_users.direct.update({user: userId}, {$unset: {organization: 1}})
 
 	Meteor.publish 'organizations', (spaceId)->
 		

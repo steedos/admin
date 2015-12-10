@@ -42,7 +42,7 @@
 		"organizations_name": "部门名称",
 		"organizations_parent": "上级部门",
 		"organizations_space_name()": "工作区",
-
+		"organizations_users_count()": "人数",
 
 		"space_users": "人员",
 		"space_users_space_name()": "工作区",
@@ -50,7 +50,8 @@
 		"space_users_email": "邮件",
 		"space_users_organization": "所属部门",
 		"space_users_user_accepted": "已激活",
-		"space_users_manager": "上级主管"
+		"space_users_manager": "上级主管",
+		"space_users_organization_name()": "部门"
 
 
 	}

@@ -27,4 +27,7 @@ Meteor.startup ->
 						if !user.username
 							modifier.$set.username = user.steedos_id.replace("@","_").replace(".","_")
 
+				if user.is_cloud_admin
+					Roles.addUsersToRoles user._id, "admin", Roles.GLOBAL_GROUP
+					
 				Meteor.users.update	{_id: user._id}, modifier

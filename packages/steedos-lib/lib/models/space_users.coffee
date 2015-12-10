@@ -24,23 +24,24 @@ db.space_users._simpleSchema = new SimpleSchema
 		type: String,
 		optional: true,
 		autoform: 
-			type: "select2",
-			options: ->
-				options = [{
-					label: " - ",
-					value: ""
-				}]
-				objs = db.organizations.find({}, 
-					{
-						sort: {fullname:1}
-					}
-				)
-				objs.forEach (obj) ->
-					options.push({
-						label: obj.fullname,
-						value: obj._id
-					})
-				return options
+			omit: true
+			# type: "select2",
+			# options: ->
+			# 	options = [{
+			# 		label: " - ",
+			# 		value: ""
+			# 	}]
+			# 	objs = db.organizations.find({}, 
+			# 		{
+			# 			sort: {fullname:1}
+			# 		}
+			# 	)
+			# 	objs.forEach (obj) ->
+			# 		options.push({
+			# 			label: obj.fullname,
+			# 			value: obj._id
+			# 		})
+			# 	return options
 
 	manager: 
 		type: String,
@@ -92,24 +93,36 @@ if Meteor.isClient
 
 db.space_users.attachSchema(db.space_users._simpleSchema);
 
+db.space_users.adminConfig = 
+		icon: "users"
+		label: ->
+			return t("db.space_users")
+		tableColumns: [
+			{name: "name"},
+			{name: "organization_name()"},
+			{name: "space_name()"},
+		]
+		extraFields: ["space", "user", 'organization']
+		newFormFields: "space,email"
+		editFormFields: "space,name,manager,user_accepted"
+		selector: (userId, connection) ->
+			if Meteor.isServer
+				spaceId = connection["spaceId"]
+				console.log "[selector] filter space_users " + spaceId
+				if spaceId
+					return {space: spaceId}
+				else
+					return {space: "-1"}
 
-db.space_users._selector = (userId, connection) ->
-	if Meteor.isServer
-		spaceId = connection["spaceId"]
-		console.log "[selector] filter space_users " + spaceId
-		if spaceId
-			return {space: spaceId}
-		else
-			return {space: "-1"}
 
+db.space_users.helpers
+	space_name: ->
+		space = db.spaces.findOne({_id: this.space});
+		return space?.name
+	organization_name: ->
+		organization = db.organizations.findOne({_id: this.organization});
+		return organization?.name
 
-if (Meteor.isClient) 
-
-	db.space_users.helpers
-		space_name: ->
-			space = db.spaces.findOne({_id: this.space});
-			return space?.name
-		
 
 if (Meteor.isServer) 
 

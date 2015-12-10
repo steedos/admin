@@ -13,45 +13,11 @@
 		omitFields: ['createdAt', 'updatedAt', 'created', 'created_by', 'modified', 'modified_by']
 	collections: 
 
-		spaces: 
-			icon: "globe"
-			label: ->
-				return t("db.spaces")
-			tableColumns: [
-				{name: "name"},
-				{name: "owner_name()"},
-				{name: "is_paid"},
-			]
-			extraFields: ["owner"]
-			newFormFields: "name"
-			selector: Steedos.spaces._selector
+		spaces: db.spaces.adminCofig
 
-		space_users: 
-			icon: "users"
-			label: ->
-				return t("db.space_users")
-			tableColumns: [
-				{name: "space_name()"},
-				{name: "name"},
-				{name: "email"},
-			]
-			extraFields: ["space", "user"]
-			newFormFields: "space,email"
-			editFormFields: "space,name,organization,manager,user_accepted"
-			selector: Steedos.space_users._selector
+		space_users: db.space_users.adminConfig
 
-		organizations: 
-			icon: "sitemap"
-			label: ->
-				return t("db.organizations")
-			tableColumns: [
-				{name: "space_name()"},
-				{name: "fullname"},
-			]
-			extraFields: ["space", "name"]
-			newFormFields: "space,name,parent"
-			editFormFields: "name,parent"
-			selector: Steedos.organizations._selector
+		organizations: db.organizations.adminConfig
 
 	callbacks:
 		onInsert: (name, insertDoc, updateDoc, currentDoc) ->
