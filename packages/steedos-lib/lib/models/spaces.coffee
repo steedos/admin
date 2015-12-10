@@ -119,8 +119,7 @@ db.spaces.helpers
 
 if Meteor.isClient
 
-	spaceWatch = db.spaces.find({})
-	spaceWatch.observeChanges
+	db.spaces.find().observeChanges
 		added: (_id, fields) ->
 			if !Session.get("spaceId")
 				Meteor.call "setSpaceId", _id, ->
@@ -141,6 +140,9 @@ if Meteor.isServer
 		doc.created_by = userId
 		doc.created = new Date()
 		
+		if !userId
+			throw new Meteor.Error(400, t("spaces_error.login_required"));
+
 		doc.owner = userId
 		doc.admins = [userId]
 
@@ -158,7 +160,7 @@ if Meteor.isServer
 		if not Roles.userIsInRole userId, "admin"
 			# only space owner can modify space
 			if doc.owner != userId
-				throw new Meteor.Error(400, t("users_error.space_owner_only"));
+				throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
 
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
@@ -173,16 +175,6 @@ if Meteor.isServer
 				modifier.$set.admins.push(modifier.$set.owner)
 
 
-	db.spaces.before.remove (userId, doc) ->
-		if not Roles.userIsInRole userId, "admin"
-			# only space owner can remove space
-			if doc.owner != userId
-				throw new Meteor.Error(400, t("users_error.space_owner_only"));
-
-		db.space_users.direct.remove({space: doc._id});
-		db.orgnanizations.direct.remove({space: doc._id});
-
-
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
 		self = this
 		modifier.$set = modifier.$set || {};
@@ -194,6 +186,16 @@ if Meteor.isServer
 			_.each modifier.$set.admins, (admin) ->
 				self.transform().join_space(admin, true)
 				Roles.addUsersToRoles(admin, 'admin', doc._id)
+
+	db.spaces.before.remove (userId, doc) ->
+		if not Roles.userIsInRole userId, "admin"
+			# only space owner can remove space
+			if doc.owner != userId
+				throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
+
+		db.space_users.direct.remove({space: doc._id});
+		db.orgnanizations.direct.remove({space: doc._id});
+
 
 
 
