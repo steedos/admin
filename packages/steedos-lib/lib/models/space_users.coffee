@@ -122,7 +122,7 @@ if (Meteor.isServer)
 			throw new Meteor.Error(400, t("space_users_error.space_required"));
 
 		# check space exists
-		space = db.spaces.find(doc.space)
+		space = db.spaces.findOne(doc.space)
 		if !space
 			throw new Meteor.Error(400, t("space_users_error.space_not_found"));
 		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
