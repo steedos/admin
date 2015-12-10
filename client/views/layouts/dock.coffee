@@ -10,6 +10,11 @@ Template.dock.helpers
 		else
 			return " "
 	
+	email: ->
+		if Meteor.user()
+			if Meteor.user().emails and Meteor.user().emails.length >0
+				return Meteor.user().emails[0].address
+		return ""
 
 	avatar: ->
 		if Meteor.user()

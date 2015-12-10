@@ -11,9 +11,17 @@
             </div>
           </div>
           <ul class="nav sidebar-menu">
-            <li class="header">SETTINGS</li>
+            <li class="header">{{_ "SETTINGS"}}</li>
             <li>
-                <a href="/admin/"><i class="fa fa-gears"></i><span>{{_ "Admin"}}</span></a>
+                <a href="/account/profile/"><i class="fa fa-user"></i><span>{{_ "Profile"}}</span></a>
+            </li>
+            <li class="treeview">
+                <a href="/admin/"><i class="fa fa-gears"></i><span>{{_ "Space Admin"}}</span></a>
+                <ul class="treeview-menu menu-open" style="display: block;">
+                  <li><a href="/admin/spaces"><i class="fa fa-globe"></i> {{_ "db.spaces"}}</a></li>
+                  <li><a href="/admin/space_users"><i class="fa fa-users"></i> {{_ "db.space_users"}}</a></li>
+                  <li><a href="/admin/organizations"><i class="fa fa-sitemap"></i> {{_ "db.organizations"}}</a></li>
+                </ul>
             </li>
           </ul>
         </div>

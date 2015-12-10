@@ -23,20 +23,6 @@ Template.profile.onRendered ->
 
 Template.profile.onCreated ->
 
-	AutoForm.hooks
-		updateProfile:
-			onSuccess: (formType, result) ->
-				toastr.success t('Profile_saved_successfully')
-				if this.updateDoc.$set.locale != this.currentDoc.locale
-					toastr.success t('Language_changed_reloading')
-					setTimeout ->
-						Meteor._reload.reload()
-					, 1000
-
-			onError: (formType, error) ->
-				toastr.error error
-			
-
 	@clearForm = ->
 		@find('#oldPassword').value = ''
 		@find('#password').value = ''
@@ -76,4 +62,19 @@ Template.profile.events
 				# Inserted new doc with ID fileObj._id, and kicked off the data upload using HTTP
 				Meteor.call "saveUserProfile", 
 					avatar: fileObj._id
+			
+Meteor.startup ->
+	
+	AutoForm.hooks
+		updateProfile:
+			onSuccess: (formType, result) ->
+				toastr.success t('Profile_saved_successfully')
+				if this.updateDoc.$set.locale != this.currentDoc.locale
+					toastr.success t('Language_changed_reloading')
+					setTimeout ->
+						Meteor._reload.reload()
+					, 1000
+
+			onError: (formType, error) ->
+				toastr.error error
 			
