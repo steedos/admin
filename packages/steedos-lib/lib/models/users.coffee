@@ -124,7 +124,7 @@ if Meteor.isServer
 			doc.name = doc.steedos_id.split('@')[0]
 
 		if (doc.steedos_id && !doc.username)
-			doc.username = this.steedos_id.replace("@","_").replace(".","_")
+			doc.username = doc.steedos_id.replace("@","_").replace(".","_")
 
 		_.each doc.emails, (obj)->
 			db.users.checkEmailValid(obj.address);
@@ -133,17 +133,13 @@ if Meteor.isServer
 	db.users.before.update  (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
 
-		if doc._id != userId
-			if not Roles.userIsInRole userId, "admin"
-				throw new Meteor.Error(400, t("users_error.cloud_admin_required"));
-
 		if doc.steedos_id && modifier.$set.steedos_id
 			if modifier.$set.steedos_id != doc.steedos_id
 				throw new Meteor.Error(400, t("users_error.steedos_id_readonly"));
 
 		if userId
 			modifier.$set.modified_by = userId;
-			modifier.$set.modified = new Date();
+		modifier.$set.modified = new Date();
 
 
 	db.users.after.update (userId, doc, fieldNames, modifier, options) ->
