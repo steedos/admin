@@ -194,7 +194,7 @@ if Meteor.isServer
 				throw new Meteor.Error(400, t("spaces_error.space_owner_only"));
 
 		db.space_users.direct.remove({space: doc._id});
-		db.orgnanizations.direct.remove({space: doc._id});
+		db.organizations.direct.remove({space: doc._id});
 
 
 
