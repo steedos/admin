@@ -10,11 +10,7 @@ Template.profile.helpers
 		return Meteor.userId()
 
 	getGravatarURL: (user, size) ->
-		if (Meteor.user())
-			if Meteor.user().avatar
-				return "/api/files/avatars/" + Meteor.user().avatar
-			else
-				return "/avatar/" + Meteor.user().emails[0].address
+		return Meteor.user()?.avatarURL()
 
 
 Template.profile.onRendered ->

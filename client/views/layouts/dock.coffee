@@ -17,11 +17,7 @@ Template.dock.helpers
 		return ""
 
 	avatar: ->
-		if Meteor.user()
-			if Meteor.user().avatar
-				return "/api/files/avatars/" + Meteor.user().avatar
-			else
-				return "/avatar/" + Meteor.user().emails[0].address
+		return Meteor.user()?.avatarURL()
 
 	spaceCount: ->
 		return Steedos.spaces.find().count()

@@ -2,7 +2,7 @@ Meteor.startup ->
 	
 	WebApp.connectHandlers.use '/avatar/', (req, res, next) ->
 		this.params =
-			username: req.url.replace(/^\//, '').replace(/\?.*$/, '')
+			username: decodeURI(req.url).replace(/^\//, '').replace(/\?.*$/, '')
 
 		if this.params.username[0] isnt '@'
 			file = null; #RocketChatFileAvatarInstance.getFileWithReadStream this.params.username
@@ -21,13 +21,17 @@ Meteor.startup ->
 			position = username.length % colors.length
 			color = colors[position]
 
-			username = username.replace(/[^A-Za-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.)|(\.$)/g, '')
-			usernameParts = username.split('.')
+			#username = username.replace(/[^A-Za-z0-9]/g, '.').replace(/\.+/g, '.').replace(/(^\.)|(\.$)/g, '')
+			#usernameParts = username.split('.')
 			initials = ''
 			#if usernameParts.length > 1
 			#	initials = _.first(usernameParts)[0] + _.last(usernameParts)[0]
 			#else
-			initials = username.replace(/[^A-Za-z0-9]/g, '').substr(0, 2)
+			#initials = username.replace(/[^A-Za-z0-9]/g, '').substr(0, 2)
+			if username.charCodeAt(0)>255
+				initials = username.substr(0, 1)
+			else
+				initials = username.substr(0, 2)
 
 			initials = initials.toUpperCase()
 
