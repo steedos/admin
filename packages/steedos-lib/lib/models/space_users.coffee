@@ -146,6 +146,10 @@ if (Meteor.isServer)
 			if (userObj)
 				doc.user = userObj._id
 				doc.name = userObj.name
+			else
+				user = {email: doc.email}
+				doc.user = Accounts.createUser user
+				doc.name = doc.email.split('@')[0]
 
 		if !doc.user
 			throw new Meteor.Error(400, t("space_users_error.user_required"));
