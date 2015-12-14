@@ -146,11 +146,17 @@ if Meteor.isClient
 					Session.set("spaceId", spaceId)
 
 if Meteor.isServer
-
+	
 	db.spaces.before.insert (userId, doc) ->
 		doc.created_by = userId
 		doc.created = new Date()
 		
+		# check space exists
+		existed=db.spaces.find
+			"name": doc.name
+		if existed.count()>0
+			throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
+
 		if !userId
 			throw new Meteor.Error(400, t("spaces_error.login_required"));
 

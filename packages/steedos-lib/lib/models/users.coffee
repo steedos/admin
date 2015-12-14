@@ -111,7 +111,7 @@ if Meteor.isServer
 
 	db.users.checkUsernameValid = (username) ->
 		existed = db.users.find 
-			"username": email
+			"username": username
 		if existed.count()>0
 			throw new Meteor.Error(400, t("users_error.username_exists"));
 
