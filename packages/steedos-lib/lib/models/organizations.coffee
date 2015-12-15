@@ -147,7 +147,7 @@ db.organizations.helpers
 
 	space_name: ->
 		space = db.spaces.findOne({_id: this.space});
-		return space?.name
+		return space.name
 
 	users_count: ->
 		if this.users
@@ -172,6 +172,12 @@ if (Meteor.isServer)
 		# only space admin can update space_users
 		if space.admins.indexOf(userId) < 0
 			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
+		
+		# check organization_name exists
+		existed=db.organizations.find
+			"name": doc.name,"space": doc.space
+		if existed.count()>0
+			throw new Meteor.Error(400, t("organizations_error.organization_name_exists"));
 
 
 	db.organizations.after.insert (userId, doc) ->
@@ -253,6 +259,7 @@ if (Meteor.isServer)
 		if modifier.$set.users
 			_.each modifier.$set.users, (userId) ->
 				db.space_users.direct.update({user: userId}, {$set: {organization: doc._id}})
+
 
 	db.organizations.before.remove (userId, doc) ->
 		# check space exists
