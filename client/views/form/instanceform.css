@@ -23,6 +23,59 @@
     padding: 15px;
 }
 
+.instance-traces > .heading{
+    font-size: 17px;
+}
+
+.traces {
+    font-size: 14px;
+}
+
+.trace-item{
+    height: 30px;
+    background-color: #EEEEEE;
+    font-weight: bold;
+    font-size: 14px;
+    color:rgb(64,64,64);
+}
+
+.approve-item{
+    height: 30px;
+    font-size: 13px;
+}
+
+.approve-item > .name{
+    width: 160px;
+    font-weight: bold;
+}
+
+.approve-item > .finish-date{
+    width: 130px;
+}
+
+.approve-item > .approved{
+    color: green;
+}
+
+.approve-item > .rejected{
+    color: red;
+}
+
+.approve-item > .terminated{
+    color: black;
+}
+
+.approve-item > .reassigned{
+    color: black;
+}
+
+.approve-item > .description{
+    border-top:0px;
+    font-size: 14px;
+    white-space: pre-line;
+    color: black;
+}
+
 textarea {
     resize: none;
 }

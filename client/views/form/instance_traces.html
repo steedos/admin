@@ -1,0 +1,27 @@
+<template name="instance_traces" >
+    <div class="panel panel-default instance-traces">
+        <div class="panel-heading heading">签核历程</div>
+        <table class='table table-condensed traces'>
+            <tbody>
+                {{#each this}}
+
+                <tr class="trace-item">
+                    <td colspan='3'>{{getStepName this.step}}</td>
+                </tr>
+                    {{#each this.approves}}
+                        <tr class="approve-item">
+                            <td class="name">{{this.user_name}}</td>
+                            <td class="finish-date">{{dateFormat this.finish_date}}</td>
+                            <td class="status {{this.judge}}"><span class='{{getApproveStatusIcon this.judge}}'></span>&nbsp;&nbsp;{{getApproveStatusText this.judge}}</td>
+                        </tr>
+                        {{#if isNotNull this.description}}
+                        <tr class="approve-item">
+                            <td class="description" colspan="3">{{this.description}}</td>
+                        </tr>
+                        {{/if}}
+                    {{/each}}
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>

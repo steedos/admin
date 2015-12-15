@@ -1,0 +1,14 @@
+<template name="instance_attachments" >
+    <div class="panel panel-default instance-attachments">
+        <div class="panel-heading heading">附件</div>
+        <table class='table table-condensed attachments'>
+            <tbody>
+                {{#each this}}
+                <tr class="trace-item">
+                    <td colspan='3'>{{this.filename}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</template>

@@ -33,6 +33,12 @@
                 </div>
                 
             {{/autoForm}}
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{> Template.dynamic template="instance_traces" data=instance.traces}}
+                </div>
+            </div>
         </div>
     </div>
 </template>
