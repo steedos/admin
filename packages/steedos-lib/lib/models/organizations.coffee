@@ -229,8 +229,7 @@ if (Meteor.isServer)
 			# parent 不能等于自己或者children
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
-				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));
-
+				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));	
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
 		updateFields = {}
@@ -256,10 +255,14 @@ if (Meteor.isServer)
 		if !_.isEmpty(updateFields)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
 		
-		if modifier.$set.users
-			_.each modifier.$set.users, (userId) ->
-				db.space_users.direct.update({user: userId}, {$set: {organization: doc._id}})
-
+		if (modifier.$set.users)
+			_.each modifier.$set.users, (userId) ->	
+				# 更新users后，每一个userId之前所属部门的users字段也要更新 
+				oldUsers=db.space_users.findOne
+					"space":doc.space,"user":userId;
+				if (oldUsers.organization != doc._id)
+					db.organizations.direct.update({_id:oldUsers.organization},{$pull: {users: userId}})
+				db.space_users.direct.update({user: userId,space:doc.space}, {$set: {organization: doc._id}})
 
 	db.organizations.before.remove (userId, doc) ->
 		# check space exists
