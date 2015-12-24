@@ -34,6 +34,12 @@
                 
             {{/autoForm}}
 
+             <div class="row">
+                <div class="col-md-12">
+                    {{> Template.dynamic template="instance_attachments" data=instance.attachments}}
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-12">
                     {{> Template.dynamic template="instance_traces" data=instance.traces}}
