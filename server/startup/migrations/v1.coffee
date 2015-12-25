@@ -14,7 +14,7 @@ Meteor.startup ->
 								address: user.email, 
 								verified: !!user.primaryEmailVerified
 						
-				if user.emails || user.emails.length > 0
+				if user.emails && user.emails.length > 0
 					if !user.steedos_id
 						modifier.$set.steedos_id = user.emails[0].address
 						if !user.name
