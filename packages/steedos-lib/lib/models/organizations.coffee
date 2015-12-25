@@ -171,13 +171,18 @@ if (Meteor.isServer)
 			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
 		# only space admin can update space_users
 		if space.admins.indexOf(userId) < 0
-			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
-		
-		# check organization_name exists
-		existed=db.organizations.find
-			"name": doc.name,"space": doc.space
-		if existed.count()>0
-			throw new Meteor.Error(400, t("organizations_error.organization_name_exists"));
+			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));	
+		# 同一个space中不能有同名的organization，parent 不能有同名的 child
+		if doc.parent
+			parentOrg = db.organizations.findOne(doc.parent)
+			if parentOrg.children
+				nameOrg = db.organizations.find({_id: {$in: parentOrg.children}, name: doc.name}).count()
+				if nameOrg>0
+					throw new Meteor.Error(400, t("organizations_error.organizations_name_exists")) 
+		else			
+			existed = db.organizations.find({name: doc.name, space: doc.space,fullname:doc.name}).count()				
+			if existed>0
+				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
 
 
 	db.organizations.after.insert (userId, doc) ->
@@ -190,7 +195,7 @@ if (Meteor.isServer)
 		if !_.isEmpty(updateFields)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
 
-		if (doc.parent)
+		if doc.parent
 			parent = db.organizations.findOne(doc.parent)
 			db.organizations.direct.update(parent._id, {$set: {children: parent.calculateChildren()}});
 
@@ -226,10 +231,20 @@ if (Meteor.isServer)
 		modifier.$set.modified = new Date();
 
 		if (modifier.$set.parent)
-			# parent 不能等于自己或者children
+			# parent 不能等于自己或者 children
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
-				throw new Meteor.Error(400, t("organizations_error.parent_is_self"));	
+				throw new Meteor.Error(400, t("organizations_error.parent_is_self"))
+		   # 同一个 parent 不能有同名的 child
+			if parentOrg.children
+				nameOrg = db.organizations.find({_id: {$in: parentOrg.children}, name: modifier.$set.name}).count()
+				if nameOrg>0
+					throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
+		else			
+			existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
+			if existed>0
+				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
+
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
 		updateFields = {}
