@@ -1,5 +1,5 @@
-Steedos_table_Helpers = {};
-Template.registerHelper("Steedos_table_Helpers", Steedos_table_Helpers);
+autoform_table_Helpers = {};
+Template.registerHelper("autoform_table_Helpers", autoform_table_Helpers);
 
 function arrayify(obj){
     result = [];
@@ -14,7 +14,7 @@ Template.registerHelper("arrayify", function(obj){
   return arrayify(obj);
 });
 
-Steedos_table_Helpers.equals = function (a, b) {
+autoform_table_Helpers.equals = function (a, b) {
   return a === b;
 };
 
@@ -22,12 +22,12 @@ var get_table = function (tableCode){
     return $("[name='"+tableCode+"table']")[0];
 };
 
-Steedos_table_Helpers.getTable = function (tableCode){
-    console.log("steedos_table dataset is " + JSON.stringify(get_table(tableCode).dataset));
+autoform_table_Helpers.getTable = function (tableCode){
+    console.log("autoform_table dataset is " + JSON.stringify(get_table(tableCode).dataset));
     return get_table(tableCode).dataset;
 };
 
-Steedos_table_Helpers.updateTable = function(tableCode, values){
+autoform_table_Helpers.updateTable = function(tableCode, values){
 
     var table = get_table(tableCode);
 
@@ -42,20 +42,20 @@ var get_table_modal = function (tableCode){
     return $("[name='"+tableCode+".modal']")[0];
 };
 
-Steedos_table_Helpers.updateTableModalFieldValue = function(fieldCode , value){
+autoform_table_Helpers.updateTableModalFieldValue = function(fieldCode , value){
     $("[name='" + fieldCode + "']").val(value);
 };
 
-Steedos_table_Helpers.getTableModal = function (tableCode){
-    console.log("steedos_table modal dataset is " + JSON.stringify(get_table(tableCode).dataset));
+autoform_table_Helpers.getTableModal = function (tableCode){
+    console.log("autoform_table modal dataset is " + JSON.stringify(get_table(tableCode).dataset));
     return get_table_modal(tableCode).dataset;
 };
 
-Steedos_table_Helpers.getTableModalValue = function (fieldCode){
+autoform_table_Helpers.getTableModalValue = function (fieldCode){
     return $("[name='" + fieldCode + "']").val();
 }
 
-Steedos_table_Helpers.updateTableModal = function (tableCode, values){
+autoform_table_Helpers.updateTableModal = function (tableCode, values){
 
     var table_modal = get_table_modal(tableCode);
 
@@ -66,14 +66,14 @@ Steedos_table_Helpers.updateTableModal = function (tableCode, values){
     return table_modal;
 };
 
-Steedos_table_Helpers.showTableModal = function (tableCode, modalTitle){
+autoform_table_Helpers.showTableModal = function (tableCode, modalTitle){
     
     $("#"+tableCode+'-modal-header').html(modalTitle);
 
     $("#" + tableCode + "modal").modal('show');
 };
 
-Steedos_table_Helpers.initValidrows = function (arr){
+autoform_table_Helpers.initValidrows = function (arr){
     var validrows = new Array();
     for(var i = 0 ; i < arr.length ; i++){
       validrows.push(i + "");
@@ -81,7 +81,7 @@ Steedos_table_Helpers.initValidrows = function (arr){
     return validrows.toString();
 };
 
-Steedos_table_Helpers.removeValidrows = function (validrows_str, row_index){
+autoform_table_Helpers.removeValidrows = function (validrows_str, row_index){
     var validrows = new Array();
     if (validrows_str !="")
         validrows = validrows_str.split(",");
@@ -91,7 +91,7 @@ Steedos_table_Helpers.removeValidrows = function (validrows_str, row_index){
     return validrows.toString();
 };
 
-Steedos_table_Helpers.addValidrows = function (validrows_str, row_index){
+autoform_table_Helpers.addValidrows = function (validrows_str, row_index){
     var validrows = new Array();
     if (validrows_str !="")
         validrows = validrows_str.split(",");
@@ -99,14 +99,14 @@ Steedos_table_Helpers.addValidrows = function (validrows_str, row_index){
     return validrows.toString();
 };
 
-Steedos_table_Helpers.getValidrowIndex = function (validrows_str, row_index){
+autoform_table_Helpers.getValidrowIndex = function (validrows_str, row_index){
     var validrows = new Array();
     if (validrows_str !="")
         validrows = validrows_str.split(",");
     return validrows.indexOf(row_index);
 };
 
-Steedos_table_Helpers.update_row = function (row_index, tableCode, rowobj){
+autoform_table_Helpers.update_row = function (row_index, tableCode, rowobj){
     $("[name='"+row_index+"row']").html(get_tds_html(row_index, tableCode, rowobj));
 };
 
@@ -140,15 +140,15 @@ var get_tr_html = function(row_index, tableCode, rowobj){
     return tr_html;
 };
 
-Steedos_table_Helpers.update_autoFormArrayItem = function(row_index, tableCode, rowobj){
+autoform_table_Helpers.update_autoFormArrayItem = function(row_index, tableCode, rowobj){
     for(var key in rowobj){
         $("[name='"+(tableCode + "."+row_index+"." + key)+"']").val($("[name='"+(tableCode + ".$." + key)+"']").val());
     }
 };
 
-Steedos_table_Helpers.add_row = function (row_index, tableCode, rowobj){
+autoform_table_Helpers.add_row = function (row_index, tableCode, rowobj){
 
-    Steedos_table_Helpers.update_autoFormArrayItem(row_index, rowobj);
+    autoform_table_Helpers.update_autoFormArrayItem(row_index, rowobj);
 
     var rows_html = $("#"+tableCode+'tbody').html() + get_tr_html(row_index, tableCode, rowobj);
     

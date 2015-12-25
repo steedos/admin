@@ -32,15 +32,10 @@ mrt:moment-timezone
 
 fortawesome:fontawesome
 twbs:bootstrap
-#fezvrasta:bootstrap-material-design
 steedos:admin-lte
 
 alanning:roles
-steedos:lib
 joshowens:timezone-picker
-#steedos:useraccounts-core
-#steedos:useraccounts-semantic-ui
-#steedos:useraccounts-flow-routing
 useraccounts:core
 useraccounts:bootstrap
 useraccounts:iron-routing
@@ -70,3 +65,6 @@ iron:router
 yogiben:admin
 aldeed:template-extension
 gandev:server-eval
+
+steedos:lib
+steedos:workflow

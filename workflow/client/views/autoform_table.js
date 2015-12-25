@@ -1,8 +1,8 @@
 
-Template.steedos_table.helpers({
+Template.autoform_table.helpers({
 
   equals: function(a,b) {
-    return Steedos_table_Helpers.equals(a,b);
+    return autoform_table_Helpers.equals(a,b);
   },
 
   append: function(a,b) {
@@ -10,7 +10,7 @@ Template.steedos_table.helpers({
   },
 
   initValidrows: function(arr){
-    return Steedos_table_Helpers.initValidrows(arr);
+    return autoform_table_Helpers.initValidrows(arr);
   },
 
   initRowobj: function(sfield){
@@ -24,18 +24,18 @@ Template.steedos_table.helpers({
 
   initRowFormula: function(sfield){
     var formulas = Form_formula.getFormulaFieldVariable("Form_formula.field_values", sfield);
-    console.log("steedos_table formulas is \n" + JSON.stringify(formulas));
+    console.log("autoform_table formulas is \n" + JSON.stringify(formulas));
     return JSON.stringify(formulas);
   }
 
 });
 
-Template.steedos_table.events({
+Template.autoform_table.events({
     'click .add-steedos-table-row': function (event, template) {
 
       var tableCode = template.data.code;
       
-      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+      var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
       var formId = steedosTable.formid;
 
@@ -45,23 +45,23 @@ Template.steedos_table.events({
       var row_index = AutoForm.arrayTracker.info[formId][tableCode].array.length;
 
       for(var key in rowObj){
-        Steedos_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key]);
+        autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowObj[key]);
       }
       
       AutoForm.arrayTracker.addOneToField(formId, tableCode, AutoForm.getFormSchema(formId),0,5000);
 
-      Steedos_table_Helpers.updateTable(tableCode, {"validrows" : Steedos_table_Helpers.addValidrows(steedosTable.validrows, row_index)});
+      autoform_table_Helpers.updateTable(tableCode, {"validrows" : autoform_table_Helpers.addValidrows(steedosTable.validrows, row_index)});
 
-      Steedos_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
+      autoform_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
 
-      Steedos_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
+      autoform_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
     'click .remove-steedos-table-row': function (event, template) {
 
       var tableCode = template.data.code;
 
-      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+      var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
       var row_index = event.target.dataset.rowindex;
 
@@ -72,9 +72,9 @@ Template.steedos_table.events({
       //隐藏删除行
       $("[name='"+row_index+"row']").css("display","none");
       
-      //steedosTable.dataset.validrows = Steedos_table_Helpers.removeValidrows(steedosTable.dataset.validrows, row_index);
+      //steedosTable.dataset.validrows = autoform_table_Helpers.removeValidrows(steedosTable.dataset.validrows, row_index);
 
-      Steedos_table_Helpers.updateTable(tableCode, {"validrows" : Steedos_table_Helpers.removeValidrows(steedosTable.validrows, row_index)});
+      autoform_table_Helpers.updateTable(tableCode, {"validrows" : autoform_table_Helpers.removeValidrows(steedosTable.validrows, row_index)});
     },
 
     'click .edit-steedos-table-row': function (event, template) {
@@ -83,38 +83,38 @@ Template.steedos_table.events({
 
         var tableCode = template.data.code;
 
-        var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+        var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
         var formId = steedosTable.formid;
 
         var rowObj = JSON.parse(steedosTable.rowobj);
 
-        var value_index = Steedos_table_Helpers.getValidrowIndex(steedosTable.validrows, row_index);
+        var value_index = autoform_table_Helpers.getValidrowIndex(steedosTable.validrows, row_index);
 
         var rowValue = AutoForm.getFieldValue(tableCode, formId)[value_index];
 
         console.log("edit-steedos-table-row , rowValue is " + JSON.stringify(rowValue));
 
         for(var key in rowObj){
-          Steedos_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowValue[key]);
+          autoform_table_Helpers.updateTableModalFieldValue(tableCode + ".$." + key, rowValue[key]);
         }
 
-        Steedos_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
+        autoform_table_Helpers.updateTableModal(tableCode, {"rowindex" : row_index, "method" : event.target.dataset.method});
 
-        Steedos_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
+        autoform_table_Helpers.showTableModal(tableCode , event.target.dataset.title);
     },
 
     'change .form-control': function(event, template){
 
-      console.log("steedos_table form-control change");
+      console.log("autoform_table form-control change");
 
       var fieldCode = event.target.name;
 
       var tableCode = template.data.code;
 
-      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+      var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
-      var steedosTableModal = Steedos_table_Helpers.getTableModal(tableCode);
+      var steedosTableModal = autoform_table_Helpers.getTableModal(tableCode);
 
       var rowObj = JSON.parse(steedosTable.rowobj);
 
@@ -127,10 +127,10 @@ Template.steedos_table.events({
       if (rowIndx < 0) 
         return ;
 
-      Steedos_table_Helpers.update_autoFormArrayItem(rowIndx, tableCode, rowObj);
+      autoform_table_Helpers.update_autoFormArrayItem(rowIndx, tableCode, rowObj);
       
       for(var key in rowObj){
-        rowValue[key] = Steedos_table_Helpers.getTableModalValue(tableCode + ".$." + key);
+        rowValue[key] = autoform_table_Helpers.getTableModalValue(tableCode + ".$." + key);
       }
 
       console.log("fieldCode is " + fieldCode + "; rowValue is \n" + JSON.stringify(rowValue));
@@ -143,9 +143,9 @@ Template.steedos_table.events({
       
       var tableCode = template.data.code;
 
-      var steedosTable = Steedos_table_Helpers.getTable(tableCode);
+      var steedosTable = autoform_table_Helpers.getTable(tableCode);
 
-      var steedosTableModal = Steedos_table_Helpers.getTableModal(tableCode);
+      var steedosTableModal = autoform_table_Helpers.getTableModal(tableCode);
 
       var row_index = steedosTableModal.rowindex;
       
@@ -154,11 +154,11 @@ Template.steedos_table.events({
       var call_method = steedosTableModal.method;
 
       if(call_method == "add"){
-        Steedos_table_Helpers.add_row(row_index, tableCode, rowobj);
+        autoform_table_Helpers.add_row(row_index, tableCode, rowobj);
       }
 
       if(call_method == "edit"){
-        Steedos_table_Helpers.update_row(row_index, tableCode, rowobj);
+        autoform_table_Helpers.update_row(row_index, tableCode, rowobj);
       }
     }
 })
