@@ -240,7 +240,7 @@ if (Meteor.isServer)
 				nameOrg = db.organizations.find({_id: {$in: parentOrg.children}, name: modifier.$set.name}).count()
 				if nameOrg>0
 					throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
-		else			
+		else if (modifier.$set.name != doc.name)		
 			existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
 			if existed>0
 				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
