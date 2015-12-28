@@ -230,6 +230,16 @@ if (Meteor.isServer)
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
+		if (modifier.$set.users)
+			removeUsers = []
+			addUsers = [] 
+			# 删除users时，所删除space_users的organization字段要更新
+			removeUsers.push user for user in doc.users when 0 > modifier.$set.users.indexOf(user)
+			db.space_users.update({user: {$in: removeUsers},space: doc.space},{$set: {organization: ""}},{multi: true})
+			# 添加users时，所添加space_users的organization字段要更新
+			addUsers.push user for user in modifier.$set.users when 0 > doc.users.indexOf(user)						
+			db.space_users.update({user: {$in: addUsers},space: doc.space},{$set: {organization: doc._id}},{multi: true})
+
 		if (modifier.$set.parent)
 			# parent 不能等于自己或者 children
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
@@ -244,7 +254,7 @@ if (Meteor.isServer)
 			existed = db.organizations.find({name: modifier.$set.name, space: doc.space,fullname:modifier.$set.name}).count()				
 			if existed>0
 				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
-
+		
 
 	db.organizations.after.update (userId, doc, fieldNames, modifier, options) ->
 		updateFields = {}
@@ -279,6 +289,7 @@ if (Meteor.isServer)
 					db.organizations.direct.update({_id:oldUsers.organization},{$pull: {users: userId}})
 				db.space_users.direct.update({user: userId,space:doc.space}, {$set: {organization: doc._id}})
 
+	
 	db.organizations.before.remove (userId, doc) ->
 		# check space exists
 		space = db.spaces.findOne(doc.space)
