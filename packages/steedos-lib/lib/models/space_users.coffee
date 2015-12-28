@@ -133,14 +133,6 @@ if (Meteor.isServer)
 		if !doc.space
 			throw new Meteor.Error(400, t("space_users_error.space_required"));
 
-		# check space_users exists
-		oldUser=db.users.findOne
-			"emails.address":doc.email
-		existed=db.space_users.find
-			"user":oldUser._id,"space":doc.space
-		if existed.count()>0
-			throw new Meteor.Error(400, t("space_users_error.space_users_exists"));
-
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
@@ -148,7 +140,7 @@ if (Meteor.isServer)
 		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
 			
-		if !doc.user && doc.email
+		if (!doc.user) && (doc.email)
 			userObj = db.users.findOne({"emails.address": doc.email});
 			if (userObj)
 				doc.user = userObj._id
@@ -163,6 +155,14 @@ if (Meteor.isServer)
 
 		if !doc.name
 			throw new Meteor.Error(400, t("space_users_error.name_required"));
+
+		# check space_users exists
+		oldUser=db.users.findOne
+			"emails.address":doc.email
+		existed=db.space_users.find
+			"user":oldUser._id,"space":doc.space
+		if existed.count()>0
+			throw new Meteor.Error(400, t("space_users_error.space_users_exists"));
 
 	db.space_users.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};

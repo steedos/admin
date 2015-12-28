@@ -235,7 +235,7 @@ if (Meteor.isServer)
 			parentOrg = db.organizations.findOne({_id: modifier.$set.parent})
 			if (doc._id == parentOrg._id || parentOrg.parents.indexOf(doc._id)>=0)
 				throw new Meteor.Error(400, t("organizations_error.parent_is_self"))
-		   # 同一个 parent 不能有同名的 child
+		   	# 同一个 parent 不能有同名的 child
 			if parentOrg.children
 				nameOrg = db.organizations.find({_id: {$in: parentOrg.children}, name: modifier.$set.name}).count()
 				if nameOrg>0
