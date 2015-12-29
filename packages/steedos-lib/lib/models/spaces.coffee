@@ -152,10 +152,11 @@ if Meteor.isServer
 		doc.created = new Date()
 		
 		# check space exists
-		existed=db.spaces.find
-			"name": doc.name
-		if existed.count()>0
-			throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
+		if (modifier.$set.name != doc.name)
+			existed = db.spaces.find
+				"name": doc.name
+			if existed.count() > 0
+				throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
 
 		if !userId
 			throw new Meteor.Error(400, t("spaces_error.login_required"));
@@ -190,6 +191,12 @@ if Meteor.isServer
 					delete modifier.$set.admins
 			if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
 				modifier.$set.admins.push(modifier.$set.owner)
+		# organization 同名判断
+		if (modifier.$set.name != doc.name)
+			existed = db.spaces.find
+				"name": doc.name
+			if existed.count() > 0
+				throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
 
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->

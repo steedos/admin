@@ -121,7 +121,7 @@ db.space_users.helpers
 		return space?.name
 	organization_name: ->
 		organization = db.organizations.findOne({_id: this.organization});
-		return organization?.name
+		return organization?.fullname
 
 
 if (Meteor.isServer) 
