@@ -164,14 +164,18 @@ if (Meteor.isServer)
 		#doc.is_company = !doc.parent;
 		if (!doc.space)
 			throw new Meteor.Error(400, t("organizations_error.space_required"));
-
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
 			throw new Meteor.Error(400, t("organizations_error.space_not_found"));
 		# only space admin can update space_users
 		if space.admins.indexOf(userId) < 0
-			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));	
+			throw new Meteor.Error(400, t("organizations_error.space_admins_only"));
+		if doc.users
+			doc.users.forEach (User) ->
+				oldUser = db.space_users.findOne({user: User,space: doc.space})
+				if oldUser.organization
+					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: User}})
 		# 同一个space中不能有同名的organization，parent 不能有同名的 child
 		if doc.parent
 			parentOrg = db.organizations.findOne(doc.parent)
@@ -183,6 +187,7 @@ if (Meteor.isServer)
 			existed = db.organizations.find({name: doc.name, space: doc.space,fullname:doc.name}).count()				
 			if existed>0
 				throw new Meteor.Error(400, t("organizations_error.organizations_name_exists"))
+
 
 
 	db.organizations.after.insert (userId, doc) ->
@@ -201,7 +206,7 @@ if (Meteor.isServer)
 
 		if doc.users
 			_.each doc.users, (userId) ->
-				db.space_users.direct.update({user: userId}, {$set: {organization: doc._id}})
+				db.space_users.direct.update({user: userId,space: doc.space}, {$set: {organization: doc._id}})
 
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
@@ -246,8 +251,6 @@ if (Meteor.isServer)
 				oldUser = db.space_users.findOne({user: User,space: doc.space})
 				if oldUser.organization
 					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: User}})						
-			db.space_users.update({user: {$in: addUsers},space: doc.space},{$set: {organization: doc._id}},{multi: true})
-
 
 		if (modifier.$set.parent)
 			# parent 不能等于自己或者 children

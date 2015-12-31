@@ -188,7 +188,7 @@ if Meteor.isServer
 				modifier.$set.admins = doc.admins
 				if modifier.$unset
 					delete modifier.$set.admins
-			if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
+			else if (modifier.$set.admins.indexOf(modifier.$set.owner) <0)
 				modifier.$set.admins.push(modifier.$set.owner)
 		# space 同名判断
 		if (modifier.$set.name != doc.name)
@@ -196,6 +196,9 @@ if Meteor.isServer
 				"name": doc.name
 			if existed.count() > 0
 				throw new Meteor.Error(400, t("spaces_error.space_name_exists"));
+		# 管理员不能为空
+		if (!modifier.$set.admins)
+			throw new Meteor.Error(400, t("spaces_error.space_admins_required"));
 
 
 	db.spaces.after.update (userId, doc, fieldNames, modifier, options) ->
