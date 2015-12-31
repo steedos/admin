@@ -206,7 +206,6 @@ if (Meteor.isServer)
 
 	db.organizations.before.update (userId, doc, fieldNames, modifier, options) ->
 		modifier.$set = modifier.$set || {};
-
 		# check space exists
 		space = db.spaces.findOne(doc.space)
 		if !space
@@ -230,20 +229,23 @@ if (Meteor.isServer)
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 
-		if modifier.$set.users && doc.users
-			# 更新users时，每一个userId之前所属部门的users字段也要更新
-			_.each modifier.$set.users, (userId) ->
-				oldUser = db.space_users.findOne({user: userId,space: doc.space})
-				if oldUser.organization
-					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: userId}})
-			
+		if (!modifier.$set.users && doc.users)
+			db.space_users.update({user: {$in: doc.users},space: doc.space},{$set: {organization: ""}},{multi: true})	
+
+		if modifier.$set.users
 			removeUsers = []
-			addUsers = [] 
-			# 删除users时，所删除space_users的organization字段要更新
-			removeUsers.push user for user in doc.users when 0 > modifier.$set.users.indexOf(user)			
-			db.space_users.update({user: {$in: removeUsers},space: doc.space},{$set: {organization: ""}},{multi: true})			
-			# 添加users时，所添加space_users的organization字段要更新
-			addUsers.push user for user in modifier.$set.users when 0 > doc.users.indexOf(user)						
+			addUsers = []
+			if !doc.users
+				addUsers.push user for user in modifier.$set.users
+			else
+				removeUsers.push user for user in doc.users when 0 > modifier.$set.users.indexOf(user)				
+				addUsers.push user for user in modifier.$set.users when 0 > doc.users.indexOf(user)			
+			# 编辑users时，所添加或删除的space_users之前所属的organization字段要更新
+			db.space_users.update({user: {$in: removeUsers},space: doc.space},{$set: {organization: ""}},{multi: true})						
+			addUsers.forEach (User) ->
+				oldUser = db.space_users.findOne({user: User,space: doc.space})
+				if oldUser.organization
+					db.organizations.direct.update({_id: oldUser.organization},{$pull: {users: User}})						
 			db.space_users.update({user: {$in: addUsers},space: doc.space},{$set: {organization: doc._id}},{multi: true})
 
 
@@ -288,8 +290,8 @@ if (Meteor.isServer)
 			db.organizations.direct.update(obj._id, {$set: updateFields})
 		
 		if modifier.$set.users
-			_.each modifier.$set.users, (userId) ->	
-				db.space_users.direct.update({user: userId,space:doc.space}, {$set: {organization: doc._id}})
+			_.each modifier.$set.users, (userId) ->
+				db.space_users.direct.update({user: userId,space:doc.space},{$set: {organization: doc._id}})
 
 	
 	db.organizations.before.remove (userId, doc) ->
