@@ -310,6 +310,11 @@ if (Meteor.isServer)
 		if (doc.children && doc.children.length>0)
 			throw new Meteor.Error(400, t("organizations_error.organization_has_children"));
 
+		# can not delete organiztion with users
+		if (doc.users && doc.users.length>0)
+			console.info("can not delete organiztion with users")
+			throw new Meteor.Error(400, t("organizations_error.organizations_has_users"))
+
 	db.organizations.after.remove (userId, doc) ->
 		if (doc.parent)
 			parent = db.organizations.findOne(doc.parent)

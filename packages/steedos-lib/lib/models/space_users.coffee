@@ -174,7 +174,10 @@ if (Meteor.isServer)
 		# only space admin can update space_users
 		if space.admins.indexOf(userId) < 0 and not Roles.userIsInRole userId, "admin"
 			throw new Meteor.Error(400, t("space_users_error.space_admins_only"));
-
+		# 上级主管不能是自己
+		if modifier.$set.manager == doc.user
+			throw new Meteor.Error(400, t("space_users_error.manager_is_oneself"));
+		
 		modifier.$set.modified_by = userId;
 		modifier.$set.modified = new Date();
 

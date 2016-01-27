@@ -21,21 +21,21 @@ Template.profile.onCreated ->
 
 	@clearForm = ->
 		@find('#oldPassword').value = ''
-		@find('#password').value = ''
+		@find('#Password').value = ''
 		@find('#confirmPassword').value = ''
 
 	@changePassword = (callback) ->
 		instance = @
 
 		oldPassword = $('#oldPassword').val()
-		password = $('#password').val()
+		Password = $('#Password').val()
 		confirmPassword = $('#confirmPassword').val()
 
-		if !oldPassword or !password or !confirmPassword
+		if !oldPassword or !Password or !confirmPassword
 			toastr.warning t('Old_and_new_password_required')
 
-		else if password == confirmPassword
-			Accounts.changePassword oldPassword, password, (error) ->
+		else if Password == confirmPassword
+			Accounts.changePassword oldPassword, Password, (error) ->
 				if error
 					toastr.error t('Incorrect_Password')
 				else
