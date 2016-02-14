@@ -129,7 +129,6 @@ srp@1.0.4
 standard-minifiers@1.0.2
 steedos:admin-lte@0.0.2
 steedos:lib@0.0.1
-steedos:workflow@0.0.1
 tap:i18n@1.7.0
 templating@1.1.5
 templating-tools@1.0.0
